@@ -9,10 +9,10 @@
 \usepackage{empheq}
 \usepackage{natbib}
 \usepackage{cancel}
-\usepackage[colorlinks=True, linkcolor=blue]{hyperref}
+\usepackage[colorlinks=True, linkcolor=blue, citecolor=blue]{hyperref}
 \usepackage[all]{hypcap}
 
-\bibliographystyle{apj}
+\bibliographystyle{apsrev}
 
 \newcommand{\Div}[1]{\ensuremath{\nabla\cdot\left( #1\right)}}
 \newcommand{\angles}[1]{\ensuremath{\left\langle #1 \right\rangle}}
@@ -39,7 +39,8 @@ This is where an abstract defining what we're doing with stratified convection a
 
 %%%%% Body of the paper
 \section{Introduction \label{section:intro}}
-Blah Blah stuff.
+Talk about \cite{hurlburt&all1984, brummell&all1996, cattaneo&all1991},  and then talk about some
+\RB stuff, such as \cite{johnston&doering2009}.
 
 \section{Model \& Equations \label{section:model}}
 We study a fluid whose equation of state is that of an ideal gas, $P = R^*\rho T$ and whose
@@ -96,7 +97,8 @@ conservation form,
 where $h \equiv c_V T + P/\rho$ is the system enthalpy and $\phi = -gz$ is the gravitational potential.  All of the 
 
 We use initial conditions of randomized temperature perturbations on the order of $10^{-6}$ below the background
-temperature field (EVAN -- TRY TO DO 1E-6*EPSILON). 
+temperature field (EVAN -- TRY TO DO 1E-6*EPSILON). We impose stress free, impenetrable, constant temperature boundary
+conditions.
 
 \subsection{Control Parameters}
 In addition to the explicitly scaling the level of superadiabaticity of the background entropy gradient via $\epsilon$,
