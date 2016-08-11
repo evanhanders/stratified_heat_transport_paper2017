@@ -1,0 +1,119 @@
+%\documentclass[iop]{emulateapj}
+\documentclass[aps, prl, twocolumn, groupedaddress]{revtex4-1}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{empheq}
+\usepackage{natbib}
+\usepackage{cancel}
+\usepackage[colorlinks=True, linkcolor=blue]{hyperref}
+\usepackage[all]{hypcap}
+
+\bibliographystyle{apj}
+
+\newcommand{\Div}[1]{\ensuremath{\nabla\cdot\left( #1\right)}}
+\newcommand{\angles}[1]{\ensuremath{\left\langle #1 \right\rangle}}
+\newcommand{\grad}{\ensuremath{\nabla}}
+\newcommand{\RB}{Rayleigh-B\'{e}nard }
+\newcommand{\stressT}{\ensuremath{\bm{\bar{\bar{\Pi}}}}}
+
+
+\begin{document}
+%%%%% Create nice title and abstract
+\author{Evan H. Anders}
+\affiliation{Department of Astrophysical \& Planetary Sciences, University of Colorado -- Boulder}
+\affiliation{Laboratory for Atmospheric and Space Physics, Boulder, CO}
+\author{Benjamin P. Brown}
+\affiliation{Department of Astrophysical \& Planetary Sciences, University of Colorado -- Boulder}
+\affiliation{Laboratory for Atmospheric and Space Physics, Boulder, CO}
+\title{Heat transport in stratified convection across mach number blahdy blah}
+
+\begin{abstract}
+This is where an abstract defining what we're doing with stratified convection and Nusselt numbers will go.
+\end{abstract}
+\maketitle
+
+
+%%%%% Body of the paper
+\section{Introduction \label{section:intro}}
+Blah Blah stuff.
+
+\section{Model \& Equations \label{section:model}}
+We study a fluid whose equation of state is that of an ideal gas, $P = R^*\rho T$ and whose
+initial stratification is polytropic, where
+\begin{equation}
+\begin{split}
+\rho(z) &= \rho_{00}(z_0 - z)^m \\
+T(z)    &= T_{00}(z_0 - z)^m
+\end{split}
+\end{equation}
+and $z$ increases upwards. We define the height of the atmosphere such that $n_\rho$ density scale heights fit in the
+atmosphere, or such that $\ln[\rho(L_{z})/\rho(0)] = n_\rho$.  We nondimensionalize our equations such that 
+$P = \rho = T = 1$ at the top of the atmosphere, requiring $z_0 \equiv L_z + 1$ and $R^* = T_{00} = \rho_{00} = 1$.  
+We specify the entropy gradient at the top of the atmosphere as $\grad S(L_z) = -\epsilon$ such that the
+polytropic index of the atmosphere is $m = (\gamma - 1)^{-1} - \epsilon = m_{ad} - \epsilon$.
+
+We evolve the Fully Compressible Navier-Stokes equations with an energy-conserving energy equation,
+which take the form:
+\begin{align}
+&\begin{aligned}
+&\frac{D \ln\rho}{D t} + \Div{\bm{u}} = 0
+	\label{eqn:continuity_eqn}
+\end{aligned}\\
+&\begin{aligned}
+&\rho\frac{D\bm{u}}{D t}=
+-\grad P + \rho\bm{g} - \nabla\cdot\stressT
+	\label{eqn:momentum_eqn}
+\end{aligned}\\
+&\begin{aligned}
+\rho c_V\left(\frac{D T}{D t} + (\gamma-1)T\Div{\bm{u}}\right) + &\Div{-\kappa\grad T} = \\
+&-\left(\stressT\cdot\nabla\right)\cdot\bm{u} 
+	\label{eqn:energy_eqn}
+\end{aligned}
+\end{align}
+where $D/Dt \equiv \partial_t + \bm{u}\cdot\grad$ and the viscous stress tensor is defined as
+\begin{equation}
+\Pi_{ij} \equiv -\mu\left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} - \frac{2}{3}\delta_{ij}\Div{\bm{u}}\right),
+	\label{eqn:stress_tensor}
+\end{equation}
+where $\mu$ is the \emph{dynamic viscosity} (in units of [mass $\cdot$ length$^{-1}$ $\cdot$ time$^{-1}$]) and $\delta_{ij}$
+is the kronecker delta function.  We also define the \emph{kinematic viscosity}, which has units of a classic diffusion coefficient,
+as $\nu \equiv \mu/\rho$.  In a similar fashion, we define the thermal diffusivity, $\chi \equiv \kappa / \rho$ [note: Kundu has a $c_P$ on
+the bottom, here].
+
+Dotting Eq. \ref{eqn:momentum_eqn} with $\bm{u}$ and adding it to Eq. \ref{eqn:energy_eqn}, we retrieve the full energy equation in
+conservation form,
+\begin{equation}
+\begin{split}
+\frac{\partial}{\partial t}&\left(\rho\left[\frac{|\bm{u}|^2}{2} + c_V T + \phi\right]\right) +\\
+&\Div{\rho\bm{u}\left[\frac{|\bm{u}|^2}{2} + h + \phi\right] + \bm{u}\cdot\stressT - \rho\chi\grad T} = 0,
+	\label{eqn:energy_eqn_full}
+\end{split}
+\end{equation}
+where $h \equiv c_V T + P/\rho$ is the system enthalpy and $\phi = -gz$ is the gravitational potential.  All of the 
+
+We use initial conditions of randomized temperature perturbations on the order of $10^{-6}$ below the background
+temperature field (EVAN -- TRY TO DO 1E-6*EPSILON). 
+
+\subsection{Control Parameters}
+In addition to the explicitly scaling the level of superadiabaticity of the background entropy gradient via $\epsilon$,
+we utilize the nondimensional Prandtl (Pr) and Rayleigh (Ra) numbers to determine our atmospheric diffusivities.  Pr
+is the ratio of kinematic viscosity to thermal diffusivity, which we set equal to one.  Ra is the ratiof buoyant driving
+to diffusivity of the form
+\begin{equation}
+\text{Ra} \equiv \frac{g L_z^3 (\Delta S/c_P)}{\nu\chi},
+	\label{eqn:ra_def}
+\end{equation}
+where $\Delta S/c_P$ is the entropy difference between the top and bottom boundaries of the reference state.  Note that
+$\nu \propto \chi \propto \rho^{-1}$ such that Ra increases with depth as the square of the density.  In this work we
+specify Ra at the top of the domain.
+
+\begin{acknowledgements}
+This work was supported by the CU/NSO Hale Graduate Fellowship blah.
+\end{acknowledgements}
+
+\bibliography{../biblio.bib}
+\end{document}
