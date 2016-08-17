@@ -39,8 +39,32 @@ This is where an abstract defining what we're doing with stratified convection a
 
 %%%%% Body of the paper
 \section{Introduction \label{section:intro}}
-Talk about \cite{hurlburt&all1984, brummell&all1996, cattaneo&all1991},  and then talk about some
-\RB stuff, such as \cite{johnston&doering2009}.
+Compressible convection is ubiquitous among natural systems such as stellar envelopes and planetary atmospheres.
+The widely-studied \RB convection in which up- and downflows are symmetric and the Rayleigh number (Ra, the
+ratio of buoyant driving to diffusive damping) serves as the primary control parameter lacks a number of the
+key features which make studies of stratified convection difficult to master.  Early studies of stratified
+convection in two \cite{graham1975, chan&all1982, hurlburt&all1984, cattaneo&all1990} and three 
+\cite{malagoli&all1990, cattaneo&all1991, brummell&all1996} dimensions
+utilized polytropically stratified atmospheres, in which the temperature gradient, thermal diffusivity, and
+gravity are constant throughout the depth of the atmosphere and the atmosphere is in hydrostatic equilibrium.
+While perhaps not perfectly realistic and often abandoned for atmospheres constructed using more realistic
+radiative transfer properties (cite some papers), the polytrope is a particularly useful reference state for
+stratified convection studies.
+
+A canonical value of the ``polytropic index'' used in the study of convection of monatomic ideal gases is
+$m = 1$, such that the density and temperature profile are both linear.  Recently, \cite{brandenburg&all2005}
+argued that as the polytropic index approaches the adiabatic value of $m_{ad} = 1.5$, the convective flux of
+the system becomes negligible compared to the background flux gradient, and the Nusselt number of the
+system approaches zero.  They argue that, as a result, values of $m \rightarrow -1$ are ideal polytropes
+to study, as the radiative flux approaches zero and the convective flux carries the whole of the system
+flux in equilibrium. 
+
+Here, we argue for The definition of a new Nusselt number, where the radiative flux is defined relative to
+the \emph{adiabatic} state rather than to a linear temperature profile.  We demonstrate that values
+of $m$ close to adiabatic show a Nusselt number (similar?) to \cite{johnston&doering2009} and that
+such values of $m$ are useful in allowing us to probe low-Mach number convection, such as that
+deep within the Sun's convection zone (cite a paper for that?)
+
 
 \section{Model \& Equations \label{section:model}}
 We study a fluid whose equation of state is that of an ideal gas, $P = R^*\rho T$ and whose
@@ -99,6 +123,25 @@ where $h \equiv c_V T + P/\rho$ is the system enthalpy and $\phi = -gz$ is the g
 We use initial conditions of randomized temperature perturbations on the order of $10^{-6}$ below the background
 temperature field (EVAN -- TRY TO DO 1E-6*EPSILON). We impose stress free, impenetrable, constant temperature boundary
 conditions.
+
+The efficiency of convection is defined by the Nusselt number.  While the Nusselt number is well-defined in \RB convection
+as the amount of total convective and radiative flux divided by the steady-state background flux \cite{johnston&doering2009, otero&all2002},
+a well-defined Nusselt number is more elusive in stratified convection.  We suggest that a more general definition of the
+Nusselt number is similar to that defined by \RB convection, but where both the numerator and denominator have the
+radiative flux of the adiabatic temperature gradient of the atmosphere removed.  Such a definition was first used
+by \cite{hurlburt&all1984} who wrote it as
+\begin{equation}
+N \equiv \frac{F_T - F_A}{F - F_A},
+\end{equation}
+where $F_T$ is the sum of fluxes in the system, $F_A = \kappa g / c_P$ is the radiative flux of the corresponding adiabatic profile
+of the atmosphere, and $F = \Delta T / Lz$ is the radiative flux carried by a linear temperature profile across the domain.  Under
+the specific case of constant temperature boundary conditions, $\Delta T$ is constant and the denominator of the Nusselt number
+reduces to $F - F_A = -\kappa\epsilon \grad T_0 (\gamma-1)/\gamma$.  Thus, the denominator of the Nusselt number is directly proportional
+to the level of superadiabaticity of the background atmosphere, as is the time-dependent value of $F_T - F_A$.  Under the Boussinesq
+approximation of \RB convection, the lack of density variation means that the temperature field is directly linked to entropy, and
+the adiabatic temperature gradient is definitionally zero.  In the case of \cite{brandenburg&all2005}, the case of
+$\epsilon \rightarrow (m_{ad} + 1)$ is examined, but this also corresponds to the case where $g \rightarrow 0$ and the
+corresponding adiabatic atmospheric temperature gradient is isothermal.
 
 \subsection{Control Parameters}
 In addition to the explicitly scaling the level of superadiabaticity of the background entropy gradient via $\epsilon$,
