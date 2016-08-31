@@ -89,7 +89,9 @@ $P_0(L_z) = \rho_0(L_z) = T_0(L_z) = 1$, requiring $z_0 \equiv L_z + 1$ and $R^*
 The polytropic index is set by the adiabatic index of a monatomic ideal gas, $\gamma = 5/3$ and the 
 superadiabatic excess \cite{graham1975}, $\epsilon$, such that $m = (\gamma - 1)^{-1} - \epsilon = m_{ad} - \epsilon$ 
 and the subsequent entropy gradient at the top of the atmosphere is $\grad S(L_z) = -\epsilon$,
-the negative value of the superadiabatic excess.
+the negative value of the superadiabatic excess.  We argue that the characteristic timescale of such an
+atmosphere is related to the characteristic atmospheric buoyancy time, $t_{\text{b}} = \sqrt{L_z/g\epsilon}$,
+not the characteristic thermal diffusion time, $t_{\text{th}} = L_z^2/\chi$.
 
 Atmospheric diffusivities are set by the Rayleigh number and the Prandtl number.  We define the
 non-dimensional Rayleigh number as
@@ -101,7 +103,7 @@ $\nu$ is the kinematic viscosity (viscous diffusivity), and $\chi$ is the therma
 The relationship between the thermal and viscous diffusivities is
 set by the Prandtl number, Pr$ = \nu/\chi$.   We relate the dynamic viscosity, $\mu$ and the thermal conductivity,
 $\kappa$, to their corresponding diffusivities such that 
-$\nu \equiv \mu/\rho$ and $\chi \equiv \mu\/rho$.  As a result, $\text{Ra} \propto (\nu\chi)^{-1} \propto
+$\nu \equiv \mu/\rho$ and $\chi \equiv \mu/\rho$.  As a result, $\text{Ra} \propto (\nu\chi)^{-1} \propto
 \rho^2$, such that for our atmospheres with $n_{\rho} = 3$, the Rayleigh number increases by a factor of
 approximately 400 from the top of the domain to the bottom of the domain.  Such a formulation leaves Pr
 constant throughout the depth of the atmosphere, and in this paper we specifically study $\text{Pr} = 1$.
@@ -117,11 +119,8 @@ see Fig. \ref{fig:ma_v_eps}.
 \includegraphics[width=3.4375in]{./figs/ma_v_eps.png}
 \caption{Shown are characteristic mach numbers from IVPs spanning six decades of $\epsilon$, from
 very low Mach number to near Mach one.  A very strong Ma $\propto \epsilon^{1/2}$ relation is clear. 
-(need to actually do linear regression)
 \label{fig:ma_v_eps} }
 \end{figure}
-
-
 
 We start with initial conditions of random small perturbations compared to $\epsilon$ in the temperature
 field.  We evolve the Fully Compressible Navier-Stokes equations with an energy-conserving energy equation,
@@ -169,7 +168,7 @@ The efficiency of convection is defined by the Nusselt number.  While the Nussel
 as the amount of total flux divided by the steady-state background conductive flux 
 \cite{johnston&doering2009, otero&all2002},
 a well-defined Nusselt number is more elusive in stratified convection.  A traditional definition of the Nusselt
-number in stratified convection is \cite{graham1975,hurlburt1984}
+number in stratified convection is \cite{graham1975,hurlburt&all1984}
 \begin{equation}
 N \equiv \frac{F_{\text{conv, z}} + F_{\text{rad, z}} - F_A}{F_{\text{ref}} - F_A},
 \label{eqn:nusselt}
@@ -185,24 +184,33 @@ suppress entropy stratification and create isentropic atmospheres.  Under the Bo
 density variations are ignored, entropy stratification is directly proportional to temperature stratification,
 such that $\grad S \rightarrow 0$ only when $\grad T \rightarrow 0$.  Thus, for \RB convection, 
 $\grad T_{\text{ad}} \equiv 0$ and the familiar form of $N$ is retrieved.  In the case of stratified convection,
-as $\epsilon \rightarrow m_{ad} + 1$, as in \cite{brandenburg2015}, $\grad P \propto g \rightarrow 0$ and
+as $\epsilon \rightarrow m_{ad} + 1$, as in \cite{brandenburg&all2005}, $\grad P \propto g \rightarrow 0$ and
 the resulting $\grad T_{\text{ad}} \rightarrow 0$.  In such a case, $F_A \rightarrow 0$ and the familiar
 definition of the \RB nusselt number is appropriate to use. However, for any given values of $\epsilon$, including
 the very small values used in this work, Eq. \ref{eqn:nusselt} is the proper non-dimensional definition
 of the Nusselt number.
 
-***WE USE DEDALUS, EXPLAIN WHAT IT ARE***
-
-***EXPLAIN BOUNDARY CONDITIONS***
-
-***EXPLAIN WHAT THE CHARACTERISTIC TIME SCALE, THE BUOYANCY TIME, IS***
-
+We utilize the novel Dedalus pseudospectral framework (cite website?) to time-evolve Eqs. 
+\ref{eqn:continuity_eqn}-\ref{eqn:energy_eqn}.  We use a dealiased Chebyshev (vertical)
+and Fourier (horizontal) grid in which the
+physical grid dimensions are 3/2 the size of the coefficient grid.  Our coefficient grid sizes range from
+64x256 grid points (low Ra) to 768x3072 grid points (Ra = $10^{7.66}$).  The atmosphere is bounded above
+and below by impenetrable, stress free, fixed temperature boundary conditions such that
+\begin{equation}
+w = \partial_z u = T_1 = 0
+\end{equation}
+at the boundaries.  Theh domain is horizontally periodic.
 
 \section{Results \label{section:results}}
+
 We ran initial value problems for a few hundreds of buoyancy times past the convective transients from 
-Rayleigh numbers around $R_{crit}$ up to Rayleigh numbers of $\approx 10^7 R_{crit}$.  While bulk thermodynamic
-structures are similar between low and high $\epsilon$, high $\epsilon$ runs start to exhibit shock fronts
-propagating away from downflow channels, such as those in Fig. \ref{fig:entropy_snapshots}, as reported in \cite{cattaneo&all1990}.
+Rayleigh numbers around $R_{crit}$ up to Rayleigh numbers of $\approx 10^7 R_{crit}$ (BOOTSTRAPPING?).  At
+high values of $\epsilon$, shock systems form in the upper atmosphere near downflow lanes 
+(see e.g. Fig. \ref{fig:entropy_snapshots}b) and propagate towards upflow lanes.  Such systems were reported in
+both two \cite{cattaneo&all1990} and three \cite{malagoli&all1990} dimensional polytropic simulations previously.
+Low mach number flows, such as those on an $\epsilon = 10^{-4}$ atmosphere (e.g. Fig. \ref{fig:entropy_snapshots}a)
+have similar bulk thermodynamic structure but lack the complicating dynamics of shock heating.
+
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
 \caption{Two characteristic snapshots after about 200 buoyancy times are shown at $\epsilon=10^{-4}$ (top)
@@ -210,9 +218,13 @@ and $\epsilon=0.5$ (bottom) at Ra = $10^6$.
 \label{fig:entropy_snapshots} }
 \end{figure}
 
-Despite diferent thermodynamic structures, the fluxes look fairly similar at low and high mach number (sort of?
-I don't think the ones I have are averaged over enough time, especially the eps=0.5 one, but I Pleiades is
-a bit slammed right now).  See Fig \ref{fig:flux_profiles}
+Despite diferent thermodynamic structures, the properly normalized \emph{sum} of the fluxes for a given
+Ra is similar.  See, for example, Fig. \ref{fig:flux_profiles} to see time-averaged horizontal profiles of
+the vertical system fluxes.  At high $\epsilon$ and Ra, $\bm{F}_{\text{enth}}$ and $\bm{F}_{\text{KE}}$
+exhibit two local maxima over the depth of the domain, whereas at low $\epsilon$ and low Ma, there is only
+one local maximum near the bottom of the domain.  Viscous fluxes become important near the bottom boundary
+layer, and radiative flux is nearly zero everywhere in the domain except for near the boundaries where the
+fixed-temperature boundary conditions create large deviations in $\grad T$ away from $\grad T_{\text{ad}}$.
 
 \begin{figure}[b]
 \includegraphics[width=3.4375in]{./figs/fluxes_fig.png}
@@ -228,7 +240,7 @@ This is, in part, due to the fact that cold downdrafts floating to the bottom of
 by upflows, or warm risen parcels can be entrainedi n the intense cold downdrafts.  Such events reverse the
 preferred direction of flux in the system, and even let the Nusselt number become negative for short periods of
 time.  See Fig. \ref{fig:nu_v_time}.  As a result, it is necessary to take a long time average of the fluxes
-before calculating the Nusselt number at higher Rayleigh number.
+before calculating the Nusselt number at higher Rayleigh number. (IS THIS USEFUL?)
 
 
 \begin{figure}[t]
@@ -242,12 +254,9 @@ time-average of the Nusselt number is required to obtain a sensible mean.
 
 The evolution of the Nusselt number as the Rayleigh number is increased is shown for both high and low
 $\epsilon$ in Fig. \ref{fig:nu_v_ra}.  Below convective onset, the Nusselt number is perfectly one. Just above
-onset, there is a brief range of highly inflated scaling between $N$ and Ra.  From about $10R_{crit}$ to roughly
-$10^{4-5}R_{crit}$, Ra and $N$ follow the relationship: (put a power law here)  Above about
-$10^5 R_{crit}$, the Nusselt number flattens out as Ra is increased -- perhaps this is some Featherstone 2016
-shennanigans.
+onset, there is a brief range of highly inflated scaling between $N$ and Ra. 
 
-\begin{figure}[b]
+\begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/nu_v_ra.png}
 \caption{Variation of the Nusselt number as a function of the Rayleigh number is shown.
 \label{fig:nu_v_ra} }
