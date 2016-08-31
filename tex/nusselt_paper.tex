@@ -2,7 +2,6 @@
 \documentclass[aps, prl, twocolumn, groupedaddress]{revtex4-1}
 \usepackage{amsmath}
 \usepackage{graphicx}
-\usepackage{epstopdf}
 \usepackage{listings}
 \usepackage{color}
 \usepackage{bm}
@@ -32,7 +31,10 @@
 \title{Convective heat transport in stratified atmospheres at low and high Mach number}
 
 \begin{abstract}
-This is where an abstract defining what we're doing with stratified convection and Nusselt numbers will go.
+Here we study the effects of varying the strength of buoyant driving (the Rayleigh number, Ra) and the
+characteristic flow speed (the Mach number, Ma) on convective heat transport in stratified atmospheres.
+We utilize polytropic reference states to condition the Mach number and study the evolution of the
+non-dimensional Nusselt number (Nu) as Ra is increased in various Ma regimes.
 \end{abstract}
 \maketitle
 
@@ -40,37 +42,37 @@ This is where an abstract defining what we're doing with stratified convection a
 %%%%% Body of the paper
 \section{Introduction \label{section:intro}}
 Convection is ubiquitous among natural systems such as stellar envelopes and planetary atmospheres.
-Compressible convection in such stratified atmospheres exhibits behavior which is much more complex than 
-what is seen in the widely-studied \RB convection.  Upflows and downflows are asymmetric, the well-defined
-Rayleigh Number (Ra, the ratio of buoyant driving to diffusive damping) becomes less defined and depth-dependent,
-and the Mach number of the flows becomes an additional control parameter.
+In these systems, compressibility and buoyancy couple to produce complex effects which are not seen in
+the widely-studied \RB convection.
 Early studies of stratified
 convection in two \cite{graham1975, chan&all1982, hurlburt&all1984, cattaneo&all1990} and three 
 \cite{malagoli&all1990, cattaneo&all1991, brummell&all1996} dimensions
-utilized polytropically stratified atmospheres, in which the temperature gradient, thermal diffusivity, and
-gravity are constant throughout the depth of the atmosphere and the atmosphere is initially in hydrostatic equilibrium.
-While often abandoned for atmospheres constructed using more realistic
+utilized polytropically stratified atmospheres, in which the equation of hydrostatic equilibrium is satisfied
+under the assumptions of constant gravitational acceleration, thermal diffusivity and a linear temperature profile.
 radiative transfer properties (cite some papers), the polytrope is a particularly useful reference state for
 stratified convection studies.
 
-A canonical value of the ``polytropic index'' used in the study of convection of monatomic ideal gases is
-$m = 1$, such that the density and temperature profile are both linear.  Recently, \cite{brandenburg&all2005}
-argued that as the polytropic index approaches the adiabatic value of $m_{ad} = 1.5$, the convective flux of
-the system becomes negligible compared to the background flux gradient, and the Nusselt number of the
-system approaches zero.  They argue that, as a result, values of $m \rightarrow -1$ are ideal polytropes
-to study, as the radiative flux approaches zero and the convective flux carries the whole of the system
-flux in equilibrium. 
+Aside from the physical size of the domain in which convection occurs, \RB convection has two main control
+parameters.  These are the non-dimensional Rayleigh number (Ra, the ratio of buoyanty driving to diffusivity)
+and the Prandtl number (Pr, the ratio of viscous to thermal diffusivity).  In stratified atmospheres, Ra
+and Pr combine with the degree of stratification of the atmosphere and the characteristic Mach number of
+motions in the convective flows.  While there have been numerous studies of the effects of varying
+Ra, Pr, and atmospheric stratification (cite some), there are few studies of the effects of Mach number
+on the resulting heat transport properties of the resulting convection.
 
-Here, we argue for The definition of a new Nusselt number, where the radiative flux is defined relative to
-the \emph{adiabatic} state rather than to a linear temperature profile.  We demonstrate that values
-of $m$ close to adiabatic show a Nusselt number (similar?) to \cite{johnston&doering2009} and that
-such values of $m$ are useful in allowing us to probe low-Mach number convection, such as that
-deep within the Sun's convection zone (cite a paper for that?)
-
+In this letter, we hold the Prandtl number and density stratification constant in polytropic atmospheres.
+We examine the effects of varying the Rayleigh number and characteristic superadiabaticity of the reference
+polytrope as a means of probing dynamics at low and high Mach number.  We utilize the non-dimensional
+Nusselt number to study the heat transport characteristics at low and high Mach number.
 
 \section{Model \& Equations \label{section:model}}
 We study a fluid whose equation of state is that of an ideal gas, $P = R^*\rho T$ and whose
-initial stratification is polytropic, where
+initial stratification is polytropic.
+The primary assumptions utilized in constructing a polytropic atmosphere are that the gravitational
+acceleration and conductive heat flux are invariant throughout the depth of the atmosphere. In order
+to satisfy the latter assumption, the thermal conductivity, $\kappa$ and temperature gradient
+$\grad T_0$ are often taken as constants, such that, \bm{$F}_{\text{cond}} = -\kappa \grad T_0 = \text{constant}$.
+Under these assumptions, solving the equation of hydrostatic equilibrium produces an atmosphere defined by
 \begin{equation}
 \begin{split}
 \rho_0(z) &= \rho_{00}(z_0 - z)^m \\
@@ -79,40 +81,40 @@ T_0(z)    &= T_{00}(z_0 - z)
 \end{split}
 \end{equation}
 and $z$ increases upwards within the bounds $z =\{0, L_{z}\}$.
-The height of the atmosphere is set by specifying the number of density scale heights it spans, $n_\rho$,
-which we set to be three throughout this study such that the density at the bottom of the atmosphere is larger
+We specify the number of density scale heights the atmosphere spans, $n_\rho$ to determine $L_{z}$. Throughout
+this study, we set $n_{\rho} = 3$ such that the density at the bottom of the atmosphere is larger
 than that at the top of the atmosphere by roughly a factor of 20.
-Variables are nondimensionalized at the top of the atmosphere as 
+Thermodynamic variables are nondimensionalized at the top of the atmosphere as 
 $P_0(L_z) = \rho_0(L_z) = T_0(L_z) = 1$, requiring $z_0 \equiv L_z + 1$ and $R^* = T_{00} = \rho_{00} = 1$.  
 The polytropic index is set by the adiabatic index of a monatomic ideal gas, $\gamma = 5/3$ and the 
-control parameter $\epsilon$, such that $m = (\gamma - 1)^{-1} - \epsilon = m_{ad} - \epsilon$ 
-and the subsequent entropy gradient at the top of the atmosphere is $\grad S(L_z) = -\epsilon$.
+superadiabatic excess \cite{graham1975}, $\epsilon$, such that $m = (\gamma - 1)^{-1} - \epsilon = m_{ad} - \epsilon$ 
+and the subsequent entropy gradient at the top of the atmosphere is $\grad S(L_z) = -\epsilon$,
+the negative value of the superadiabatic excess.
 
-The primary assumptions utilized in constructing a polytropic atmosphere are that acceleration due to 
-gravity is constant and that the conductive heat flux, $F_{\text{cond}} = -\kappa \grad T_0$ is
-constant throughout the atmosphere.  To ensure the second condition is met, it is traditional to use
-a constant value of $\kappa$ and $\grad T_0$.  The thermal conductivity is controlled by the
-non-dimensional Rayleigh number,
+Atmospheric diffusivities are set by the Rayleigh number and the Prandtl number.  We define the
+non-dimensional Rayleigh number as
 \begin{equation}
 \text{Ra} = \frac{g L_z^3 (\Delta S_0 / c_P)}{\nu\chi},
 \end{equation}
-where $\Delta S_0$ is the entropy jump across the polytropic atmosphere, $\nu$ is the kinematic viscosity
-and $\kappa$ is the thermal diffusivity.  The relationship between the thermal and viscous diffusivities is
-set by the Prandtl number, Pr$ = \nu/\chi$, which we take to be one throughout this study.   The thermal
-and viscous diffusion coefficients are related to the dynamic viscosity, $\mu$ and $\kappa$ by the ratio
+where $\Delta S_0$ is the entropy difference between the top and bottom of the atmosphere, 
+$\nu$ is the kinematic viscosity (viscous diffusivity), and $\chi$ is the thermal dififusivity.  
+The relationship between the thermal and viscous diffusivities is
+set by the Prandtl number, Pr$ = \nu/\chi$.   We relate the dynamic viscosity, $\mu$ and the thermal conductivity,
+$\kappa$, to their corresponding diffusivities such that 
 $\nu \equiv \mu/\rho$ and $\chi \equiv \mu\/rho$.  As a result, $\text{Ra} \propto (\nu\chi)^{-1} \propto
 \rho^2$, such that for our atmospheres with $n_{\rho} = 3$, the Rayleigh number increases by a factor of
-approximately 400 from the top of the domain to the bottom of the domain.
+approximately 400 from the top of the domain to the bottom of the domain.  Such a formulation leaves Pr
+constant throughout the depth of the atmosphere, and in this paper we specifically study $\text{Pr} = 1$.
 
 At the constant values of $n_\rho$ and Pr used, the primary control parameters of convection are $\epsilon$
 and Ra.  We decompose our atmosphere into the background polytrope ($\rho_{0}, T_{0}$) and the fluctuations
 about that background ($\bm{u}, \rho_{1}, T_{1}$).  The scaling of the entropy gradient with $\epsilon$
 is reflected in the evolved values of these fluctuations, which follow the scaling of
-Ma$^{1/2} \propto T_1/T_0 \propto \rho_{1}/\rho_{0} \propto \epsilon$, and which scale weakly with Ra (prove it,
-we have the data). 
+Ma$^{1/2} \propto T_1/T_0 \propto \rho_{1}/\rho_{0} \propto \epsilon$, and which scale as roughly $Ra^{0.3}$,
+see Fig. \ref{fig:ma_v_eps}.
 
 \begin{figure}[t]
-\includegraphics[width=3.5in]{./figs/ma_v_eps.eps}
+\includegraphics[width=3.4375in]{./figs/ma_v_eps.png}
 \caption{Shown are characteristic mach numbers from IVPs spanning six decades of $\epsilon$, from
 very low Mach number to near Mach one.  A very strong Ma $\propto \epsilon^{1/2}$ relation is clear. 
 (need to actually do linear regression)
@@ -166,30 +168,28 @@ where $\bm{F}_{\text{rad}} = -\kappa \grad T$.
 The efficiency of convection is defined by the Nusselt number.  While the Nusselt number is well-defined in \RB convection
 as the amount of total flux divided by the steady-state background conductive flux 
 \cite{johnston&doering2009, otero&all2002},
-a well-defined Nusselt number is more elusive in stratified convection.  Convection generally 
-works to drive the overall \emph{entropy} gradient to zero.  In the case of the Boussinesq approximation of
-\RB convection, $\grad S = 0$ implies that $\grad T = 0$ because density is no longer a factor in determining the
-stratification.  However, once compressibility and stratification are considered, convection works to cause
-$\grad S = 0$ but \emph{not} necessarily $\grad T = 0$.  As such, even perfectly efficient convection will still
-have some amount of adiabatic conductive flux, $F_A \equiv -\kappa \grad T_{ad}$.  In the case of an initially
-superadiabatic polytrope, assuming that hydrostatic equilibrium is conserved to first order and that the system
-evolves towards a new, adiabatic polytropic state such that the temperature gradient takes the form
-$\grad T_{\text{ad}} = -g/c_P = \grad T_0 (1 - \epsilon(m_{ad} + 1))$.  In order to obtain a meaningful definition
-of the conductive flux, this constant adiabatic component must be subtracted, which yields
-$\bm{F}_{\text{rad}} - \bm{F}_{\text{ad}} = -\kappa\grad T_1 -\kappa\grad T_0\epsilon(m_{ad} + 1)$.  Unlike
-the full radiative flux, which is $O(\kappa\grad T)$, this is $O(\kappa\grad T_1) \approx O(\epsilon)$, and it
-is thus comparable to the other fluxes in the system, as would be expected.  Acknowledging this, we define the
-Nusselt number in the same form as \cite{hurlburt&all1984}, who wrote it as
+a well-defined Nusselt number is more elusive in stratified convection.  A traditional definition of the Nusselt
+number in stratified convection is \cite{graham1975,hurlburt1984}
 \begin{equation}
-N \equiv \frac{F_{\text{conv, z}} + F_{\text{rad, z}} - F_A}{F - F_A},
+N \equiv \frac{F_{\text{conv, z}} + F_{\text{rad, z}} - F_A}{F_{\text{ref}} - F_A},
 \label{eqn:nusselt}
 \end{equation}
-where $F = \Delta T / Lz$ is the radiative flux carried by a
-linear temperature profile from the top boundary value to the bottom boundary value.
-It is important to note that such a definition explains the results of \cite{brandenburg&all2005}, who noted that
-as $m \rightarrow -1$, $F_{\text{rad}}\rightarrow 0$ and $F_{\text{conv}}$ becomes large.  As $m\rightarrow -1$,
-$g\rightarrow 0$, such that the adiabatic flux become zero and the Nusselt number definition reverts to a form
-more similar to that of \RB convection.
+where $F_{\text{conv, z}}$ and $F_{\text{rad, z}}$ are the z-components of $\bm{F}_{\text{conv}}$ and $\bm{F}_{\text{rad}}$,
+respectively.  $F_A$ is the adiabatic conductive flux, defined as $F_A = -\kappa \grad T_{\text{ad}}$.  For an
+atmosphere in hydrostatic equilibrium, such as a polytrope, $\grad T_{\text{ad}} \equiv - g / c_{P}$, and thus
+$F_A = \kappa g / c_{P}$.  $F_{\text{ref}} = \Delta T / L_z$ is the conductive flux of a linear profile connecting the upper
+and lower plates, where $\Delta T = T_{u} - T_{\ell}$.
+
+Such a definition of the Nusselt number is general to both stratified and \RB convection.  Convection works to
+suppress entropy stratification and create isentropic atmospheres.  Under the Boussinesq approximation where
+density variations are ignored, entropy stratification is directly proportional to temperature stratification,
+such that $\grad S \rightarrow 0$ only when $\grad T \rightarrow 0$.  Thus, for \RB convection, 
+$\grad T_{\text{ad}} \equiv 0$ and the familiar form of $N$ is retrieved.  In the case of stratified convection,
+as $\epsilon \rightarrow m_{ad} + 1$, as in \cite{brandenburg2015}, $\grad P \propto g \rightarrow 0$ and
+the resulting $\grad T_{\text{ad}} \rightarrow 0$.  In such a case, $F_A \rightarrow 0$ and the familiar
+definition of the \RB nusselt number is appropriate to use. However, for any given values of $\epsilon$, including
+the very small values used in this work, Eq. \ref{eqn:nusselt} is the proper non-dimensional definition
+of the Nusselt number.
 
 ***WE USE DEDALUS, EXPLAIN WHAT IT ARE***
 
@@ -202,10 +202,9 @@ more similar to that of \RB convection.
 We ran initial value problems for a few hundreds of buoyancy times past the convective transients from 
 Rayleigh numbers around $R_{crit}$ up to Rayleigh numbers of $\approx 10^7 R_{crit}$.  While bulk thermodynamic
 structures are similar between low and high $\epsilon$, high $\epsilon$ runs start to exhibit shock fronts
-propagating away from downflow channels, such as those in Fig. \ref{fig:entropy_snapshots}, as reported in
-(cite Juri's paper from ~1990 that has this).
+propagating away from downflow channels, such as those in Fig. \ref{fig:entropy_snapshots}, as reported in \cite{cattaneo&all1990}.
 \begin{figure}[t]
-\includegraphics[width=3.5in]{./figs/snapshots_fig.eps}
+\includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
 \caption{Two characteristic snapshots after about 200 buoyancy times are shown at $\epsilon=10^{-4}$ (top)
 and $\epsilon=0.5$ (bottom) at Ra = $10^6$.  
 \label{fig:entropy_snapshots} }
@@ -216,7 +215,7 @@ I don't think the ones I have are averaged over enough time, especially the eps=
 a bit slammed right now).  See Fig \ref{fig:flux_profiles}
 
 \begin{figure}[b]
-\includegraphics[width=3.5in]{./figs/fluxes_fig.eps}
+\includegraphics[width=3.4375in]{./figs/fluxes_fig.png}
 \caption{Flux profiles for low (top) and high (bottom) Mach number flows.  
 \label{fig:flux_profiles} }
 \end{figure}
@@ -233,7 +232,7 @@ before calculating the Nusselt number at higher Rayleigh number.
 
 
 \begin{figure}[t]
-\includegraphics[width=3.5in]{./figs/nu_v_time.eps}
+\includegraphics[width=3.4375in]{./figs/nu_v_time.png}
 \caption{The evolution of the Nusselt number is shown at low ($10^2$) and high ($10^7$) Rayleigh number and at
 $\epsilon = 10^{-4}$.  At low Rayleigh number, the system is able to settle into a time invariant solution. As
 the Rayleigh number is raised, the thermodynamic structure become increasingly complex and time variant, and a
@@ -249,7 +248,7 @@ $10^5 R_{crit}$, the Nusselt number flattens out as Ra is increased -- perhaps t
 shennanigans.
 
 \begin{figure}[b]
-\includegraphics[width=3.5in]{./figs/nu_v_ra.eps}
+\includegraphics[width=3.4375in]{./figs/nu_v_ra.png}
 \caption{Variation of the Nusselt number as a function of the Rayleigh number is shown.
 \label{fig:nu_v_ra} }
 \end{figure}
