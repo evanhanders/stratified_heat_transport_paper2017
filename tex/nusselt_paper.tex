@@ -34,12 +34,13 @@
 \begin{abstract}
 Here we study stratified convection in the context of 
 plane-parallel polytropically stratified atmospheres. 
-We hold the density stratification ($n_\rho$) and Prandtl number (Pr) constant while studying the dependence
-of the Nusselt number (Nu), which quantifies the efficiency of convective heat transport, on
-variations of the Mach number (Ma) and the Rayleigh number (Ra).  At large but still subsonic values of
-Ma, a scaling $Nu \appropto Ra^{0.45}$ for low values of Ra.  As Ra increases and flows become supersonic,
-this scaling gives way to a much weaker $Nu \appropto Ra^{0.20}$.  In the regime of $Ma \ll 1$, a consistent
-$Nu \appropto Ra^{0.3}$ is retrieved,  reminiscent of the Nu $\propto$ Ra$^{2/7}$ seen in \RB convection.
+We hold the density stratification (\nrho) and Prandtl number (Pr) constant while varying the
+Mach number (Ma) and the Rayleigh number (Ra) to determine the behavior of the Nusselt number (Nu), 
+which quantifies the efficiency of convective heat transport.
+As Ra increases and $\text{Ma} \rightarrow 1$, a scaling of Nu $\appropto$ Ra$^{0.45}$ is observed.  
+As Ra increases to a regime where Ma $\geq 1$,
+this scaling gives way to a weaker Nu $\appropto$ Ra$^{0.20}$.  In the regime of Ma $\ll 1$, a consistent
+Nu $\appropto$ Ra$^{0.3}$ is retrieved,  reminiscent of the Nu $\propto$ Ra$^{2/7}$ seen in \RB convection.
 \end{abstract}
 \maketitle
 
@@ -50,13 +51,13 @@ $Nu \appropto Ra^{0.3}$ is retrieved,  reminiscent of the Nu $\propto$ Ra$^{2/7}
 \label{sec:intro}
 Convection is essential to heat transport in the cores of high mass stars, the
 envelopes of low mass stars, and the atmospheres of terrestrial and jovian planets. In such systems, convection
-occurs in the presence of the atmospheric stratification, which can be small but extends up to 
+occurs in the presence of the atmospheric stratification which can be small but extends up to 
 14 density scale heights in the Sun's convective envelope.
 A basic understanding of the
 properties of compressible convection in stratified media is important to understanding systems in astrophysics
-and planetary sciences.  Numerical constraints typically have restricted studies of stratified convection to
-moderately high Mach numbers, appropriate to regions near the Sun's surface.  As such, we know little about the
-fundamental properties of low-Mach number stratified convection, which occurs in the deep solar interior.
+and planetary sciences.  Numerical constraints have often restricted studies of stratified convection to
+moderately high Mach numbers, appropriate to regions near the Sun's surface.  As such, we know few
+fundamental properties of the low-Mach number stratified convection which occurs in the deep solar interior.
 
 Some of the earliest numerical experiments on stratified convection
 were performed in two \cite{graham1975, chan&all1982,
@@ -64,14 +65,15 @@ hurlburt&all1984, cattaneo&all1990} and three \cite{cattaneo&all1991, brummell&a
 revealed a number of basic properties in the moderate-to-high Mach number regime.
 In the widely-studied \RB (hereafter RB) problem, upflows and downflows are symmetrical and
 the temperature gradient approaches zero in the convective interior causing the conductive flux to similarly 
-disappear.  Highly stratified convection, on the other hand, exhibits narrow downflow lanes broad upflow regions.
-Furthermore, the \emph{entropy} gradient is flattened by convection rather than the temperature gradient, which
-means that even in the presence of perfectly efficient convection a significant component of the flux can be
+disappear.  Highly stratified convection exhibits narrow downflow lanes and broad upflow regions.
+Furthermore, the \emph{entropy} gradient is negated by convection rather than the temperature gradient, such
+that in the presence of perfectly efficient convection a significant component of the flux can be
 carried by conduction.
 
 In RB convection, there exist two primary control parameters: the Rayleigh number (Ra), the ratio of
 buoyant driving to diffusive damping, and the Prandtl number (Pr), the ratio of viscous to thermal
-diffusivity.  Along with the aspect ratio of the physical domain, these two numbers entirely control the
+diffusivity.  These numbers couple with the aspect ratio of the physical domain and the boundary conditions
+to entirely control the
 dynamics of the convection.  In stratified atmospheres, in addition to specifying the equation of state and
 fundamental properties of the gas, the two control parameters of RB convection are joined by the degree of
 stratification across the domain and the characteristic Mach number (Ma) of the convective flows.  
@@ -82,9 +84,9 @@ the atmosphere spans (\nrho), and Ma is controlled by the superadiabatic excess 
 the deviation of the polytropic index from the adiabatic polytropic index \cite{graham1975}.
 
 In this letter we study the behavior of convective heat transport, quantified by
-the Nusselt number (Nu), in polytropically stratified atmospheres.  
+the Nusselt number (Nu), in plane-parallel two-dimensional polytropically stratified atmospheres.  
 We vary $\epsilon$ and Ra while holding \nrho and Pr
-constant across all simulations and convective structures which arise in a domain with an aspect ratio of 4.  In section 
+constant across all simulations.  We study domains with an aspect ratio of 4.  In section 
 \ref{sec:experiment}, we describe the construction of atmospheres, our equations, and our method for
 numerical time evolution.  We describe our findings in section \ref{sec:results} and discuss
 implications in section \ref{sec:discussion}.
@@ -93,7 +95,7 @@ implications in section \ref{sec:discussion}.
 \refstepcounter{section}
 \label{sec:experiment}
 In order to compare our results with previous studies and in an effort to examine a simplest case,
-we study a fluid composed of monatomic ideal gas particles, with an adiabatic index of $\gamma = 5/3$ and
+we study a fluid composed of monatomic ideal gas particles with an adiabatic index of $\gamma = 5/3$ and
 whose equation of state is $P = R^*\rho T$. 
 The initial stratification is polytropic and the gravitational
 acceleration and conductive heat flux are invariant throughout the depth of the atmosphere. We specify that both 
@@ -109,15 +111,14 @@ T_0(z)    &= T_{00}(z_0 - z),
 \end{equation}
 where $z$ increases upwards within the bounds $z =\{0, L_{z}\}$.
 We specify the number of density scale heights the atmosphere spans, $n_\rho$, to determine $L_{z}$. Throughout
-this letter, we set $n_{\rho} = 3$ such that the density at the bottom of the atmosphere is larger
-than at the top by a factor of 20.
+this letter, we set $n_{\rho} = 3$ such that the density varies by a factor of 20.
 Thermodynamic variables are nondimensionalized at the top of the atmosphere as 
 $P_0(L_z) = \rho_0(L_z) = T_0(L_z) = 1$, requiring $z_0 \equiv L_z + 1$ and $R^* = T_{00} = \rho_{00} = 1$.  
 The polytropic index is set by the adiabatic index and the
 superadiabatic excess, $\epsilon$, such that $m = m_{ad} - \epsilon$
 where $m_{ad} \equiv (\gamma-1)^{-1}$ is the adiabatic polytropic index.
 The subsequent entropy gradient at the top of the atmosphere is $\grad S(L_z) = -\epsilon$.  
-The characteristic timescale of such an
+The characteristic timescale of the
 atmosphere is related to the characteristic atmospheric buoyancy time, $t_{\text{b}} = \sqrt{L_z/g\epsilon}$.
 We will utilize buoyancy time units throughout this letter.
 
@@ -132,15 +133,15 @@ The relationship between the thermal and viscous diffusivities is
 set by the Prandtl number, Pr$ = \nu/\chi$.   We relate the dynamic viscosity, $\mu$, and the thermal conductivity,
 $\kappa$, to their corresponding diffusivities such that 
 $\nu \equiv \mu/\rho$ and $\chi \equiv \kappa/\rho$.  As a result, $\text{Ra} \propto (\nu\chi)^{-1} \propto
-\rho^2$, such that for our atmospheres with $n_{\rho} = 3$, the Rayleigh number increases by a factor of
-400 across the domain.  This formulation leaves Pr
+\rho^2$.  The atmospheres studied here with $n_{\rho} = 3$ experience an increase in the Rayleigh number 
+by a factor of 400 across the domain.  This formulation leaves Pr
 constant throughout the depth of the atmosphere, and in this letter we impose $\text{Pr} = 1$.
 
 At the constant values of $n_\rho$ and Pr used, the primary control parameters of convection are $\epsilon$
 and Ra.  We decompose our atmosphere into the background polytrope ($\ln\rho_{0}, T_{0}$) and the fluctuations
 about that background ($\bm{u}, \ln\rho_{1}, T_{1}$).  The scaling of the entropy gradient with $\epsilon$
 is reflected in the evolved values of these fluctuations, which follow the scaling of
-Ma$^{1/2} \propto T_1/T_0 \propto \rho_{1}/\rho_{0} \propto \epsilon$, and which scale as roughly $Ra^{0.25}$,
+Ma$^{1/2} \propto T_1/T_0 \propto \rho_{1}/\rho_{0} \propto \epsilon$ for low values of $\epsilon$,
 as in Fig. \ref{fig:ma_v_eps}.
 
 \begin{figure}[t]
@@ -173,8 +174,8 @@ which take the form:
 \label{eqn:momentum_eqn}
 \end{aligned}\\
 &\begin{aligned}
-\frac{D T}{D t} = &-(\gamma-1)T\Div{\bm{u}} + \frac{\chi}{c_V}\grad^2 T + \\
-&\grad T \cdot \grad\chi + \chi\grad T \cdot\grad\ln\rho +\nu\left(\lilstressT\cdot\nabla\right)\cdot\bm{u} 
+\frac{D T}{D t} = -&(\gamma-1)T\Div{\bm{u}} + \frac{1}{c_V}\left\{ \chi\grad^2 T + \grad T \cdot \grad\chi  \right. \\ \
+&+ \chi\grad T \cdot\grad\ln\rho +\nu\left(\lilstressT\cdot\nabla\right)\cdot\bm{u}\left.\right\} 
 	\label{eqn:energy_eqn}
 \end{aligned}
 \end{align}
@@ -184,7 +185,7 @@ where $D/Dt \equiv \partial_t + \bm{u}\cdot\grad$ and the viscous stress tensor 
 	\label{eqn:stress_tensor}
 \end{equation}
 
-In such stratified systems, the total convective flux can be defined as
+In such stratified systems, the total convective flux is
 \begin{equation}
 \bm{F}_{\text{conv}} \equiv \bm{F}_{\text{enth}} + \bm{F}_{\text{KE}} + \bm{F}_{\text{PE}} + \bm{F}_{\text{visc}},
 \end{equation}
@@ -196,27 +197,19 @@ Eq. \ref{eqn:momentum_eqn} with $\bm{u}$ and adding it to
 Eq. \ref{eqn:energy_eqn}, the full energy equation in conservation form is retrieved,
 \begin{equation}
 \frac{\partial}{\partial t}\left(\rho\left[\frac{|\bm{u}|^2}{2} + c_V T + \phi\right]\right) +
-\Div{\bm{F}_{\text{conv}} + \bm{F}_{\text{rad}}} = 0
+\Div{\bm{F}_{\text{conv}} + \bm{F}_{\text{cond}}} = 0
 	\label{eqn:energy_eqn_full}
 \end{equation}
-where $\bm{F}_{\text{rad}} = -\kappa \grad T$.  An understanding of the flux terms is essential to characterizing
+where $\bm{F}_{\text{cond}} = -\kappa \grad T$.  An understanding of the flux terms is essential to characterizing
 the convective heat transport in our systems.
 
-The atmosphere is bounded above
-and below by impenetrable, stress free, fixed temperature boundary conditions such that
-\begin{equation}
-w = \partial_z u = T_1 = 0
-\end{equation}
-at the boundaries. 
-
-\textbf{Using a linear eigenvalue solve, we found the critical Ra number to be blahblahblah}
-
-
-We utilize the novel Dedalus pseudospectral framework (http://dedalus-project.org/) to time-evolve Eqs. 
+The atmosphere is contained between two impenetrable, stress free, fixed temperature boundaries at
+the top and bottom of the domain such that $w = \partial_z u = T_1 = 0$ at $z = \{0, L_z\}$. The domain
+is periodic in the horizontal.We utilize the novel Dedalus pseudospectral framework (http://dedalus-project.org/) to time-evolve Eqs. 
 \ref{eqn:continuity_eqn}-\ref{eqn:energy_eqn} using an implicit-explicit third-order four-step 
 Runge-Kutta timestepping scheme \cite{ascher&all1997}.  
 Variables are time-evolved on a dealiased Chebyshev (vertical)
-and Fourier (horizontal, periodic) domain in which the
+and Fourier (horizontal) domain in which the
 physical grid dimensions are 3/2 the size of the coefficient grid.  Our physical grid sizes range from
 96x384 grid points at the lowest values of Ra to 1152x4608 grid points at Ra $\geq 10^{7}$. 
 By using IMEX timestepping, we are able to study flows at moderate ($Ma \approx 1$) and very low ($Ma \approx 10^{-4}$)
@@ -233,12 +226,12 @@ as the amount of total flux divided by the steady-state background conductive fl
 a well-defined Nusselt number is more elusive in stratified convection.  A traditional definition of the Nusselt
 number in stratified convection is \cite{graham1975,hurlburt&all1984}
 \begin{equation}
-Nu \equiv \frac{F_{\text{conv, z}} + F_{\text{rad, z}} - F_A}{F_{\text{ref}} - F_A},
+\text{Nu} \equiv \frac{F_{\text{conv, z}} + F_{\text{cond, z}} - F_A}{F_{\text{ref}} - F_A},
 \label{eqn:nusselt}
 \end{equation}
-where $F_{\text{conv, z}}$ and $F_{\text{rad, z}}$ are the z-components of $\bm{F}_{\text{conv}}$ and $\bm{F}_{\text{rad}}$,
+where $F_{\text{conv, z}}$ and $F_{\text{cond, z}}$ are the z-components of $\bm{F}_{\text{conv}}$ and $\bm{F}_{\text{cond}}$,
 respectively.  $F_A$ is the adiabatic conductive flux, defined as $F_A = -\kappa \partial_z T_{\text{ad}}$.  For an
-ideal gas atmosphere in hydrostatic equilibrium, $\partial_z T_{\text{ad}} \equiv - g / c_{P}$.
+ideal gas in hydrostatic equilibrium, $\partial_z T_{\text{ad}} \equiv - g / c_{P}$.
 $F_{\text{ref}} = \Delta T / L_z$ , where $\Delta T = T_{u} - T_{\ell}$, is the conductive flux of a linear profile connecting the upper
 and lower plates.
 
@@ -247,37 +240,17 @@ cases. Convection works to
 suppress entropy stratification and create isentropic atmospheres.  Under the Boussinesq approximation,
 density variations are ignored and entropy stratification is directly proportional to temperature stratification,
 such that $\grad S \rightarrow 0$ only when $\grad T \rightarrow 0$.  Thus, for RB convection, 
-$\grad T_{\text{ad}} \equiv 0$ and the familiar form of $Nu$ is retrieved.  In the case of stratified convection,
+$\grad T_{\text{ad}} \equiv 0$ and the familiar form of Nu is retrieved.  In the case of stratified convection,
 as $\epsilon \rightarrow m_{ad} + 1$, $\grad P \propto g \rightarrow 0$ and
-the resulting $\grad T_{\text{ad}} \rightarrow 0$.  In such a case, $F_A \rightarrow 0$ and the familiar
-definition of the RB Nusselt number is appropriate to use, as convection carries all of the
-atmospheric flux in such a case \cite{brandenburg&all2005}. As $\epsilon \rightarrow 0$, 
+the resulting $\grad T_{\text{ad}} \rightarrow 0$.  In such a case, $F_A \rightarrow 0$ and the
+definition of the RB Nu is appropriate to use, as convection carries all of the
+flux \cite{brandenburg&all2005}. As $\epsilon \rightarrow 0$, 
 $\grad T_{\text{ad}}\rightarrow \grad T_0$, the atmospheric initial temperature profile.  This causes increasingly
 smaller velocity, and thermodynamic perturbations (e.g. Fig. \ref{fig:ma_v_eps}), but the removal of the 
 O(1) background term in the numerator and denominator of Eq. \ref{eqn:nusselt}, makes the numerator and
 denominator both O($\epsilon$).
 
-We solved initial value problems which start in hydrostatic and thermal equilibrium and experienced infinitesimal 
-kicks compared to $\epsilon$ in $T_1$.  Solutions were time-evolved until a long-time average of $Nu$ showed little
-dependence on height. At
-high values of $\epsilon$, shock systems form in the upper atmosphere near downflow lanes 
-(see e.g. Fig. \ref{fig:entropy_snapshots}a) and propagate towards upflow lanes.  Such systems were reported in
-both two \cite{cattaneo&all1990} and three \cite{malagoli&all1990} dimensional polytropic simulations previously.
-It is unsurprising that \cite{cattaneo&all1990} discovered that as $\gamma \rightarrow 1$, shocks are easier to
-find and produce, as in such a regime $m_{ad} \rightarrow \infty$ and, as a result, $\epsilon \rightarrow \infty$.
-Low mach number flows, such as those in an $\epsilon = 10^{-4}$ atmosphere (e.g. Fig. \ref{fig:entropy_snapshots}b)
-have similar bulk thermodynamic structure but lack the complicating dynamics of shock heating. This is interesting
-in light of the current literature, as low Mach number flows are in pressure equilibrium with the background and
-so pressure forces can no longer be the cause of narrow downflow lanes and broad upflow regions, as suggested
-by \cite{hurlburt&all1984}.  As Ra is
-increased to very large values (e.g. Fig. \ref{fig:entropy_snapshots}c), thermodynamic structures 
-break up into small packets which traverse through the domain many
-times before diffusing rather than spanning the whole domain.  
-The complicated nature of high Ra dynamics, especially in the low Ma regime where
-shocks are absent, has barred us from sufficiently converging any solutions in the regime of $Ra > 10^6$
-at low $\epsilon$.
-
-\begin{figure}[t]
+\begin{figure}[b]
 \includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
 \caption{Characteristic entropy. The time- and horizontally-
 averaged profile is removed in all cases.  At high
@@ -288,23 +261,33 @@ the entirety of the domain and individual small blobs are responsible for carryi
 \label{fig:entropy_snapshots} }
 \end{figure}
 
-At high values of Ra, the heat transport properties of the systems become increasingly complex and time-dependent.
-Large $\epsilon$ flows exhibit two local maxima in the enthalpy flux and kinetic energy flux: one in the upper 
-atmosphere caused by the shocks, and one in the lower atmosphere caused by the deep mixing of convective motions.
-At low $\epsilon$, only the deep maximum is present.  Furthermore, for low values of $\epsilon$, the presence
-of fixed-temperature boundary conditions allows the flux at the boundaries to vary.  Many runs at $Ra > 10^5$,
-$\epsilon = 10^{-4}$ exhibit time-dependent states of stratified convection (such as those shown in 
-Fig. \ref{fig:entropy_snapshots}), in which the flux entering the system at the bottom of the atmosphere exceeds
-that at the top.  These states are punctuated by states of vigorous shearing which flatten the bottom temperature
-gradient towards adiabatic, allowing the excess energy to exit through the upper boundary.  These shearing
-states will be covered in more detail in a future paper.  Regardless, a proper long-term average over shearing
-and non-shearing states retrieves an invariant flux profile (and therefore Nu profile) throughout the depth
-of the atmosphere (\textbf{After about 24 more hours, it'll be flat!  I don't have enough data at the parameters
-shown in Fig. \ref{flux_profiles} yet}).
+We solved initial value problems which start in hydrostatic and thermal equilibrium and experienced infinitesimal 
+kicks compared to $\epsilon$ in $T_1$.  Solutions were time-evolved until a long-time average of Nu showed little
+dependence on depth. By performing a linear stability analysis, we determined that the onset of convection
+occurs at Ra$_c$ $= \{10, 11, 11\}$ (\textbf{need exact}) for $\epsilon = \{0.5, 10^{-4}, 10^{-7}\}$, respectively.  We study Rayleigh
+numbers from values at onset up to nearly $10^6$Ra$_c$ for $\epsilon = 0.5$, $10^5$Ra$_c$ for $\epsilon = 10^{-4}$,
+and $10^4$Ra$_c$ for $\epsilon = 10^{-7}$.  At
+high values of $\epsilon$, shock systems form in the upper atmosphere near downflow lanes 
+(see e.g. Fig. \ref{fig:entropy_snapshots}a) and propagate towards upflow lanes.  Such systems were reported in
+both two \cite{cattaneo&all1990} and three \cite{malagoli&all1990} dimensional polytropic simulations previously.
+In the context of Fig \ref{fig:ma_v_eps}, it is unsurprising that as $\gamma \rightarrow 1$, systems in which shocks
+form are easier to produce \cite{cattaneo&all1990}.  In such a limit, $m_{ad} \rightarrow \infty$ 
+and therefore $\epsilon \rightarrow \infty$.
+Low mach number flows, such as those in an $\epsilon = 10^{-4}$ atmosphere (e.g. Fig. \ref{fig:entropy_snapshots}b)
+have similar bulk thermodynamic structure but lack the complicating dynamics of shock heating. This is interesting
+in light of the current literature, as low Mach number flows are in pressure equilibrium with the background and
+pressure forces cannot be the cause of narrow downflow lanes and broad upflow regions, as has been suggested
+\cite{hurlburt&all1984}.  As Ra is
+increased to very large values (e.g. Fig. \ref{fig:entropy_snapshots}c), thermodynamic structures 
+break up into small packets which traverse through the domain many
+times before diffusing rather than spanning the whole domain.  
+The complicated nature of high Ra dynamics, especially in the low Ma regime where
+shocks are absent, has barred us from sufficiently converging any solutions in the regime of 
+$\text{Ra }> 10^5\text{Ra}_c$ at low $\epsilon$.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/fluxes_fig.png}
-\caption{Time-averaged flux profiles for low (top) and high (bottom) Mach number flows at $Ra = 10^6$.  
+\caption{Time-averaged flux profiles for high (top) and low (bottom) Mach number flows at $Ra = 10^6$.  
 The dashed lines correpond to the
 enthalpy flux (orange, positive) and kinetic energy flux (purple, negative).  The grey dash-dot line is the
 viscous flux, and the green dotted line is the radiative flux with the adiabatic radiative flux removed. All
@@ -313,6 +296,23 @@ the properly normalized sum of all the fluxes, and under this normalization its 
 Nusselt number.
 \label{fig:flux_profiles} }
 \end{figure}
+
+At high values of Ra, the heat transport properties of the systems become increasingly complex and time-dependent.
+Large $\epsilon$ flows exhibit two local maxima in the enthalpy flux and kinetic energy flux: one in the upper 
+atmosphere caused by the shocks, and one in the lower atmosphere caused by the deep mixing of convective motions
+(see Fig. \ref{fig:flux_profiles}a).
+At low $\epsilon$, only the deep maximum is present (Fig. \ref{fig:flux_profiles}b).  
+Furthermore, the presence
+of fixed-temperature boundary conditions allows the flux at the boundaries to vary.  Many runs at $Ra > 10^5$ and
+$\epsilon = 10^{-4}$ exhibit time-dependent states of stratified convection (such as those shown in 
+Fig. \ref{fig:entropy_snapshots}b\&c), in which the flux entering the system at the bottom of the atmosphere exceeds
+that at the top.  These states are punctuated by states of vigorous shearing, similar to those previouslyl
+reported in two-dimensional RB convection (\textbf{cite goluskin?}).  These shearing states flatten the bottom temperature
+gradient towards adiabatic, allowing the excess energy to exit through the upper boundary.  These shearing
+states will be covered in more detail in a future paper.  Regardless, a proper long-term average over shearing
+and non-shearing states retrieves an invariant flux profile (and therefore Nu profile) throughout the depth
+of the atmosphere (\textbf{After about 24 more hours, it'll be flat!  I don't have enough data at the parameters
+shown in Fig. \ref{fig:flux_profiles} yet}).
 
 After appropriately time-averaging the fluxes, a sensible Nusselt number is retrieved.  Nusselt numbers for
 all simulations at low and high Ma are plotted in Fig. \ref{fig:nu_v_ra}.  At $\epsilon = \{10^{-4}, 10^{-7}\}$,
@@ -327,7 +327,8 @@ negligible.
 \caption{Variation of $Nu$ as $Ra$ increases is shown for $\epsilon = \{10^{-7}, 10^{-4}, 0.5\}$. 
 At high $\epsilon$, a clear transition from the subsonic to supersonic regime is evident in the scaling
 of Nu with Ra.  In the low $\epsilon$ regime Nu vs. Ra scalings collapse onto a similar line which is
-reminiscent of RB scalings \cite{johnston&doering2009}.
+reminiscent of RB scalings \cite{johnston&doering2009}.  Error bars represent one standard deviation
+of a long-time averaged Nu sampled throughout the depth of the domain.
 \label{fig:nu_v_ra} }
 \end{figure}
 
@@ -335,16 +336,18 @@ reminiscent of RB scalings \cite{johnston&doering2009}.
 \refstepcounter{section}
 \label{sec:discussion}
 Here we have presented a non-dimensional construction of polytropic atmospheres and the control parameters 
-which determine flow characteristics in such systems.  We argue that such systems are the natural extension
+which determine flow characteristics in such systems.  We argue that these atmospheres are the natural extension
 of the RB problem to stratified systems, and should be used to understand the basic properties of stratified
-convection.  We have argued that the traditional definition of the Nusselt number in stratified atmospheres
+convection.  The striking similarity between the growth of Nu with Ra at low Ma and in RB convection suggests
+that low Ma polytropic convection shares many properties with RB convection but includes the complicating
+effect of stratification. We have argued that the traditional definition of the Nusselt number in stratified atmospheres
 \cite{graham1975} is the correct one, and shown how it extends in extreme cases.
 
 Furthermore, we have demonstrated that low Ma flows exhibit the same broad-upflow / narrow downflow dynamics
-as are observed in high Mach number flows \cite{hurlburt&all1984}.  However, unlike at high Ma, pressure perturbations
-are no longer responsible this effect; rather, high temperature, low density upflows and low temperature,
-high density upflows causing appropriately signed entropy perturbations are responsible for the entirely
-buoyantly-driven flow.  It is possible that at low Ma, these flows begin to feel the pressure response of the
+as are observed in high Mach number flows \cite{hurlburt&all1984}.  However, pressure perturbations
+cannot be responsible for this effect; rather, high temperature, low density upflows and low temperature,
+high density upflows causing appropriately signed entropy perturbations which buoyantly rise or fall accordingly.
+It is possible that at low Ma, these flows begin to feel the pressure response of the
 top and bottom walls which leads them to deflect at the far boundary in a way that high Ma flows do not.
 
 The dynamics of these polytropic solutions are complex and highly time-dependent, even in two dimensions.
@@ -353,7 +356,8 @@ Time-dependent oscillating shear states have developed spontaneously, as seen be
 whether or not these states are attainable in three-dimensional, non-rotating atmospheres.  While the
 two-dimensional work studied here offers a basis for comparing the heat transport abilities of stratified
 convection compared to RB convection \cite{johnston&doering2009}, it will be informative to study the low 
-Mach number systems presented here in three dimensions and in atmospheres bounded by stable regions.
+Mach number systems presented here in three dimensions and in atmospheres bounded by stable regions
+\cite{hurlburt&all1986}.
 
 
 \subsection{acknowledgements}
