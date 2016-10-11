@@ -172,7 +172,7 @@ which take the form:
 &\begin{aligned}
 \frac{D\bm{u}}{D t}=
 &-\grad T - T\grad\ln\rho + \bm{g} \\
-&\,\,\,\,-\nu\Div{\lilstressT} - \lilstressT\cdot\grad\nu - \nu\lilstressT\cdot\grad\ln\rho
+&\,\,\,\,+\nu\Div{\lilstressT} + \lilstressT\cdot\grad\nu + \nu\lilstressT\cdot\grad\ln\rho
 \label{eqn:momentum_eqn}
 \end{aligned}\\
 &\begin{aligned}
@@ -192,7 +192,7 @@ In such stratified systems, the total convective flux is
 \bm{F}_{\text{conv}} \equiv \bm{F}_{\text{enth}} + \bm{F}_{\text{KE}} + \bm{F}_{\text{PE}} + \bm{F}_{\text{visc}},
 \end{equation}
 where $\bm{F}_{\text{enth}} \equiv \rho\bm{u}(c_V T + P/\rho)$ is the enthalpy flux, $\bm{F}_{\text{KE}} \equiv 
-\rho|\bm{u}|^2\bm{u}$ is the kinetic energy flux, $\bm{F}_{\text{PE}} \equiv \rho\bm{u}\phi$ is the potential
+\rho|\bm{u}|^2\bm{u}/2$ is the kinetic energy flux, $\bm{F}_{\text{PE}} \equiv \rho\bm{u}\phi$ is the potential
 energy flux (with $\phi \equiv -gz$), 
 and $\bm{F}_{\text{visc}} \equiv -\rho\nu\bm{u}\cdot\lilstressT$ is the viscous flux.  Taking an inner product of
 Eq. \ref{eqn:momentum_eqn} with $\bm{u}$ and adding it to 
