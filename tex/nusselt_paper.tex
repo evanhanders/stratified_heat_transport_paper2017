@@ -156,7 +156,7 @@ an evident scaling of $Ma \propto \{\epsilon^{0.50}, \epsilon^{0.51}\}$
 at Ra = $\{10^2, 10^5\}$ is retrieved.
 When $\epsilon \rightarrow m_{ad}$, large deviations from this power law are seen and the systems display
 supersonic dynamics.  
-(b) At high epsilon, Ma scales as Ra$^{0.26}$ until it reaches the supersonic regime, at which point it turns
+(b) At high epsilon, Ma scales as Ra$^{0.28}$ until it reaches the supersonic regime, at which point it turns
 over and follows a power law of Ra$^{-0.10}$.  At low epsilon, consistent power laws are achieved throughout all
 values of $Ra$ studied, where Ma $\propto$ \{Ra$^{0.26}$, Ra$^{0.22}$\} for $\epsilon = \{10^{-4}, 10^{-7}\}$. All
 error bars are negligible.  \label{fig:ma_v_eps} }
@@ -325,7 +325,7 @@ After appropriately time-averaging the fluxes, a sensible Nusselt number is retr
 all simulations at low and high Ma are plotted in Fig. \ref{fig:nu_v_ra}.  At $\epsilon = \{10^{-4}, 10^{-7}\}$,
 scaling laws of $Nu \propto Nu^{\{0.31, 0.31\}}$ are retrieved.  At $\epsilon = 0.5$, in the near-sonic
 regime ($Ra \leq 10^4$), the scaling of $Nu$ with $Ra$ is inflated, with $Nu \propto Ra^{0.45}$.  As simulations
-pass into the supersonic regime and shocks start to form near the downflows, propoelling warm fluid deep
+pass into the supersonic regime and shocks start to form near the downflows, propelling warm fluid deep
 into the atmosphere, that scaling drops to $Nu \propto Ra^{0.19}$.  Error on all power law scalings is
 negligible.
 
@@ -343,38 +343,36 @@ of a long-time averaged Nu sampled throughout the depth of the domain.
 \refstepcounter{section}
 \label{sec:discussion}
 In this letter we have studied fundamental heat transport by stratified convection in simplified 2-D polytropic
-atmospheres at low and high Mach number.  Out atmospheres here are specified by two parameters, \nrho 
+atmospheres at low and high Mach number.  Our atmospheres here are specified by two parameters, \nrho 
 and $\epsilon$.  We argue that these atmospheres are the natural extension
 of the RB problem to stratified systems, and should be used to understand the basic properties of stratified
-convection.  The striking similarity between the growth of Nu with Ra at low Ma and in RB convection suggests
-that low Ma polytropic convection shares many properties with RB convection but includes the complicating
-effect of stratification. We have argued that the traditional definition of the Nusselt number in stratified atmospheres
-\cite{graham1975} is the correct one, and shown how it extends in extreme cases.
+convection.  The similarity between the scaling of Nu in RB convection and in these stratified polytropes suggests that
+a boundary layer theory such as the Prandtl-Blausius or Grossmann-Lohse theories for incompressible flows
+could be developed for fully compressible
+convection in these systems \cite{ahlers&all2009}.  
 
-Furthermore, we have demonstrated that low Ma flows exhibit the same broad-upflow / narrow downflow dynamics
-as are observed in high Mach number flows \cite{hurlburt&all1984}.  At low Ma, flows are in pressure equilibrium
-with their surroundings, so cold parcels must also be low density parcels, both of which are negative
-entropy contributions.  As there is no thermodynamic variable causing additional breaking or acceleration, it
-is simply the effects of stratification which lead downflows to be narrow and upflows to be broad.
-It is possible that at low Ma, these flows begin to feel the pressure response of the
-top and bottom walls which leads them to deflect at the far boundary in a way that high Ma flows do not.
+Furthermore, we have demonstrated that low Ma flows exhibit the same pattern of broad upflows and narrow downflows
+observed in high Ma flows \cite{hurlburt&all1984}.  At low Ma, flows are often in pressure equilibrium
+with their surroundings, so cooling parcels increases their density, and both of these effects reduce
+entropy.  Neither of the two free thermodynamic variables can cause breaking in warm upflow regions, 
+so stratification effects must cause the observed flow asymmetry.
+While not studied in this work, it is possible that at low Ma, flows feel the pressure response of the
+boundaries, causing deflection in a manner unseen at high Ma.
 
 The dynamics of these polytropic solutions are complex and highly time-dependent, even in two dimensions.
 Time-dependent oscillating shear states have developed spontaneously, as seen before in RB convection
-\cite{goluskin&all2014}.  Future work will aim to better understand the mechanisms of shearing states and
-whether or not these states are attainable in three-dimensional, non-rotating atmospheres.  While the
-two-dimensional work studied here offers a basis for comparing the heat transport abilities of stratified
-convection compared to RB convection \cite{johnston&doering2009}, it will be informative to study the low 
-Mach number systems presented here in three dimensions and in atmospheres bounded by stable regions
-\cite{hurlburt&all1986}.
+\cite{goluskin&all2014}.  While computationally difficult, the highest values of Ra and the lowest value
+of $\epsilon$ studied here are far below the values found in nature.  If the scalings of Nu and Ma
+presented here hold, then under solar conditions ($\text{Ra }\approx 10^{20}$, $\text{Ma }\approx 10^{-4}$), we expect that $\epsilon \approx 10^{20}$ and
+$\text{Nu }\approx 10^{6}$. 
 
-The similarity between the scaling of Nu in RB convection and in these stratified polytropes suggests that
-a similar Prandtl-Blausius or Grossmann-Lohse boundary layer theory could be developed for fully compressible
-convection in these systems \cite{ahlers&all2009}.  If our scalings of Ma and $\epsilon$ hold up, then under
-solar conditions (Ra $\approx 10^{20}$, Ma $\approx 10^{-4}$), we expect that $\epsilon \approx 10^{20}$ and
-Nu $\approx 10^{6}$.  Solar conditions are of course more complicated, as there $\kappa$ is set by the
-radiative opacity and depend on both $T$ and $\rho$.  Our studies here set the groundwork for studying transport
-under conditions with more realistic $\kappa$.
+Future work will aim to better understand the mechanisms of shearing states and
+whether or not these states are attainable in three-dimensional, non-rotating atmospheres.  Our studies
+here have set the groundwork for understanding and comparing heat transport in stratified convection
+to that in RB convection \cite{johnston&doering2009}, and for future studies of transport in stratified
+convection in more realistic systems, such as those bounded by stable regions \cite{hurlburt&all2009} or 
+using more realistic profiles of $\kappa$.
+
 
 
 \subsection{acknowledgements}
