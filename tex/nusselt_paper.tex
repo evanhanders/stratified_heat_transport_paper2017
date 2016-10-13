@@ -21,6 +21,9 @@
 
 \newcommand{\appropto}{\mathpalette\approptoinn\relax}
 
+\newcommand\mnras{{MNRAS}}%
+          % Monthly Notices of the RAS
+
 \begin{document}
 %%%%% Create nice title and abstract
 \author{Evan H. Anders}
@@ -210,14 +213,17 @@ the top and bottom of the domain such that $w = \partial_z u = T_1 = 0$ at $z = 
 is periodic in the horizontal. We utilize the novel Dedalus\footnote{http://dedalus-project.org/} pseudospectral framework 
  to time-evolve Eqs. 
 \ref{eqn:continuity_eqn}-\ref{eqn:energy_eqn} using an implicit-explicit third-order four-step 
-Runge-Kutta timestepping scheme \cite{ascher&all1997}.  
+Runge-Kutta timestepping scheme RK443 \cite{ascher&all1997}.  
 Variables are time-evolved on a dealiased Chebyshev (vertical)
 and Fourier (horizontal) domain in which the
 physical grid dimensions are 3/2 the size of the coefficient grid.  Our physical grid sizes range from
 96x384 grid points at the lowest values of Ra to 1152x4608 grid points at Ra $\geq 10^{7}$. 
-By using IMEX timestepping, we can implicitly step the stiff linear acoustic wave contribution and we are able to
+By using IMEX timestepping, we implicitly step the stiff linear acoustic wave contribution and we are able to
 efficiently study flows at moderate ($Ma \approx 1$) and very low ($Ma \approx 10^{-4}$)
-Mach number (Fig. \ref{fig:ma_v_eps}b).
+Mach number (Fig. \ref{fig:ma_v_eps}b).  Our equations take the form
+of the FC equations in \cite{lecoanet&all2014}, extended to include variable
+$\nu$ and $\chi$, and we follow the approach there; this IMEX approach has been successfully 
+tested against a nonlinear benchmark  of the compressible Kelvin-Helmholtz instability \cite{Lecoanet_et_al_2016_KH}.
 
 \section{Results}
 \refstepcounter{section}
