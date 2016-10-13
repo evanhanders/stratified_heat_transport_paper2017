@@ -131,7 +131,7 @@ non-dimensional Rayleigh number is
 \end{equation}
 where $\Delta S_0$ is the entropy difference between the top and bottom of the atmosphere, 
 $c_P = R\gamma(\gamma-1)^{-1}$ is the specific heat at constant pressure,
-$\nu$ is the kinematic viscosity (viscous diffusivity), and $\chi$ is the thermal dififusivity.  
+$\nu$ is the kinematic viscosity (viscous diffusivity), and $\chi$ is the thermal diffusivity.  
 The relationship between the thermal and viscous diffusivities is
 set by the Prandtl number, Pr$ = \nu/\chi$.   We relate the dynamic viscosity, $\mu$, and the thermal conductivity,
 $\kappa$, to their corresponding diffusivities such that 
@@ -215,7 +215,7 @@ Variables are time-evolved on a dealiased Chebyshev (vertical)
 and Fourier (horizontal) domain in which the
 physical grid dimensions are 3/2 the size of the coefficient grid.  Our physical grid sizes range from
 96x384 grid points at the lowest values of Ra to 1152x4608 grid points at Ra $\geq 10^{7}$. 
-By using IMEX timestepping, we can implicity step the stiff linear acoustic wave contribution and we are able to
+By using IMEX timestepping, we can implicitly step the stiff linear acoustic wave contribution and we are able to
 efficiently study flows at moderate ($Ma \approx 1$) and very low ($Ma \approx 10^{-4}$)
 Mach number (Fig. \ref{fig:ma_v_eps}b).
 
@@ -295,7 +295,7 @@ $\text{Ra }> 10^5\text{Ra}_c$ at low $\epsilon$.
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/fluxes_fig.png}
 \caption{Time-averaged flux profiles for high (top) and low (bottom) Mach number flows at $Ra = 10^6$.  
-The dashed lines correpond to the
+The dashed lines correspond to the
 enthalpy flux (orange, positive) and kinetic energy flux (purple, negative).  The grey dash-dot line is the
 viscous flux, the blue dash-dot-dot line is the potential energy flux, 
 and the green dotted line is the radiative flux with the adiabatic radiative flux removed. All
@@ -314,7 +314,7 @@ Furthermore, the presence
 of fixed-temperature boundary conditions allows the flux at the boundaries to vary.  Many runs at $Ra > 10^5$ and
 $\epsilon = 10^{-4}$ exhibit time-dependent states of stratified convection (such as those shown in 
 Fig. \ref{fig:entropy_snapshots}b\&c), in which the flux entering the system at the bottom of the atmosphere exceeds
-that at the top.  These states are punctuated by states of vigorous shearing, similar to those previouslyl
+that at the top.  These states are punctuated by states of vigorous shearing, similar to those previously
 reported in two-dimensional RB convection \cite{goluskin&all2014}.  These shearing states flatten the bottom temperature
 gradient towards adiabatic, allowing the excess energy to exit through the upper boundary.  These shearing
 states will be covered in more detail in a future paper.  Regardless, a proper long-term average over shearing
@@ -363,7 +363,7 @@ The dynamics of these polytropic solutions are complex and highly time-dependent
 Time-dependent oscillating shear states have developed spontaneously, as seen before in RB convection
 \cite{goluskin&all2014}.  While computationally difficult, the highest values of Ra and the lowest value
 of $\epsilon$ studied here are far below the values found in nature.  If the scalings of Nu and Ma
-presented here hold, then under solar conditions ($\text{Ra }\approx 10^{20}$, $\text{Ma }\approx 10^{-4}$), we expect that $\epsilon \approx 10^{20}$ and
+presented here hold, then under solar conditions ($\text{Ra }\approx 10^{20}$, $\text{Ma }\approx 10^{-4}$), we expect that $\epsilon \approx 10^{-20}$ and
 $\text{Nu }\approx 10^{6}$. 
 
 Future work will aim to better understand the mechanisms of shearing states and
