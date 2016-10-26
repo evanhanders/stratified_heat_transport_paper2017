@@ -37,13 +37,18 @@
 \begin{abstract}
 Here we study stratified convection in the context of 
 plane-parallel, polytropically stratified atmospheres. 
-We hold the density stratification (\nrho) and Prandtl number (Pr) constant while varying the
-Mach number (Ma) and the Rayleigh number (Ra) to determine the behavior of the Nusselt number (Nu), 
+We hold the density stratification (\nrho) and Prandtl 
+number (Pr) constant while varying the
+Mach number (Ma) and the Rayleigh number (Ra) to determine 
+the behavior of the Nusselt number (Nu), 
 which quantifies the efficiency of convective heat transport.
-As Ra increases and $\text{Ma} \rightarrow 1$, a scaling of Nu $\propto$ Ra$^{0.45}$ is observed.  
+As Ra increases and $\text{Ma} \rightarrow 1$, a scaling 
+of Nu $\propto$ Ra$^{0.45}$ is observed.  
 As Ra increases to a regime where Ma $\geq 1$,
-this scaling gives way to a weaker Nu $\propto$ Ra$^{0.19}$.  In the regime of Ma $\ll 1$, a consistent
-Nu $\propto$ Ra$^{0.31}$ is retrieved,  reminiscent of the Nu $\propto$ Ra$^{2/7}$ seen in \RB convection.
+this scaling gives way to a weaker Nu $\propto$ Ra$^{0.19}$. 
+In the regime of Ma $\ll 1$, a consistent
+Nu $\propto$ Ra$^{0.31}$ is retrieved,  reminiscent of the 
+Nu $\propto$ Ra$^{2/7}$ seen in \RB convection.
 \end{abstract}
 \maketitle
 
@@ -52,39 +57,57 @@ Nu $\propto$ Ra$^{0.31}$ is retrieved,  reminiscent of the Nu $\propto$ Ra$^{2/7
 \section{Introduction}
 \refstepcounter{section}
 \label{sec:intro}
-Convection is essential to heat transport in the cores of high mass stars, the
-envelopes of low mass stars, and the atmospheres of terrestrial and jovian planets. In such systems, convection
-occurs in the presence of the atmospheric stratification which can be small but extends up to 
+Convection is essential to heat transport in the cores of high mass stars,
+the envelopes of low mass stars, and the atmospheres of terrestrial and 
+jovian planets.  The convective dynamics are influenced by the atmospheric 
+stratification, which is small in some systems but extends up to 
 14 density scale heights in the Sun's convective envelope.
-A basic understanding of the
-properties of compressible convection in stratified media is important to understanding systems in astrophysics
-and planetary sciences.  Numerical constraints have often restricted studies of stratified convection to
-moderately high Mach numbers, appropriate to regions near the Sun's surface.  As such, we know few
-fundamental properties of the low-Mach number stratified convection which occurs in the deep solar interior.
+Understanding the fundamental
+properties of compressible convection in stratified media is essential
+to characterizing systems in astrophysics and planetary sciences.  
+Numerical constraints have often restricted studies of compressible
+convection to moderately high Mach number (Ma), appropriate to regions near 
+the Sun's surface.  Few fundamental properties of the 
+low-Ma stratified convection which occurs in the deep solar interior are known.
 
 Early numerical experiments on stratified convection
 in two \cite{graham1975, chan&all1982,
-hurlburt&all1984, cattaneo&all1990} and three \cite{cattaneo&all1991, brummell&all1996} dimensions
-revealed a number of basic properties in the moderate-to-high Mach number regime.
-In the widely-studied \RB (hereafter RB) problem, upflows and downflows are symmetrical and
-the temperature gradient approaches zero in the convective interior causing the conductive flux to similarly 
-disappear.  Highly stratified convection exhibits narrow downflow lanes and broad upflow regions.
-Furthermore, the \emph{entropy} gradient is negated by convection rather than the temperature gradient, such
-that in the presence of perfectly efficient convection a significant component of the flux is still
-carried by conduction.
+hurlburt&all1984, cattaneo&all1990} and three 
+\cite{cattaneo&all1991, brummell&all1996} dimensions
+revealed a number of basic properties in the moderate-to-high 
+Ma regime. In the widely-studied \RB (hereafter RB) problem, 
+upflows and downflows are symmetrical and
+the temperature gradient approaches zero in the convective interior 
+causing the conductive flux to similarly 
+disappear.  Highly stratified convection exhibits narrow downflow 
+lanes and broad upflow regions.
+Furthermore, the \emph{entropy} gradient is negated by convection 
+rather than the temperature gradient, such
+that in the presence of perfectly efficient convection a significant 
+component of the flux is still carried by conduction.
 
-In RB convection, there exist two primary control parameters: the Rayleigh number (Ra), the ratio of
-buoyant driving to diffusive damping, and the Prandtl number (Pr), the ratio of viscous to thermal
-diffusivity.  These numbers couple with the aspect ratio of the physical domain and the boundary conditions
-to entirely control the
-dynamics of the convection.  In stratified atmospheres, in addition to specifying the equation of state and
-fundamental properties of the gas, the two control parameters of RB convection are joined by the degree of
-stratification across the domain and the characteristic Mach number (Ma) of the convective flows.  
-Polytropically stratified atmospheres, such as those used in early studies, are an ideal extension of
-RB convection into the stratified realm as the two additional control parameters are directly linked to
-basic properties of the atmosphere.  The density stratification is set by the number of density scale heights
-the atmosphere spans (\nrho), and Ma is controlled by the superadiabatic excess ($\epsilon$),
-the deviation of the polytropic index from the adiabatic polytropic index \cite{graham1975}.
+In RB convection, there exist two primary control parameters: 
+the Rayleigh number (Ra, the ratio of
+buoyant driving to diffusive damping) and the Prandtl number 
+(Pr, the ratio of viscous to thermal
+diffusivity).  These numbers coupled with the aspect ratio of 
+the physical domain and the boundary conditions
+determine the dynamics of the convection.  In stratified atmospheres, 
+in addition to specifying the equation of state and
+fundamental properties of the gas, the two control parameters of 
+RB convection are joined by the degree of
+stratification across the domain and the characteristic 
+Ma of the convective flows.  
+Polytropically stratified atmospheres, such as those used in 
+early studies, are an ideal extension of
+RB convection into the stratified realm as the two additional 
+control parameters are directly linked to
+basic properties of the atmosphere.  The density stratification is 
+set by the number of density scale heights
+the atmosphere spans (\nrho), and Ma is controlled 
+by the superadiabatic excess ($\epsilon$,
+the deviation of the polytropic index from the adiabatic polytropic 
+index \cite{graham1975}).
 
 In this letter we study the behavior of convective heat transport, quantified by
 the Nusselt number (Nu), in plane-parallel, two-dimensional, polytropically stratified atmospheres.  
@@ -99,33 +122,33 @@ in section \ref{sec:discussion}.
 \label{sec:experiment}
 In order to compare our results with previous studies and in an effort to examine a simplest case,
 we study a fluid composed of monatomic ideal gas particles with an adiabatic index of $\gamma = 5/3$ and
-whose equation of state is $P = R\rho T$. 
-The initial stratification is polytropic and the gravitational
-acceleration and conductive heat flux are invariant throughout the depth of the atmosphere. We specify that both 
-the thermal conductivity, $\kappa$, and the temperature gradient, $\grad T_0$, are constant while constructing
-our atmosphere such that $\bm{F}_{\text{cond,0}} = -\kappa \grad T_0 = \text{constant}$.
-Under these assumptions, solving the equation of hydrostatic equilibrium produces an atmosphere defined by
+whose equation of state is $P = R\rho T$. In constructing an initial atmosphere, we assume
+that the gravitational
+acceleration and conductive heat flux do not vary with depth. Both 
+the thermal conductivity, $\kappa$, and the temperature gradient, $\grad T_0$, are constant,
+such that $\bm{F}_{\text{cond,0}} = -\kappa \grad T_0 = \text{constant}$.
+Under these assumptions, satisfying hydrostatic equilibrium produces an atmosphere defined by
 \begin{equation}
 \begin{split}
-\rho_0(z) &= \rho_{00}(z_0 - z)^m \\
-T_0(z)    &= T_{00}(z_0 - z).
+\rho_0(z) &= \rho_{t}(z_0 - z)^m \\
+T_0(z)    &= T_{t}(z_0 - z).
 \label{eqn:polytrope}
 \end{split}
 \end{equation}
-Thermodynamic variables are nondimensionalized at the top of the atmosphere as 
-$P_0(L_z) = \rho_0(L_z) = T_0(L_z) = 1$, requiring $z_0 \equiv L_z + 1$ and $R = T_{00} = \rho_{00} = 1$.
-By this choice, the non-dimensional length scale is the inverse temperature gradient scale and
-the timescale is the isothermal sound crossing time of this unit length.
-$z$ increases upwards within the bounds $z =[0, L_{z}]$, where $L_{z} = e^{n_{\rho}/m} - 1$ is
-determined by the number of density scale heights the atmosphere spans, $n_\rho$.
-Throughout this letter, we set $n_{\rho} = 3$ such that the density varies by a factor of 20.
-The polytropic index is such that $m = m_{ad} - \epsilon$
+The polytropic index is $m = m_{ad} - \epsilon$
 where $m_{ad} \equiv (\gamma-1)^{-1}$ is the adiabatic polytropic index and $\epsilon$ is the
 superadiabatic excess.
-The subsequent entropy gradient at the top of the atmosphere is $\grad S(L_z) = -\epsilon$.  
+The subsequent entropy gradient at the top of the atmosphere is $\grad S(L_z) = -\epsilon$. 
+Thermodynamic variables are nondimensionalized at the top of the atmosphere as 
+$P_0(L_z) = \rho_0(L_z) = T_0(L_z) = 1$, requiring $z_0 \equiv L_z + 1$ and $R = T_{t} = \rho_{t} = 1$.
+By this choice, the non-dimensional length scale is the inverse temperature gradient scale and
+the timescale is the isothermal sound crossing time of this unit length.
+$z$ increases upwards within $[0, L_{z}]$, where $L_{z} = e^{n_{\rho}/m} - 1$ is
+determined by the number of density scale heights the atmosphere spans, $n_\rho$.
+Throughout this letter, we set $n_{\rho} = 3$ such that the density varies by a factor of 20.
 The characteristic timescale of convective dynamics
 is related to the atmospheric buoyancy time, $t_{\text{b}} = \sqrt{L_z/g\epsilon}$, with $g = (m+1)$.
-We will utilize buoyancy time units throughout this letter.
+We use buoyancy time units in this letter.
 
 Atmospheric diffusivities are specified by the Rayleigh number and the Prandtl number.  The
 non-dimensional Rayleigh number is
