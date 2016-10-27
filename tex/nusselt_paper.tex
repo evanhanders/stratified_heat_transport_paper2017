@@ -122,33 +122,33 @@ in section \ref{sec:discussion}.
 \label{sec:experiment}
 In order to compare our results with previous studies and in an effort to examine a simplest case,
 we study a fluid composed of monatomic ideal gas particles with an adiabatic index of $\gamma = 5/3$ and
-whose equation of state is $P = R\rho T$. In constructing an initial atmosphere, we assume
-that the gravitational
-acceleration and conductive heat flux do not vary with depth. Both 
-the thermal conductivity, $\kappa$, and the temperature gradient, $\grad T_0$, are constant,
-such that $\bm{F}_{\text{cond,0}} = -\kappa \grad T_0 = \text{constant}$.
-Under these assumptions, satisfying hydrostatic equilibrium produces an atmosphere defined by
+whose equation of state is $P = R\rho T$. 
+The initial atmosphere is a plane-parallel polytrope in which the gravitational acceleration
+and conductive flux, $\bm{F}_{\text{cond,0}} = -\kappa \grad T_0$, do not vary with depth. To
+achieve the latter condition, both $\kappa$ and $\grad T_0$ are constant.
+Under these assumptions, satisfying hydrostatic equilibrium produces a stratification of
 \begin{equation}
 \begin{split}
-\rho_0(z) &= \rho_{t}(z_0 - z)^m \\
-T_0(z)    &= T_{t}(z_0 - z).
+\rho_0(z) &= \rho_{t}(z_0 - z)^m, \\
+T_0(z)    &= T_{t}(z_0 - z),
 \label{eqn:polytrope}
 \end{split}
 \end{equation}
-The polytropic index is $m = m_{ad} - \epsilon$
-where $m_{ad} \equiv (\gamma-1)^{-1}$ is the adiabatic polytropic index and $\epsilon$ is the
-superadiabatic excess.
-The subsequent entropy gradient at the top of the atmosphere is $\grad S(L_z) = -\epsilon$. 
+where $m = m_{ad} - \epsilon$ is the polytropic index.
+The adiabatic polytropic index is $m_{ad} \equiv (\gamma-1)^{-1}$ and
+the superadiabatic excess is $\epsilon$ which sets the scale 
+of the entropy gradient, $\grad S_0 \propto -\epsilon$.
 Thermodynamic variables are nondimensionalized at the top of the atmosphere as 
 $P_0(L_z) = \rho_0(L_z) = T_0(L_z) = 1$, requiring $z_0 \equiv L_z + 1$ and $R = T_{t} = \rho_{t} = 1$.
 By this choice, the non-dimensional length scale is the inverse temperature gradient scale and
 the timescale is the isothermal sound crossing time of this unit length.
 $z$ increases upwards within $[0, L_{z}]$, where $L_{z} = e^{n_{\rho}/m} - 1$ is
-determined by the number of density scale heights the atmosphere spans, $n_\rho$.
-Throughout this letter, we set $n_{\rho} = 3$ such that the density varies by a factor of 20.
+determined by $n_\rho$, the number of density scale heights the atmosphere spans.
 The characteristic timescale of convective dynamics
 is related to the atmospheric buoyancy time, $t_{\text{b}} = \sqrt{L_z/g\epsilon}$, with $g = (m+1)$.
-We use buoyancy time units in this letter.
+Throughout this letter, buoyancy time units are used and 
+$n_{\rho} = 3$ such that the initial density varies by a factor of 20.
+All atmospheres studied here have an aspect ratio of 4, such that $L_x = 4L_z$.
 
 Atmospheric diffusivities are specified by the Rayleigh number and the Prandtl number.  The
 non-dimensional Rayleigh number is
@@ -159,13 +159,13 @@ where $\Delta S_0$ is the entropy difference between the top and bottom of the a
 $c_P = R\gamma(\gamma-1)^{-1}$ is the specific heat at constant pressure,
 $\nu$ is the kinematic viscosity (viscous diffusivity), and $\chi$ is the thermal diffusivity.  
 The relationship between the thermal and viscous diffusivities is
-set by the Prandtl number, Pr$ = \nu/\chi$.   We relate the dynamic viscosity, $\mu$, and the thermal conductivity,
+set by the Prandtl number, $\text{Pr} = \nu/\chi$.   We relate the dynamic viscosity, $\mu$, and the thermal conductivity,
 $\kappa$, to their corresponding diffusivities such that 
 $\nu \equiv \mu/\rho$ and $\chi \equiv \kappa/\rho$.  As a result, $\text{Ra} \propto (\nu\chi)^{-1} \propto
 \rho^2$.  The atmospheres studied here with $n_{\rho} = 3$ experience an increase in the Rayleigh number 
 by a factor of 400 across the domain.  This formulation leaves Pr
 constant throughout the depth of the atmosphere. In this letter we impose $\text{Pr} = 1$ and
-specify Ra at $z = L_z$.  We study atmospheres with an aspect ratio of 4.
+specify Ra at $z = L_z$.  
 
 At the constant values of $n_\rho$ and Pr used, the primary control parameters of convection are $\epsilon$
 and Ra.  We decompose our atmosphere into the background polytrope ($\ln\rho_{0}, T_{0}$) and the fluctuations
@@ -212,14 +212,16 @@ are evolved with a viscous stress tensor defined as
 \sigma_{ij} \equiv \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} - \frac{2}{3}\delta_{ij}\Div{\bm{u}}\right).
 	\label{eqn:stress_tensor}
 \end{equation}
-These equations carry a total convective flux of
-\begin{equation}
-\bm{F}_{\text{conv}} \equiv \bm{F}_{\text{enth}} + \bm{F}_{\text{KE}} + \bm{F}_{\text{PE}} + \bm{F}_{\text{visc}},
-\end{equation}
-where $\bm{F}_{\text{enth}} \equiv \rho\bm{u}(c_V T + P/\rho)$ is the enthalpy flux, $\bm{F}_{\text{KE}} \equiv 
-\rho|\bm{u}|^2\bm{u}/2$ is the kinetic energy flux, $\bm{F}_{\text{PE}} \equiv \rho\bm{u}\phi$ is the potential
-energy flux (with $\phi \equiv -gz$), 
-and $\bm{F}_{\text{visc}} \equiv -\rho\nu\bm{u}\cdot\lilstressT$ is the viscous flux. 
+These equations carry a total convective flux of the form
+%\begin{equation}
+$
+\bm{F}_{\text{conv}} \equiv \bm{F}_{\text{enth}} + \bm{F}_{\text{KE}} + \bm{F}_{\text{PE}} + \bm{F}_{\text{visc}}.
+$
+%\end{equation}
+Contributions from the enthalpy flux, $\bm{F}_{\text{enth}} \equiv \rho\bm{u}(c_V T + P/\rho)$;
+the kinetic energy flux, $\bm{F}_{\text{KE}} \equiv \rho|\bm{u}|^2\bm{u}/2$;
+the potential energy flux, $\bm{F}_{\text{PE}} \equiv \rho\bm{u}\phi$ (with $\phi \equiv -gz$);
+and the viscous flux, $\bm{F}_{\text{visc}} \equiv -\rho\nu\bm{u}\cdot\lilstressT$, must all be considered. 
 %Taking an inner product of
 %Eq. \ref{eqn:momentum_eqn} with $\bm{u}$ and adding it to 
 %Eq. \ref{eqn:energy_eqn}, the full energy equation in conservation form is retrieved,
@@ -243,9 +245,9 @@ Variables are time-evolved on a dealiased Chebyshev (vertical)
 and Fourier (horizontal) domain in which the
 physical grid dimensions are 3/2 the size of the coefficient grid.  Physical grid sizes range from
 96x384 grid points at the lowest values of Ra to 1152x4608 grid points at Ra $\geq 10^{7}$. 
-By using IMEX timestepping, we implicitly step the stiff linear acoustic wave contribution and we are able to
-efficiently study flows at moderate ($\text{Ma } \approx 1$) and very low ($\text{Ma } \approx 10^{-4}$)
-Mach number (Fig. \ref{fig:ma_v_eps}b).  Our equations take the form
+By using IMEX timestepping, we implicitly step the stiff linear acoustic wave contribution and are able to
+efficiently study flows at moderate ($\approx 1$) and very low ($\approx 10^{-4}$)
+Ma (Fig. \ref{fig:ma_v_eps}b).  Our equations take the form
 of the FC equations in \cite{lecoanet&all2014}, extended to include variable
 $\nu$ and $\chi$, and we follow the approach there; this IMEX approach has been successfully 
 tested against a nonlinear benchmark  of the compressible Kelvin-Helmholtz instability \cite{Lecoanet_et_al_2016_KH}.
