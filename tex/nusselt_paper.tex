@@ -178,15 +178,16 @@ as in Fig. \ref{fig:ma_v_eps}.
 \includegraphics[width=3.4375in]{./figs/ma_v_eps.png}
 \caption{The maximum value of Ma which has been horizontally averaged and time averaged for $\geq 100 t_b$, 
 beginning roughly $50t_b$ after
-the start of simulations.  (a) For $\epsilon \leq 0.1$,
+the start of simulations.  This time average is long enough that the profile is well converged
+and error bars are negligible. (a) For $\epsilon \leq 0.1$,
 a scaling of $\text{Ma }\propto \{\epsilon^{0.50}, \epsilon^{0.51}\}$ 
 at $\text{Ra }= \{10^2, 10^5\}$ exists.
 When $\epsilon \rightarrow m_{ad}$, large deviations from this power law are seen.  
 (b) At high $\epsilon$, Ma scales as Ra$^{0.28}$ until it reaches the supersonic regime, at which point it
 follows a power law of Ra$^{-0.10}$.  At low $\epsilon$, consistent power laws are achieved throughout all
 values of Ra studied, where $\text{Ma }\propto \{\text{Ra}^{0.26},\,\text{Ra}^{0.22}\}$
-for $\epsilon = \{10^{-4}, 10^{-7}\}$. \textbf{All
-error bars are negligible.}  \label{fig:ma_v_eps} }
+for $\epsilon = \{10^{-4}, 10^{-7}\}$. 
+\label{fig:ma_v_eps} }
 \end{figure}
 
 The Fully Compressible Navier-Stokes equations,
@@ -212,24 +213,24 @@ are evolved with a viscous stress tensor defined as
 \sigma_{ij} \equiv \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} - \frac{2}{3}\delta_{ij}\Div{\bm{u}}\right).
 	\label{eqn:stress_tensor}
 \end{equation}
-These equations carry a total convective flux of the form
-%\begin{equation}
+
+
+Taking an inner product of
+Eq. \ref{eqn:momentum_eqn} with $\bm{u}$ and adding it to 
+Eq. \ref{eqn:energy_eqn} reveals the full energy equation,
+\begin{equation}
+\frac{\partial}{\partial t}\left(\rho\left[\frac{|\bm{u}|^2}{2} + c_V T + \phi\right]\right) +
+\Div{\bm{F}_{\text{conv}} + \bm{F}_{\text{cond}}} = 0.
+	\label{eqn:energy_eqn_full}
+\end{equation}
+The convective flux is
 $
 \bm{F}_{\text{conv}} \equiv \bm{F}_{\text{enth}} + \bm{F}_{\text{KE}} + \bm{F}_{\text{PE}} + \bm{F}_{\text{visc}}.
 $
-%\end{equation}
 Contributions from the enthalpy flux, $\bm{F}_{\text{enth}} \equiv \rho\bm{u}(c_V T + P/\rho)$;
 the kinetic energy flux, $\bm{F}_{\text{KE}} \equiv \rho|\bm{u}|^2\bm{u}/2$;
 the potential energy flux, $\bm{F}_{\text{PE}} \equiv \rho\bm{u}\phi$ (with $\phi \equiv -gz$);
 and the viscous flux, $\bm{F}_{\text{visc}} \equiv -\rho\nu\bm{u}\cdot\lilstressT$, must all be considered. 
-%Taking an inner product of
-%Eq. \ref{eqn:momentum_eqn} with $\bm{u}$ and adding it to 
-%Eq. \ref{eqn:energy_eqn}, the full energy equation in conservation form is retrieved,
-%\begin{equation}
-%\frac{\partial}{\partial t}\left(\rho\left[\frac{|\bm{u}|^2}{2} + c_V T + \phi\right]\right) +
-%\Div{\bm{F}_{\text{conv}} + \bm{F}_{\text{cond}}} = 0,
-%	\label{eqn:energy_eqn_full}
-%\end{equation}
 %where $\bm{F}_{\text{cond}} = -\kappa \grad T$.  
 Understanding these flux terms and how they interact with the conductive flux, 
 $\bm{F}_{\text{cond}} = -\kappa \grad T$, is crucial in characterizing
@@ -258,36 +259,37 @@ tested against a nonlinear benchmark  of the compressible Kelvin-Helmholtz insta
 
 The efficiency of convection is quantified by the Nusselt number.  
 Nu is well-defined in RB convection
-as total flux normalized by the steady-state background conductive flux 
+as the total flux normalized by the steady-stateconductive flux 
 \cite{johnston&doering2009, otero&all2002}.
-In stratified convection Nu is more difficulut to define, but one of the earliest definitions used
+In stratified convection Nu is more difficult to define, but one of the earliest definitions used
 was \cite{graham1975,hurlburt&all1984}
 \begin{equation}
 \text{Nu} \equiv \frac{F_{\text{conv, z}} + F_{\text{cond, z}} - F_{\text{A}}}{F_{\text{ref}} - F_{\text{A}}},
 \label{eqn:nusselt}
 \end{equation}
 where $F_{\text{conv, z}}$ and $F_{\text{cond, z}}$ are the z-components of $\bm{F}_{\text{conv}}$ and $\bm{F}_{\text{cond}}$,
-respectively.  $F_{\text{A}} \equiv -\kappa \partial_z T_{\text{ad}}$ is the adiabatic conductive flux, and
+respectively.  $F_{\text{A}} \equiv -\kappa \partial_z T_{\text{ad}}$ is the adiabatic conductive flux and
 $\partial_z T_{\text{ad}} \equiv - g / c_{P}$ for an ideal gas in hydrostatic equilibrium.
-$F_{\text{ref}} \equiv \Delta T / L_z$, where $\Delta T \equiv T(L_z) - T(0)$ is the 
+$F_{\text{ref}} \equiv \Delta T / L_z$, where $\Delta T \equiv T(L_z) - T(0)$, is the 
 conductive flux of a linear profile connecting the upper
 and lower plates, which is constant for the choice of fixed-temperature boundaries.
 
 We contend that this is the general form of the Nusselt number and illustrate this with a few limiting
-cases. Convection works to
-suppress entropy stratification and create isentropic atmospheres.  Under the Boussinesq approximation,
-in which density variations are ignored, entropy stratification is directly proportional to temperature stratification,
-such that $\grad S \rightarrow 0$ when $\grad T \rightarrow 0$.  Thus, for RB convection, the familiar Nu is
-retrieved from Eq. \ref{eqn:nusselt} because $\grad T_{\text{ad}} = 0$.  
-In the case of polytropic convection,
-as $\epsilon \rightarrow m_{ad} + 1$, $g \rightarrow 0$, so
-$\grad T_{\text{ad}} \rightarrow 0$.  In such a case, $F_{\text{A}} \rightarrow 0$ and the
+cases. Convection eliminates
+entropy stratification.  Under the Boussinesq approximation,
+in which density variations are ignored, entropy stratification is directly proportional to temperature stratification
+such that $\grad S \rightarrow 0$ when $\grad T \rightarrow 0$.  The familiar Nu in the RB problem is
+therefore retrieved from Eq. \ref{eqn:nusselt} because $\grad T_{\text{ad}} = 0$.  
+In the case of polytropic convection,  $g \rightarrow 0$
+as $\epsilon \rightarrow m_{ad} + 1$.
+In this limit, $F_{\text{A}} \rightarrow 0$ and the
 definition of the RB Nu is appropriate to use, as convection carries all of the
-flux \cite{brandenburg&all2005}. As $\epsilon \rightarrow 0$, 
-$\grad T_{\text{ad}}\rightarrow \grad T_0$, and increasingly
+flux \cite{brandenburg&all2005}. 
+However, as $\epsilon \rightarrow 0$, 
+$\grad T_{\text{ad}}\rightarrow \grad T_0$ and increasingly
 smaller velocity and thermodynamic perturbations are needed to achieve $\grad S = 0$ (Fig. \ref{fig:ma_v_eps}a).
-Here, the removal of $F_{\text{A}}$ in the numerator and denominator of Eq. \ref{eqn:nusselt} makes them both
-O($\epsilon$), so the overall Nu is sensible.
+These perturbations carry what little flux exists in excess of the adiabatic, so the removal of 
+$F_{\text{A}}$ in the numerator and denominator of Eq. \ref{eqn:nusselt} is essential for a reasonable Nu measurement.
 
 \begin{figure}[b]
 \includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
@@ -300,74 +302,82 @@ the entirety of the domain and individual small blobs are responsible for carryi
 \label{fig:entropy_snapshots} }
 \end{figure}
 
-\textbf{Initial value problems were solved in which $T_1$ experienced an infinitesimal kick compared to $\epsilon$
-away from hydrostatic and thermal equilibrium}.
+Initial value problems were solved in which $T_1$ 
+was filled with infinitesimal, random noise compared to $T_0$ and $\epsilon$.
 Solutions were time-evolved until a long average of Nu showed little
-dependence on depth. \textbf{A linear stability analysis determined that} the onset of convection
-occurs at $\text{Ra}_c = \{10.06, 10.97, 10.97\}$ for $\epsilon = \{0.5, 10^{-4}, 10^{-7}\}$, respectively.  Rayleigh
+variance with depth. By performing a linear stability analysis, we determined that the onset of convection
+occurs at $\text{Ra}_c = \{10.06, 10.97, 10.97\}$ for $\epsilon = \{0.5, 10^{-4}, 10^{-7}\}$, respectively.  
+We studied Rayleigh
 numbers from values at onset up to nearly $10^6$Ra$_c$ for $\epsilon = 0.5$, $10^5$Ra$_c$ for $\epsilon = 10^{-4}$,
-and $10^3$Ra$_c$ for $\epsilon = 10^{-7}$ were studied.  
+and $10^3$Ra$_c$ for $\epsilon = 10^{-7}$.
 
-At large $\epsilon$ (0.5), shock systems form in the upper atmosphere near downflow lanes 
+At large Ma ($\epsilon = 0.5$), shock systems form in the upper atmosphere near downflow lanes 
 (Fig. \ref{fig:entropy_snapshots}a) and propagate toward upflow lanes.  
 Such systems were reported in
 both two \cite{cattaneo&all1990} and three \cite{malagoli&all1990} dimensional polytropic simulations previously.
-These shocks heat material entering the downflows, reducing both the
-buoyant driving and the efficiency of convective transport.
+These shocks heat material entering the downflows, affecting the dynamics and heat transport
+of these systems.
 
-Low Mach number flows, such as those in an $\epsilon = 10^{-4}$ atmosphere (Fig. \ref{fig:entropy_snapshots}b)
-have similar bulk thermodynamic structure but lack the complicating dynamics of shock heating. 
-Low Ma flows are in pressure equilibrium with their suroundings, so
-pressure forces are unlikely to be the sole cause of symmetry breaking in up- and downflows, as has been suggested
-\cite{hurlburt&all1984};  it is more likely that these flows are responding to 
-the effects of density stratification.
+Low Ma flows ($\epsilon = 10^{-4}$)
+have similar bulk thermodynamic structures (Fig. \ref{fig:entropy_snapshots}b).
 As Ra is increased to large values (Fig. \ref{fig:entropy_snapshots}c), thermodynamic structures 
 no longer span the whole domain but rather break up into small packets which traverse the domain multiple
 times before diffusing.  
-The complicated nature of high Ra dynamics, especially in the low Ma regime,
-has prevented the convergence of solutions in the regime of 
-$\text{Ra }> 10^5\text{Ra}_c$ at low $\epsilon$.
+While it has been suggested that pressure forces cause symmetry breaking in up- and downflows,
+\cite{hurlburt&all1984}, this effect seems to be secondary to flows obeying mass conservation as they traverse
+the stratified medium.  We observe low Ma cases where the double-roll systems such as those in
+Fig. \ref{fig:entropy_snapshots}b contain one roll of increased pressure and one roll of decreased pressure
+where the up- and downflows bound these regions of pressure disequilibrium.
+
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/fluxes_fig.png}
-\caption{Time-averaged flux profiles for high (top) and low (bottom) Ma flows at $\text{Ra }= 10^6$.  
+\caption{Time-averaged flux profiles for high (a) and low (b) Ma flows at $\text{Ra }= 10^6$.  
 The dashed lines correspond to the
 enthalpy flux (orange, positive) and kinetic energy flux (purple, negative).  The grey dash-dot line is the
 viscous flux, the blue dash-dot-dot line is the potential energy flux, 
-and the green dotted line is the radiative flux with the adiabatic radiative flux removed. All
+and the green dotted line is the radiative flux with the adiabatic radiative flux removed. Viscous and
+potential energy fluxes are negligible in (a) and are not shown.  All
 fluxes are normalized by $F_{\text{ref}} - F_{\text{A}}$, as in Eq. \ref{eqn:nusselt}.  The solid black line is
 Nu, the properly normalized sum of all the fluxes \label{fig:flux_profiles} }
 \end{figure}
 
-At large Ra, the heat transport properties of the systems become increasingly complex and time-dependent.
-Large $\epsilon$ flows exhibit two local maxima in the enthalpy flux and kinetic energy flux: one in the upper 
-atmosphere caused by the shocks, and one in the lower atmosphere caused by the deep mixing of convective motions
-(Fig. \ref{fig:flux_profiles}a).
-At low $\epsilon$, only the deep maximum is present (Fig. \ref{fig:flux_profiles}b).  
+%At large Ra, the heat transport properties of the systems become increasingly complex and time-dependent.
+at large values of Ra in which shocks form, high Ma flows exhibit two 
+local maxima in the enthalpy flux and kinetic energy flux (Fig. \ref{fig:flux_profiles}a).
+Shock-heated fluid parcels sometimes spin-up as they are pushed into the lower atmosphere, creating deep,
+rapidly-rotating regions
+of mixing which persist for many overturn times.  These ``spinners'' sit inside of larger rolls created by their
+neighboring up- and downflows and greatly influence the dynamics.
+At low Ma, only the deep maximum is present (Fig. \ref{fig:flux_profiles}b).  
 Fixed-temperature boundary conditions allow the flux at the boundaries to vary, so many runs at $\text{Ra }> 10^5$
 and $\epsilon = 10^{-4}$ exhibit states in which the flux entering the system at the bottom of the atmosphere 
 exceeds that which leaves at the top.  
 These states are punctuated by states of vigorous shearing, similar to those previously
-reported in two-dimensional RB convection \cite{goluskin&all2014}.  These shearing states push the bottom temperature
+reported in two-dimensional RB convection \cite{goluskin&all2014}.  
+These shearing states push the bottom temperature
 gradient towards adiabatic, allowing the excess energy to exit through the upper boundary.  These shearing
 states will be covered in more detail in a future paper.  Regardless, a proper long-term average over shearing
 and non-shearing states retrieves an invariant flux (and Nu) profile throughout the depth
 of the atmosphere. 
 
-\textbf{After appropriately time-averaging the fluxes,} a sensible Nu is retrieved.  Nusselt numbers for
+After appropriately time-averaging the fluxes for $\geq 200 t_b$, a sensible Nu is retrieved.  
+Nusselt numbers for
 all simulations at low and high Ma are plotted in Fig. \ref{fig:nu_v_ra}.  At $\epsilon = \{10^{-4}, 10^{-7}\}$,
 scaling laws of $Nu \propto Nu^{\{0.31, 0.31\}}$ are retrieved.  At $\epsilon = 0.5$, in the near-sonic
 regime ($Ra \leq 10^4$), the scaling of $Nu$ with $Ra$ is inflated, with $Nu \propto Ra^{0.45}$.  As simulations
 pass into the supersonic regime and shocks start to form near the downflows,
-that scaling drops to $Nu \propto Ra^{0.19}$.  Error on all power law scalings is negligible.
+that scaling drops to $Nu \propto Ra^{0.19}$.  
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/nu_v_ra.png}
 \caption{Variation of Nu as Ra increases at low and high Ma. 
-At high $\epsilon$, a clear transition from the subsonic to supersonic regime is evident in the scaling
-of Nu with Ra.  In the low $\epsilon$ regime, Nu scalings collapse onto a similar line which is
-\textbf{reminiscent} of RB scalings \cite{johnston&doering2009}.  Error bars represent the square root of
-the variance of Nu with depth. \textbf{Identify power law fits on plot, add 2/7 law?}
+At high $\epsilon$ (purple circles), 
+a clear transition from the subsonic to supersonic regime is evident in the scaling
+of Nu with Ra.  In the low $\epsilon$ regime (green diamonds and yellow squares), 
+Nu scalings collapse onto a similar line which is
+\textbf{consistent with RB scalings?} \cite{johnston&doering2009}.  Error bars are determined
+ by the square root of the variance of Nu with depth and indicate whether or not a solution is well-converged.
 \label{fig:nu_v_ra} }
 \end{figure}
 
@@ -409,8 +419,10 @@ using more realistic profiles of $\kappa$.
 
 
 \subsection{acknowledgements}
-This work was supported by the CU/NSO George Ellery Hale Graduate Fellowship
-and supported by NASA LWS grant number NNX16AC92G.  Computations were conducted 
+EHA acknowledges the support of the University of Colorado’s George 
+Ellery Hale Graduate Student Fellowship.
+This work was supported by  NASA LWS grant number NNX16AC92G.  
+Computations were conducted 
 with support by the NASA High End Computing (HEC) Program through the NASA 
 Advanced Supercomputing (NAS) Division at Ames Research Center
 with allocations (GID s1647, PI Brown; GID g26133, PI Toomre).
