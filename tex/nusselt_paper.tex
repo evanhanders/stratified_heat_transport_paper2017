@@ -63,7 +63,7 @@ Nu $\propto$ Ra$^{2/7}$ seen in \RB convection.
 Convection is essential to heat transport in the cores of high mass stars,
 the envelopes of low mass stars, and the atmospheres of terrestrial and 
 jovian planets.  The convective dynamics in these astrophysical objects
-are influenced by the atmospheric 
+are influenced by atmospheric 
 stratification, which is small in some systems (e.g. massive star cores)
 but spans about
 14 density scale heights in the Sun's convective envelope.
@@ -72,8 +72,8 @@ properties of compressible convection in stratified media is essential
 to characterizing systems in astrophysics and planetary sciences.  
 Numerical constraints have often restricted studies of compressible
 convection to moderately high Mach number (Ma), appropriate to regions near 
-the Sun's surface.  Few fundamental properties of the 
-low-Ma stratified convection, which occurs in the deep solar interior, are known.
+the Sun's surface.  Few fundamental properties of
+low Ma convection, which occurs in the deep solar interior, are known.
 
 Early numerical experiments on stratified convection
 in two \cite{graham1975, chan&all1982,
@@ -88,9 +88,9 @@ disappear.  These two hallmark characteristics of RB convection change
 significantly when stratification is included.  Stratified convection 
 exhibits narrow downflow lanes and broad upflow regions.
 Furthermore, the \emph{entropy} gradient is negated by convection 
-rather than the temperature gradient, such
-that in the presence of perfectly efficient convection a significant 
-component of the flux is still carried by conduction.
+rather than the temperature gradient, and
+a significant conductive flux can exist in the presence of
+efficient convection.
 
 In RB convection, there exist two primary control parameters: 
 the Rayleigh number (Ra, the ratio of
@@ -106,7 +106,7 @@ stratification across the domain and the characteristic
 Ma of the convective flows.  
 Polytropically stratified atmospheres, such as those used in 
 early studies \cite{graham1975, chan&all1982, hurlburt&all1984, 
-cattaneo&all1990, cattaneo&all1991, brummell&all1996} are an ideal extension of
+cattaneo&all1990, cattaneo&all1991, brummell&all1996}, are an ideal extension of
 RB convection into the stratified realm as the two additional 
 control parameters are directly linked to
 basic properties of the atmosphere.  The density stratification is 
@@ -128,7 +128,7 @@ in section \ref{sec:discussion}.
 \section{Experiment} 
 \refstepcounter{section}
 \label{sec:experiment}
-We exmine the simplist stratified extension of RB by studying a
+We exmine the simplest stratified extension of RB by studying a
 fluid composed of monatomic ideal gas particles with an adiabatic 
 index of $\gamma = 5/3$ and whose equation of state is $P = R\rho T$. 
 This is consistent with the approach used in earlier work.
@@ -169,14 +169,13 @@ initial density varies by a factor of 20.
 All atmospheres studied here have an aspect ratio of 4, 
 such that $L_x = 4L_z$.
 
-Atmospheric diffusivities are specified by the Rayleigh number
-and the Prandtl number.  The
-non-dimensional Rayleigh number is
+The atmospheric diffusivities are primarily controlled by
+the non-dimensional Rayleigh number,
 \begin{equation}
 \text{Ra} = \frac{g L_z^3 (\Delta S_0 / c_P)}{\nu\chi},
 \end{equation}
 where $\Delta S_0 = \epsilon\ln z_0$ is the entropy difference 
-between the top and bottom of the atmosphere, 
+between the top and bottom boundaries, 
 $c_P = R\gamma(\gamma-1)^{-1}$ is the specific heat 
 at constant pressure, $\nu$ is the kinematic viscosity 
 (the viscous diffusivity), and $\chi$ is the thermal diffusivity.  
@@ -188,13 +187,13 @@ $\nu \equiv \mu/\rho$ and $\chi \equiv \kappa/\rho$.  We take
 $\mu$ and $\kappa$ to be constant with height.
 As a result, $\text{Ra} \propto (\nu\chi)^{-1} \propto
 \rho^2$.  The atmospheres studied here with $n_{\rho} = 3$ 
-experience an increase in the Rayleigh number 
+experience an increase in Ra 
 by a factor of 400 across the domain.  This formulation leaves Pr
 constant throughout the depth of the atmosphere. 
 In this letter we impose $\text{Pr} = 1$ and specify Ra at 
 the top of the domain ($z = L_z$). 
 
-At the constant values of $n_\rho$ and Pr used, 
+While holding $n_\rho$ and Pr constant, 
 the primary control parameters of convection are $\epsilon$
 and Ra.  We decompose our atmosphere into the background 
 polytrope ($\ln\rho_{0}, T_{0}$) and the fluctuations
@@ -266,11 +265,12 @@ Taking an inner product of
 \Div{\bm{F}_{\text{conv}} + \bm{F}_{\text{cond}}} = 0,
 	\label{eqn:energy_eqn_full}
 \end{equation}
-where the convective flux is
+where
 $
 \bm{F}_{\text{conv}} \equiv \bm{F}_{\text{enth}} + \bm{F}_{\text{KE}} + \bm{F}_{\text{PE}} + \bm{F}_{\text{visc}}
 $
-and the condcutve flux is $\bm{F}_{\text{cond}} = -\kappa \grad T$.
+is the convective flux and $\bm{F}_{\text{cond}} = -\kappa \grad T$
+is the conductive flux.
 The individual contributions to $\bm{F}_{\text{conv}}$ are the enthalpy flux, 
 $\bm{F}_{\text{enth}} \equiv \rho\bm{u}(c_V T + P/\rho)$;
 the kinetic energy flux, 
@@ -280,7 +280,7 @@ $\bm{F}_{\text{PE}} \equiv \rho\bm{u}\phi$ (with $\phi \equiv -gz$);
 and the viscous flux, 
 $\bm{F}_{\text{visc}} \equiv -\rho\nu\bm{u}\cdot\lilstressT$, and all four
 must all be considered. 
-Understanding how these flux interact  
+Understanding how these fluxes interact  
 is crucial in characterizing convective heat transport.
 
 The atmosphere is contained between two 
@@ -315,7 +315,7 @@ Kelvin-Helmholtz instability \cite{Lecoanet_et_al_2016_KH}.
 
 The efficiency of convection is quantified by the Nusselt number.  
 Nu is well-defined in RB convection
-as the total flux normalized by the steady-stateconductive flux 
+as the total flux normalized by the steady-state conductive flux 
 \cite{johnston&doering2009, otero&all2002}.
 In stratified convection Nu is more difficult to define, but one of the earliest definitions used
 was \cite{graham1975,hurlburt&all1984}
@@ -341,18 +341,17 @@ cases. Convection eliminates
 entropy stratification.  Under the Boussinesq approximation,
 in which density variations are ignored, entropy stratification 
 is directly proportional to temperature stratification
-such that $\grad S \rightarrow 0$ when $\grad T \rightarrow 0$.  
+and $\partial_z S \rightarrow 0$ when $\partial_z T \rightarrow 0$.  
 The familiar Nu in the RB problem is
-therefore retrieved from (\ref{eqn:nusselt}) because $\grad T_{\text{ad}} = 0$.  
+therefore retrieved from (\ref{eqn:nusselt}) because $\partial_z T_{\text{ad}} = 0$.  
 In the case of polytropic convection,  $g \rightarrow 0$
 as $\epsilon \rightarrow m_{\text{ad}} + 1$.
-In this limit, $\grad T_{\text{ad}} \rightarrow 0$ as well and the
-definition of the RB Nu is appropriate to use, as convection carries all of the
-flux \cite{brandenburg&all2005}. 
+In this limit, $\partial_z T_{\text{ad}} \rightarrow 0$ and the
+definition of the RB Nu is appropriate to use \cite{brandenburg&all2005}. 
 However, as $\epsilon \rightarrow 0$, 
-$\grad T_{\text{ad}}\rightarrow \grad T_0$ and increasingly
-smaller velocity and thermodynamic perturbations are needed to 
-achieve $\grad S = 0$ (Fig. \ref{fig:ma_v_eps}a).
+$\partial_z T_{0}\rightarrow \partial_z T_{\text{ad}}$ and increasingly
+smaller velocity and thermodynamic perturbations 
+achieve $\partial_z S = 0$ (Fig. \ref{fig:ma_v_eps}a).
 These perturbations carry what little flux exists in 
 excess of the adiabatic, so the removal of 
 $F_{\text{A}}$ in the numerator and denominator of 
@@ -380,12 +379,12 @@ variance with depth. By performing a linear stability analysis,
 we determined that the onset of convection
 occurs at $\text{Ra}_c = \{10.06, 10.97, 10.97\}$ for $\epsilon = \{0.5, 10^{-4}, 10^{-7}\}$ respectively.  
 We studied Rayleigh
-numbers from values at onset up to nearly $10^6$Ra$_c$ for $\epsilon = 0.5$ and for $\epsilon = 10^{-4}$
+numbers from values at onset up to nearly $10^6$Ra$_c$ for $\epsilon = \{0.5, 10^{-4}\}$ 
 and up to $10^3$Ra$_c$ for $\epsilon = 10^{-7}$.
 
 At large Ma ($\epsilon = 0.5$), shock systems form in the upper atmosphere near downflow lanes 
 (Fig. \ref{fig:entropy_snapshots}a) once Ra is sufficiently large.
-These shocks propagate through upflow upflow regions.  
+These shocks propagate through upflow regions.  
 Such systems were reported in
 both two \cite{cattaneo&all1990} and three \cite{malagoli&all1990} dimensional polytropic simulations previously.
 These shocks heat material entering the downflows, affecting the dynamics and heat transport
@@ -415,33 +414,35 @@ The dashed lines correspond to the
 enthalpy flux (orange, positive) and kinetic energy flux (purple, negative).  
 The grey dash-dot line is the
 viscous flux and the green dotted line is the conductive flux with the 
-adiabatic contribution removed. Viscous and
-potential energy fluxes are negligible in (a) and are not shown.    
-The solid black line is
+adiabatic contribution removed. The potential energy flux is negligible and is not shown.
+In (a), the viscous flux is negligible and is not shown.  The solid black line is
 Nu, the properly normalized sum of all the fluxes \label{fig:flux_profiles} }
 \end{figure}
 
-High Ma flows at large values of Ra, in which shocks form, exhibit two 
-local maxima in the enthalpy flux and kinetic energy flux (Fig. \ref{fig:flux_profiles}a).
-Shock-heated fluid parcels sometimes gain vorticity
+High Ma flows exhibit two 
+local maxima in the enthalpy flux and kinetic energy flux (Fig. \ref{fig:flux_profiles}a)
+at large enough values of Ra for shocks to form.
+Shock-heated fluid parcels sometimes gain vorticity as
 they sink into the lower atmosphere.
 This creates deep, rapidly-rotating regions
 of mixing which persist for many overturn times. These ``spinners'' appear to
 influence the dynamics, but their contributions are unclear.
-At low Ma, only the deep maximum is present (Fig. \ref{fig:flux_profiles}b).  
-Fixed-temperature boundary conditions allow the flux at the 
+
+At low Ma, only the deep maximum in enthalpy and kinetic energy fluxes
+is present (Fig. \ref{fig:flux_profiles}b).  
+Our choice of fixed-temperature boundary conditions allows the flux at the 
 boundaries to vary, so many runs at $\text{Ra }> 10^5$
 and $\epsilon = 10^{-4}$ exhibit states in which the flux 
 entering the system at the bottom of the atmosphere 
 exceeds that which leaves at the top.  
 These systems are punctuated by states of vigorous shearing, similar to those previously
 reported in two-dimensional RB convection \cite{goluskin&all2014}.  
-In these shearing states, the bottom temperature
-gradient approaches adiabatic, 
-allowing the excess energy to exit through the upper boundary.  
-During shearing states, convective transport is suppressed and Nu diminishes.
+%In these shearing states, flux entering the lower atmosphere approaches $F_\text{A}$,
+%allowing excess energy to escape through the upper boundary.  
+During shearing states, convective transport is suppressed and Nu diminishes while
+excess energy exits the system through the upper boundary.
 A proper long-term average over shearing
-and non-shearing states retrieves an invariant flux (and Nu) profile throughout the depth
+and non-shearing states retrieves an invariant Nu profile throughout the depth
 of the atmosphere. 
 These shearing states will be covered in more detail in a future paper. 
 
@@ -451,12 +452,12 @@ all simulations at low and high Ma are plotted as a function of Ra in Fig. \ref{
 At $\epsilon = 0.5$, in the near-sonic
 regime ($\text{Ra} \leq 10^4$), the scaling of Nu with Ra is inflated,
 with $\text{Nu} \propto \text{Ra}^{0.45}$, similar to that expected in the
-ultimate regime of RB \cite{ahlers&all2009}.  As simulations
+ultimate regime of RB convection \cite{ahlers&all2009}.  As simulations
 pass into the supersonic regime and shocks start to form near the downflows,
 that scaling drops to $\text{Nu} \propto \text{Ra}^{0.19}$.  
 At $\epsilon = \{10^{-4}, 10^{-7}\}$,
 scaling laws of $\text{Nu} \propto \text{Ra}^{\{0.31, 0.31\}}$ are retrieved. 
-This scaling is indistringuishable from the $\text{Ra}^{2/7}$ found in RB
+This scaling is indistinguishable from the $\text{Ra}^{2/7}$ found in RB
 convection.
 
 
@@ -467,7 +468,7 @@ At high $\epsilon$ (purple circles),
 a clear transition from the subsonic to supersonic regime is evident in the scaling
 of Nu with Ra At $\text{Ra} \approx 10^4$.  In the low $\epsilon$ regime (green diamonds and yellow squares), 
 our observed Nu scalings collapse onto a similar line which is
-indistinguishable from an $\text{Ra}^{2/7}$ scaling, 
+indistinguishable from a $\text{Ra}^{2/7}$ scaling, 
 as observed in RB convection \cite{johnston&doering2009}.  Error bars are determined
  by the square root of the variance of the time-averaged Nu profile with depth and 
  indicate whether or not a solution is well-converged.
