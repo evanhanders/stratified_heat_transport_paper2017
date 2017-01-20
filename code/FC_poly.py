@@ -54,7 +54,7 @@ except:
 
 def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
                         nz=128, nx=None, ny=None, threeD=False, mesh=None,\
-			n_rho_cz=3.5, epsilon=1e-4, run_time=23.5, \
+			            n_rho_cz=3.5, epsilon=1e-4, run_time=23.5, \
                         fixed_T=False, fixed_Tz=False, const_mu=True, const_kappa=True,\
                         restart=None, start_new_files=False, \
                         rk222=False, safety_factor=0.2, run_time_buoyancies=None, \
@@ -179,7 +179,7 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
     else:
         solver.stop_sim_time    = 100*atmosphere.thermal_time
     
-    import numpy.inf as inf
+    from numpy import inf
     solver.stop_iteration   = inf
     solver.stop_wall_time   = run_time*3600
     report_cadence = 1
@@ -197,9 +197,6 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
                                 slices=[slices_count, slices_set], profiles=[profiles_count, profiles_set], scalar=[scalar_count, scalar_set],\
                                 coeffs=[coeffs_count, coeffs_set])
     
-    if start_dt != None:
-        dt = start_dt
-
     cfl_cadence = 1
     cfl_threshold=0.1
     CFL = flow_tools.CFL(solver, initial_dt=dt, cadence=cfl_cadence, safety=cfl_safety_factor,
@@ -323,10 +320,10 @@ if __name__ == "__main__":
     elif args['--fixed_Tz']:
         data_dir += '_flux'
     #Diffusivities
-    if args['--const_mu']:
-        data_dir += '_constMu'
-    else:
+    if args['--const_nu']:
         data_dir += '_constNu'
+    else:
+        data_dir += '_constMu'
     if args['--const_chi']:
         data_dir += '_constChi'
     else:
@@ -355,14 +352,6 @@ if __name__ == "__main__":
         start_new_files = True
     else:
         start_new_files = False
-    if args['--start_dt'] != None:
-        start_dt = float(args['--start_dt'])
-    else:
-        start_dt = None
-    if args['--zero_velocities']:
-        zero_velocities=True
-    else:
-        zero_velocities=False
 
     #Resolution
     nx = args['--nx']
@@ -371,7 +360,7 @@ if __name__ == "__main__":
     ny =  args['--ny']
     if ny is not None:
         ny = int(ny)
-    nz = args['--nz']
+    nz = int(args['--nz'])
 
     #Diffusivity flags
     const_mu    = True

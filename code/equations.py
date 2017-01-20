@@ -48,7 +48,7 @@ class Atmosphere:
             bases = [x_basis, y_basis, z_basis]
         else:
             logger.error('>3 dimensions not implemented')
-        
+
         self.domain = de.Domain(bases, grid_dtype=grid_dtype, comm=comm, mesh=mesh)
         
         self.z = self.domain.grid(-1) # need to access globally-sized z-basis
@@ -733,6 +733,7 @@ class FC_equations(Equations):
         self.problem.substitutions['Rayleigh_global'] = 'g*Lz**3*delta_s_atm*Cp_inv/(nu*chi)'
         self.problem.substitutions['Rayleigh_local']  = 'g*Lz**4*dz(s_mean+s_fluc)*Cp_inv/(nu*chi)'
         
+        self.problem.substitutions['vel_rms'] = 'sqrt(u**2 + v**2 + w**2)'
         self.problem.substitutions['KE'] = 'rho_full*(vel_rms**2)/2'
         self.problem.substitutions['PE'] = 'rho_full*phi'
         self.problem.substitutions['PE_fluc'] = 'rho_fluc*phi'
@@ -745,7 +746,6 @@ class FC_equations(Equations):
         self.problem.substitutions['u_rms'] = 'sqrt(u**2)'
         self.problem.substitutions['v_rms'] = 'sqrt(v**2)'
         self.problem.substitutions['w_rms'] = 'sqrt(w**2)'
-        self.problem.substitutions['vel_rms'] = 'sqrt(u**2 + v**2 + w**2)'
         self.problem.substitutions['Re_rms'] = 'vel_rms*Lz/nu'
         self.problem.substitutions['Pe_rms'] = 'vel_rms*Lz/chi'
         self.problem.substitutions['Ma_iso_rms'] = '(vel_rms/sqrt(T_full))'
@@ -1261,6 +1261,25 @@ class FC_polytrope_2d(FC_equations_2d, Polytrope):
                                                         easy_rho_energy   = easy_rho_energy,
                                                         **kwargs)
         self.test_hydrostatic_balance(T=self.T0, rho=self.rho0)
+    
+    def initialize_output(self, solver, data_dir, *args, **kwargs):
+        super(FC_polytrope_2d, self).initialize_output(solver, data_dir, *args, **kwargs)
+        import h5py
+        import os
+        from dedalus.core.field import Field
+        dir = data_dir + '/atmosphere/'
+        file = dir + 'atmosphere.h5'
+        if MPI.COMM_WORLD.rank == 0:
+            if not os.path.exists('{:s}'.format(dir)):
+                os.mkdir('{:s}'.format(dir))
+
+            f = h5py.File('{:s}'.format(file), 'w')
+            for key in self.problem.parameters.keys():
+                if type(self.problem.parameters[key]) == Field:
+                    f[key] = self.problem.parameters[key]['g']
+                else:
+                    f[key] = self.problem.parameters[key]
+            f['epsilon'] = self.epsilon
 
 class FC_polytrope_3d(FC_equations_3d, Polytrope):
     def __init__(self, dimensions=3, *args, **kwargs):
