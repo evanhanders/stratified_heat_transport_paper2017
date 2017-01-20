@@ -1256,6 +1256,7 @@ class FC_polytrope_2d(FC_equations_2d, Polytrope):
             easy_rho_momentum   = True
         if self.constant_kappa:
             easy_rho_energy     = True
+        #Need to implement HS equilibrium keyword and equation stuff
         super(FC_polytrope_2d, self).set_equations(*args,  easy_rho_momentum = easy_rho_momentum,
                                                         easy_rho_energy   = easy_rho_energy,
                                                         **kwargs)
