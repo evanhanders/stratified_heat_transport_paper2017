@@ -459,6 +459,8 @@ class Polytrope(Atmosphere):
                  **kwargs):
         
         self.atmosphere_name = 'single polytrope'
+        self.aspect_ratio    = aspect_ratio
+        self.n_rho_cz        = n_rho_cz
 
         self._set_atmosphere_parameters(gamma=gamma, epsilon=epsilon, poly_m=m_cz)
         if m_cz is None:
@@ -587,6 +589,7 @@ class Polytrope(Atmosphere):
         
         logger.info("problem parameters:")
         logger.info("   Ra = {:g}, Pr = {:g}".format(Rayleigh, Prandtl))
+        self.Rayleigh, self.Prandtl = Rayleigh, Prandtl
 
         # set nu and chi at top based on Rayleigh number
         nu_top = np.sqrt(Prandtl*(self.Lz**3*np.abs(self.delta_s/self.Cp)*self.g)/Rayleigh)
@@ -1269,17 +1272,40 @@ class FC_polytrope_2d(FC_equations_2d, Polytrope):
         from dedalus.core.field import Field
         dir = data_dir + '/atmosphere/'
         file = dir + 'atmosphere.h5'
-        if MPI.COMM_WORLD.rank == 0:
+        if self.domain.dist.comm_cart.rank == 0:
             if not os.path.exists('{:s}'.format(dir)):
                 os.mkdir('{:s}'.format(dir))
-
+        if self.domain.dist.comm_cart.rank == 0:
             f = h5py.File('{:s}'.format(file), 'w')
-            for key in self.problem.parameters.keys():
-                if type(self.problem.parameters[key]) == Field:
-                    f[key] = self.problem.parameters[key]['g']
-                else:
-                    f[key] = self.problem.parameters[key]
-            f['epsilon'] = self.epsilon
+        for key in self.problem.parameters.keys():
+            if 'scale' in key:
+                continue
+            if type(self.problem.parameters[key]) == Field:
+                self.problem.parameters[key].set_scales(1, keep_data=True)
+                this_chunk      = np.zeros(self.nz)
+                global_chunk    = np.zeros(self.nz)
+                n_per_cpu       = int(self.nz/self.domain.dist.comm_cart.size)
+                this_chunk[ self.domain.dist.comm_cart.rank*(n_per_cpu):\
+                            (self.domain.dist.comm_cart.rank+1)*(n_per_cpu)] = \
+                                    self.problem.parameters[key]['g'][0,:]
+                self.domain.dist.comm_cart.Allreduce(this_chunk, global_chunk, op=MPI.SUM)
+                if self.domain.dist.comm_cart.rank == 0:
+                    f[key] = global_chunk
+            elif self.domain.dist.comm_cart.rank == 0:
+                f[key] = self.problem.parameters[key]
+        if self.domain.dist.comm_cart.rank == 0:
+            f['dimensions']     = 2
+            f['nx']             = self.nx
+            f['nz']             = self.nz
+            f['m_ad']           = self.m_ad
+            f['m']              = self.m_ad - self.epsilon
+            f['epsilon']        = self.epsilon
+            f['n_rho_cz']       = self.n_rho_cz
+            f['rayleigh']       = self.Rayleigh
+            f['prandtl']        = self.Prandtl
+            f['aspect_ratio']   = self.aspect_ratio
+            f['atmosphere_name']= self.atmosphere_name
+            f.close()
 
 class FC_polytrope_3d(FC_equations_3d, Polytrope):
     def __init__(self, dimensions=3, *args, **kwargs):
