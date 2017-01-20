@@ -1,6 +1,6 @@
 from plot_buddy_base import *
 import matplotlib
-matplotlib.rcParams.update({'font.size': 20})
+matplotlib.rcParams.update({'font.size': 11})
 from scipy.stats.mstats import mode
 import matplotlib.colorbar as colorbar
 
