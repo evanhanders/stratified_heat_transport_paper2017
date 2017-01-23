@@ -514,6 +514,8 @@ class Polytrope(Atmosphere):
         else:
             self.poly_m = poly_m
 
+        self.m_cz = self.poly_m
+
         if g is None:
             self.g = self.poly_m + 1
         else:
@@ -543,16 +545,16 @@ class Polytrope(Atmosphere):
         self.P0.set_scales(1, keep_data=True)
         
         if self.constant_diffusivities:
-            self.scale['g'] = self.z0 - self.z
+            self.scale['g']            = self.z0 - self.z
             self.scale_continuity['g'] = (self.z0 - self.z)
-            self.scale_momentum['g'] = (self.z0 - self.z)
-            self.scale_energy['g'] = (self.z0 - self.z)
+            self.scale_momentum['g']   = (self.z0 - self.z)
+            self.scale_energy['g']     = (self.z0 - self.z)
         else:
             # consider whether to scale nccs involving chi differently (e.g., energy equation)
-            self.scale['g'] = (self.z0 - self.z)
+            self.scale['g']            = (self.z0 - self.z)
             self.scale_continuity['g'] = (self.z0 - self.z)
-            self.scale_momentum['g'] = (self.z0 - self.z)
-            self.scale_energy['g'] = (self.z0 - self.z)
+            self.scale_momentum['g']   = (self.z0 - self.z)**np.ceil(self.m_cz)
+            self.scale_energy['g']     = (self.z0 - self.z)**np.ceil(self.m_cz)
 
         # choose a particular gauge for phi (g*z0); and -grad(phi)=g_vec=-g*z_hat
         # double negative is correct.
@@ -728,8 +730,8 @@ class FC_equations(Equations):
         self.problem.substitutions['ln_rho_full']       = '(ln_rho0 + ln_rho1)'
 
         self.problem.parameters['delta_s_atm'] = self.delta_s
-        self.problem.substitutions['s_fluc'] = '(1/Cv_inv*log(1+T1/T0) - ln_rho1)'
-        self.problem.substitutions['s_mean'] = '(1/Cv_inv*log(T0) - ln_rho0)'
+        self.problem.substitutions['s_fluc'] = '((1/Cv_inv)*log(1+T1/T0) - ln_rho1)'
+        self.problem.substitutions['s_mean'] = '((1/Cv_inv)*log(T0) - ln_rho0)'
         self.problem.substitutions['epsilon'] = 'plane_avg(log(T0**(1/(gamma-1))/rho0)/log(T0))'
         self.problem.substitutions['m_ad']    = '((gamma-1)**-1)'
 
@@ -763,14 +765,15 @@ class FC_equations(Equations):
         self.problem.substitutions['kappa_flux_z'] = '((kappa_flux_mean) + (kappa_flux_fluc))'
         self.problem.substitutions['KE_flux_z'] = 'w*KE'
         self.problem.substitutions['PE_flux_z'] = 'w*PE'
-        #self.problem.substitutions['viscous_flux_z'] = '- rho_full * nu * (u*u_z + (4/3)*w*w_z + u*dx(w) - (2/3)*w*dx(u))'
         self.problem.substitutions['viscous_flux_z'] = '- rho_full * nu * (u*σxz + w*σzz)'
         self.problem.substitutions['convective_flux_z'] = '(viscous_flux_z + KE_flux_z + PE_flux_z + h_flux_z)'
         self.problem.substitutions['kappa_adiabatic_flux_z'] = '(rho0*chi*g/Cp)'
         self.problem.substitutions['kappa_reference_flux_z'] = '(-chi*rho0*(right(T1+T0)-left(T1+T0))/Lz)'
-        self.problem.substitutions['Nusselt_norm'] = '(kappa_reference_flux_z-kappa_adiabatic_flux_z)'
-        self.problem.substitutions['Nusselt'] = '((convective_flux_z+kappa_flux_z-kappa_adiabatic_flux_z)/(Nusselt_norm))'
-
+        self.problem.substitutions['Nusselt_norm']   = '(kappa_reference_flux_z - kappa_adiabatic_flux_z)'
+        self.problem.substitutions['Nusselt_norm_2'] = '(kappa_flux_z           - kappa_adiabatic_flux_z)'
+        self.problem.substitutions['all_flux_minus_adiabatic'] = '(convective_flux_z+kappa_flux_z-kappa_adiabatic_flux_z)'
+        self.problem.substitutions['Nusselt'] = '((all_flux_minus_adiabatic)/(Nusselt_norm))'
+        
     def set_BC(self,
                fixed_flux=None, fixed_temperature=None, mixed_flux_temperature=None, mixed_temperature_flux=None,
                stress_free=None, no_slip=None):
@@ -783,19 +786,12 @@ class FC_equations(Equations):
         self.dirichlet_set = []
 
         # thermal boundary conditions
-        # this needs to be done before any equations are entered
-        #self.problem.parameters['T1_left']    = self.T1_left
-        #self.problem.parameters['T1_right']   = self.T1_right  
-        #self.problem.parameters['T1_z_left']  = self.T1_z_left 
-        #self.problem.parameters['T1_z_right'] = self.T1_z_right 
-
-        # thermal boundary conditions
         if fixed_flux:
-            logger.info("Thermal BC: fixed flux (T1_z)")
-            logger.info("warning; these are not fully correct fixed flux conditions yet")
-            self.problem.add_bc( "left(T1_z) = 0")
-            self.problem.add_bc("right(T1_z) = 0")
+            logger.info("Thermal BC: fixed flux (full form)")
+            self.problem.add_bc( "left(T1_z + ln_rho1*T0_z)  =  left((exp(-ln_rho1)-1+ln_rho1)*T0_z)")
+            self.problem.add_bc("right(T1_z + ln_rho1*T0_z)  = right((exp(-ln_rho1)-1+ln_rho1)*T0_z)")
             self.dirichlet_set.append('T1_z')
+            self.dirichlet_set.append('ln_rho1')
         elif fixed_temperature:
             logger.info("Thermal BC: fixed temperature (T1)")
             self.problem.add_bc( "left(T1) = 0")
@@ -924,7 +920,8 @@ class FC_equations(Equations):
         analysis_profile.add_task("plane_avg(w*(PE))/plane_avg(Nusselt_norm)", name="norm_PE_flux_z")
         analysis_profile.add_task("plane_avg(kappa_flux_fluc)/plane_avg(Nusselt_norm)", name="norm_kappa_flux_fluc_z")
         analysis_profile.add_task("plane_avg(kappa_flux_z-kappa_adiabatic_flux_z)/plane_avg(Nusselt_norm)", name="norm_kappa_flux_z")
-        analysis_profile.add_task("plane_avg(Nusselt)", name="Nusselt")
+        analysis_profile.add_task("plane_avg(all_flux_minus_adiabatic)/plane_avg(Nusselt_norm)", name="Nusselt")
+        analysis_profile.add_task("plane_avg(all_flux_minus_adiabatic)/plane_avg(Nusselt_norm_2)", name="Nusselt_2")        
         analysis_profile.add_task("plane_avg(u_rms)", name="u_rms")
         analysis_profile.add_task("plane_avg(w_rms)", name="w_rms")
         analysis_profile.add_task("plane_avg(vel_rms)", name="vel_rms")
@@ -963,7 +960,8 @@ class FC_equations(Equations):
         analysis_scalar.add_task("vol_avg(Ma_iso_rms)", name="Ma_iso")
         analysis_scalar.add_task("vol_avg(Ma_ad_rms)", name="Ma_ad")
         analysis_scalar.add_task("vol_avg(enstrophy)", name="enstrophy")
-        analysis_scalar.add_task("vol_avg(Nusselt)", name="Nusselt")
+        analysis_scalar.add_task("vol_avg(all_flux_minus_adiabatic)/vol_avg(Nusselt_norm)", name="Nusselt")
+        analysis_scalar.add_task("vol_avg(all_flux_minus_adiabatic)/vol_avg(Nusselt_norm_2)", name="Nusselt_2")
 
         analysis_tasks['scalar'] = analysis_scalar
 
