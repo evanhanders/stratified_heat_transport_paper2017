@@ -1321,6 +1321,7 @@ class FC_polytrope_2d(FC_equations_2d, Polytrope):
             f['aspect_ratio']   = self.aspect_ratio
             f['atmosphere_name']= self.atmosphere_name
             f.close()
+        return self.analysis_tasks
 
 class FC_polytrope_3d(FC_equations_3d, Polytrope):
     def __init__(self, dimensions=3, *args, **kwargs):
