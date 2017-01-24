@@ -12,7 +12,7 @@ class ProfileBuddy(PlotBuddy):
         self.outdir = outdir
         self.output_dir = self.root_dir + '/' + outdir + '/'
 
-    def add_subplot(self, rindex, cindex, hlabel, vlabel, field,\
+    def add_subplot(self, field, rindex, cindex, hlabel='z', vlabel=None,\
                         colspan=1, rowspan=1):
         '''
             rindex -- row index of the subplot, starting from zero
@@ -34,7 +34,10 @@ class ProfileBuddy(PlotBuddy):
         subplot['colspan']            = colspan #colspan
         subplot['rowspan']            = rowspan #rowspan
         subplot['xlabel']           = hlabel
-        subplot['ylabel']           = vlabel
+        if vlabel != None:
+            subplot['ylabel']           = vlabel
+        else:
+            subplot['ylabel']           = field
 
         self.ax.append(subplot)
 
@@ -302,6 +305,8 @@ class ProfileBuddy(PlotBuddy):
 
         self.comm.Barrier()
         filename=self.outdir
+        if filename[-1] == '/':
+            filename = filename[:-1]
 
         if self.cw_rank == 0 and not os.path.exists('{:s}'.format(self.output_dir)):
             os.mkdir('{:s}'.format(output_dir))

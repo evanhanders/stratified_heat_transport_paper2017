@@ -96,7 +96,7 @@ class MovieBuddy(PlotBuddy):
                         plot_label += '{:1.0f}'.format(np.log10(self.atmosphere['epsilon']))
                         plot_label += '}$'
                     else:
-                        plot_label += '{:1.1f}$'.format(self.epsilon)
+                        plot_label += '{:1.1f}$'.format(self.atmosphere['epsilon'])
                         small_eps = True
 
                     ra_log = np.log10(self.atmosphere['rayleigh'])
@@ -216,9 +216,8 @@ class MovieBuddy(PlotBuddy):
             if ax['sub_t_avg']:
                 ax['t_avg'] = self.get_time_avg(ax['data'])
                 ax['data'] -= ax['t_avg']
-                flattened = np.sort(np.abs(ax['data'].flatten()))
-
-                ax['max_val'] = flattened[int(0.98*len(flattened))]
+            flattened = np.sort(np.abs(ax['data'].flatten()))
+            ax['max_val'] = flattened[int(0.98*len(flattened))]
 
     def make_plots(self, figsize=None, outdir='snapshots', filename='snapshots', write_number_start=1,\
                             dpi=300, cbar_factor=0.2, length_div=1, plot_title=True, n_mode_memory=100):
