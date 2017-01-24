@@ -22,7 +22,7 @@ Options:
     --run_time_buoy=<run_time>           Run time, in buoyancy times
 
     --fixed_T                            Fixed Temperature boundary conditions (top and bottom)
-    --fixed_Tz                           Fixed Temperature gradient boundary conditions (top and bottom)
+    --fixed_flux                         Fixed flux boundary conditions (top and bottom)
     --const_nu                           If flagged, use constant nu 
     --const_chi                          If flagged, use constant chi 
 
@@ -55,7 +55,7 @@ except:
 def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
                         nz=128, nx=None, ny=None, threeD=False, mesh=None,\
 			            n_rho_cz=3.5, epsilon=1e-4, run_time=23.5, \
-                        fixed_T=False, fixed_Tz=False, const_mu=True, const_kappa=True,\
+                        fixed_T=False, fixed_flux=False, const_mu=True, const_kappa=True,\
                         restart=None, start_new_files=False, \
                         rk222=False, safety_factor=0.2, run_time_buoyancies=None, \
                         data_dir='./', out_cadence=0.1, no_coeffs=False):
@@ -88,7 +88,7 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
 
     if fixed_T:
         atmosphere.set_BC(fixed_temperature=True, stress_free=True)
-    elif fixed_Tz:
+    elif fixed_flux:
         atmosphere.set_BC(fixed_flux=True, stress_free=True)
     else:
         atmosphere.set_BC(mixed_flux_temperature=True, stress_free=True)
@@ -317,7 +317,7 @@ if __name__ == "__main__":
     #BCs
     if args['--fixed_T']:
         data_dir += '_fixed'
-    elif args['--fixed_Tz']:
+    elif args['--fixed_flux']:
         data_dir += '_flux'
     #Diffusivities
     if args['--const_nu']:
@@ -392,7 +392,7 @@ if __name__ == "__main__":
                       run_time=float(args['--run_time']),
                       run_time_buoyancies=run_time_buoy,
                       fixed_T=args['--fixed_T'],
-                      fixed_Tz=args['--fixed_Tz'],
+                      fixed_flux=args['--fixed_flux'],
                       const_mu=const_mu,
                       const_kappa=const_kappa,
                       restart=(args['--restart']),
