@@ -941,6 +941,7 @@ class FC_equations(Equations):
         analysis_profile.add_task("plane_avg((convective_flux_z+kappa_flux_z-exp(ln_rho1)*kappa_adiabatic_flux_z))/vol_avg(Nusselt_norm_5)", name="Nusselt_5")        
         analysis_profile.add_task("(plane_avg(convective_flux_z+kappa_flux_z)-vol_avg(exp(ln_rho1)*kappa_adiabatic_flux_z))/vol_avg(Nusselt_norm_5)", name="Nusselt_6")
         analysis_profile.add_task("plane_avg(all_flux_minus_adiabatic)/vol_avg(Nusselt_norm_5)", name="Nusselt_7")
+        analysis_profile.add_task("plane_avg(Nusselt_norm_5)", name="Nusselt_norm_5")
       
         analysis_profile.add_task("plane_avg(u_rms)", name="u_rms")
         analysis_profile.add_task("plane_avg(w_rms)", name="w_rms")
@@ -986,6 +987,7 @@ class FC_equations(Equations):
         analysis_scalar.add_task("vol_avg((convective_flux_z+kappa_flux_z-exp(ln_rho1)*kappa_adiabatic_flux_z))/vol_avg(Nusselt_norm_4)", name="Nusselt_4")
         analysis_scalar.add_task("vol_avg((convective_flux_z+kappa_flux_z-exp(ln_rho1)*kappa_adiabatic_flux_z))/vol_avg(Nusselt_norm_5)", name="Nusselt_5")
         analysis_scalar.add_task("vol_avg(all_flux_minus_adiabatic)/vol_avg(Nusselt_norm_5)", name="Nusselt_7")
+        analysis_scalar.add_task("vol_avg(Nusselt_norm_5)", name="Nusselt_norm_5")
 
         analysis_tasks['scalar'] = analysis_scalar
 
