@@ -141,9 +141,9 @@ class PlotBuddy:
                     np.exp(self.atmosphere['n_rho_cz'])
             self.atmosphere['t_buoy']           = np.sqrt(self.atmosphere['Lz']/\
                     (self.atmosphere['g']*self.atmosphere['epsilon']))
-            self.atmosphere['t_therm']          = 2*self.atmosphere['Lz']**2 /\
-                    (self.atmosphere['chi'][int(self.atmosphere['chi'].shape[0]/2)-1]+\
-                            self.atmosphere['chi'][int(self.atmosphere['chi'].shape[0]/2)])
+#            self.atmosphere['t_therm']          = 2*self.atmosphere['Lz']**2 /\
+#                    (self.atmosphere['chi'][int(self.atmosphere['chi'].shape[0]/2)-1]+\
+#                            self.atmosphere['chi'][int(self.atmosphere['chi'].shape[0]/2)])
 
     def _read_atmosphere(self):
         '''
