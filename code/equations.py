@@ -1084,7 +1084,7 @@ class FC_equations_2d(FC_equations):
         self.problem.substitutions['L_visc_w'] = self.viscous_term_w_l
         self.problem.substitutions['L_visc_u'] = self.viscous_term_u_l
         
-        if np.max(self.nu_r['g']) == 0 and np.min(self.nu_r['g']) == 0:
+        if np.round(1e10*np.max(self.nu_r['g']/self.nu_l['g']))/1e10 == 0 and np.round(1e10*np.min(self.nu_r['g']/self.nu_l['g']))/1e10 == 0:
             self.problem.substitutions['nu'] = '(nu_l)'
             self.problem.substitutions['del_nu'] = '(del_nu_l)'
             self.nonlinear_viscous_u = " nu*(dx(ln_rho1)*σxx + dz(ln_rho1)*σxz)"
@@ -1099,7 +1099,7 @@ class FC_equations_2d(FC_equations):
         self.problem.substitutions['NL_visc_u'] = self.nonlinear_viscous_u
 
         # double check implementation of variabile chi and background coupling term.
-        if np.max(self.chi_r['g']) == 0 and np.min(self.chi_r['g']) == 0:
+        if np.round(1e10*np.max(self.chi_r['g']/self.chi_l['g']))/1e10 == 0 and np.round(1e10*np.min(self.chi_r['g']/self.chi_l['g']))/1e10 == 0:
             self.problem.substitutions['chi'] = '(chi_l)'
             self.problem.substitutions['del_chi'] = '(del_chi_l)'
         else:
@@ -1113,7 +1113,7 @@ class FC_equations_2d(FC_equations):
             self.linear_thermal_diff_l += '+ Cv_inv*(chi_l*del_ln_rho0 + del_chi_l)*T1_z'
             self.linear_thermal_diff_r += '+ Cv_inv*(chi_r*del_ln_rho0 + del_chi_r)*T1_z'
             self.source              += '+ Cv_inv*(chi*del_ln_rho0 + del_chi)*T0_z'
-        if np.max(self.chi_r['g']) == 0 and np.min(self.chi_r['g']) == 0:
+        if np.round(1e10*np.max(self.chi_r['g']/self.chi_l['g']))/1e10 == 0 and np.round(1e10*np.min(self.chi_r['g']/self.chi_l['g']))/1e10 == 0:
             self.nonlinear_thermal_diff = " Cv_inv*chi*(dx(T1)*dx(ln_rho1) + T1_z*dz(ln_rho1))"
         else:
             self.nonlinear_thermal_diff = " Cv_inv*chi*(dx(T1)*dx(ln_rho1) + T1_z*dz(ln_rho1)) + {}".format(self.linear_thermal_diff_r)
