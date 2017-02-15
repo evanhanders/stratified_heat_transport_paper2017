@@ -619,7 +619,7 @@ class Polytrope(Atmosphere):
         else:
             if self.constant_kappa:
                 self.rho0.set_scales(1, keep_data=True)
-                if self.poly_m == 1:
+                if np.round(self.poly_m*1e10)/1e10 == 1:
                     chi_l = chi_top/(self.rho0['g'])
                     chi_r = 0
                 else:
@@ -633,7 +633,7 @@ class Polytrope(Atmosphere):
             if self.constant_mu:
                 self.rho0.set_scales(1, keep_data=True)
                 nu_l  = nu_top/(self.z0 - self.z)
-                if self.poly_m == 1:
+                if np.round(self.poly_m*1e10)/1e10 == 1:
                     nu_l  = nu_top/(self.rho0['g'])
                     nu_r = 0
                 else:
@@ -1225,38 +1225,74 @@ class FC_equations_3d(FC_equations):
  
         self._set_subs()
         
+        self.viscous_term_u_l = " nu_l*(Lap(u, u_z) + 1/3*Div(dx(u), dx(v), dx(w_z)))"
+        self.viscous_term_v_l = " nu_l*(Lap(v, v_z) + 1/3*Div(dy(u), dy(v), dy(w_z)))"
+        self.viscous_term_w_l = " nu_l*(Lap(w, w_z) + 1/3*Div(  u_z, v_z, dz(w_z)))"
+        self.viscous_term_u_r = " nu_r*(Lap(u, u_z) + 1/3*Div(dx(u), dx(v), dx(w_z)))"
+        self.viscous_term_v_r = " nu_r*(Lap(v, v_z) + 1/3*Div(dy(u), dy(v), dy(w_z)))"
+        self.viscous_term_w_r = " nu_r*(Lap(w, w_z) + 1/3*Div(  u_z, v_z, dz(w_z)))"
         # here, nu and chi are constants        
-        self.viscous_term_u = " nu*(Lap(u, u_z) + 1/3*Div(dx(u), dx(v), dx(w_z)))"
-        self.viscous_term_v = " nu*(Lap(v, v_z) + 1/3*Div(dy(u), dy(v), dy(w_z)))"
-        self.viscous_term_w = " nu*(Lap(w, w_z) + 1/3*Div(  u_z,   v_z, dz(w_z)))"
+#        self.viscous_term_u = " nu*(Lap(u, u_z) + 1/3*Div(dx(u), dx(v), dx(w_z)))"
+#        self.viscous_term_v = " nu*(Lap(v, v_z) + 1/3*Div(dy(u), dy(v), dy(w_z)))"
+#        self.viscous_term_w = " nu*(Lap(w, w_z) + 1/3*Div(  u_z,   v_z, dz(w_z)))"
         
         if not easy_rho_momentum:
-            self.viscous_term_u += " + (nu*del_ln_rho0 + del_nu) * σxz"
-            self.viscous_term_v += " + (nu*del_ln_rho0 + del_nu) * σyz"
-            self.viscous_term_w += " + (nu*del_ln_rho0 + del_nu) * σzz"
+#            self.viscous_term_u += " + (nu*del_ln_rho0 + del_nu) * σxz"
+#            self.viscous_term_v += " + (nu*del_ln_rho0 + del_nu) * σyz"
+#            self.viscous_term_w += " + (nu*del_ln_rho0 + del_nu) * σzz"
+            self.viscous_term_u_l += " + (nu_l*del_ln_rho0 + del_nu_l) * σxz"
+            self.viscous_term_w_l += " + (nu_l*del_ln_rho0 + del_nu_l) * σzz"
+            self.viscous_term_v_l += " + (nu_l*del_ln_rho0 + del_nu_l) * σyz"
+            self.viscous_term_u_r += " + (nu_r*del_ln_rho0 + del_nu_r) * σxz"
+            self.viscous_term_w_r += " + (nu_r*del_ln_rho0 + del_nu_r) * σzz"
+            self.viscous_term_v_r += " + (nu_r*del_ln_rho0 + del_nu_r) * σyz"
 
-        self.problem.substitutions['L_visc_w'] = self.viscous_term_w
-        self.problem.substitutions['L_visc_u'] = self.viscous_term_u
-        self.problem.substitutions['L_visc_v'] = self.viscous_term_v
+        self.problem.substitutions['L_visc_w'] = self.viscous_term_w_l
+        self.problem.substitutions['L_visc_u'] = self.viscous_term_u_l
+        self.problem.substitutions['L_visc_v'] = self.viscous_term_v_l
 
-        self.nonlinear_viscous_u = " nu*(dx(ln_rho1)*σxx + dy(ln_rho1)*σxy + dz(ln_rho1)*σxz)"
-        self.nonlinear_viscous_v = " nu*(dx(ln_rho1)*σxy + dy(ln_rho1)*σyy + dz(ln_rho1)*σyz)"
-        self.nonlinear_viscous_w = " nu*(dx(ln_rho1)*σxz + dy(ln_rho1)*σyz + dz(ln_rho1)*σzz)"
+        if np.round(1e10*np.max(self.nu_r['g']/self.nu_l['g']))/1e10 == 0 and np.round(1e10*np.min(self.nu_r['g']/self.nu_l['g']))/1e10 == 0:
+            self.problem.substitutions['nu'] = '(nu_l)'
+            self.problem.substitutions['del_nu'] = '(del_nu_l)'
+            self.nonlinear_viscous_u = " nu*(dx(ln_rho1)*σxx + dy(ln_rho1)*σxy + dz(ln_rho1)*σxz)"
+            self.nonlinear_viscous_v = " nu*(dx(ln_rho1)*σxy + dy(ln_rho1)*σyy + dz(ln_rho1)*σyz)"
+            self.nonlinear_viscous_w = " nu*(dx(ln_rho1)*σxz + dy(ln_rho1)*σyz + dz(ln_rho1)*σzz)"
+        else:
+            self.problem.substitutions['nu'] = '(nu_l + nu_r)'
+            self.problem.substitutions['del_nu'] = '(del_nu_l + del_nu_r)'
+            self.nonlinear_viscous_u = " nu*(dx(ln_rho1)*σxx + dy(ln_rho1)*σxy + dz(ln_rho1)*σxz) + {}".format(self.viscous_term_u_r)
+            self.nonlinear_viscous_v = " nu*(dx(ln_rho1)*σxy + dy(ln_rho1)*σyy + dz(ln_rho1)*σyz) + {}".format(self.viscous_term_v_r)
+            self.nonlinear_viscous_w = " nu*(dx(ln_rho1)*σxz + dy(ln_rho1)*σyz + dz(ln_rho1)*σzz) + {}".format(self.viscous_term_w_r)
+ 
+
+#        self.nonlinear_viscous_u = " nu*(dx(ln_rho1)*σxx + dy(ln_rho1)*σxy + dz(ln_rho1)*σxz)"
+#        self.nonlinear_viscous_v = " nu*(dx(ln_rho1)*σxy + dy(ln_rho1)*σyy + dz(ln_rho1)*σyz)"
+#        self.nonlinear_viscous_w = " nu*(dx(ln_rho1)*σxz + dy(ln_rho1)*σyz + dz(ln_rho1)*σzz)"
 
         self.problem.substitutions['NL_visc_u'] = self.nonlinear_viscous_u
         self.problem.substitutions['NL_visc_v'] = self.nonlinear_viscous_v
         self.problem.substitutions['NL_visc_w'] = self.nonlinear_viscous_w
 
         # double check implementation of variabile chi and background coupling term.
-        self.problem.substitutions['Q_z'] = "(-T1_z)"
-        self.linear_thermal_diff    = " Cv_inv*(chi*(Lap(T1, T1_z) + T0_z*dz(ln_rho1)))"
+        if np.round(1e10*np.max(self.chi_r['g']/self.chi_l['g']))/1e10 == 0 and np.round(1e10*np.min(self.chi_r['g']/self.chi_l['g']))/1e10 == 0:
+            self.problem.substitutions['chi'] = '(chi_l)'
+            self.problem.substitutions['del_chi'] = '(del_chi_l)'
+        else:
+            self.problem.substitutions['chi'] = '(chi_l + chi_r)'
+            self.problem.substitutions['del_chi'] = '(del_chi_l + del_chi_r)'
+        self.linear_thermal_diff_l    = " Cv_inv*(chi_l*(Lap(T1, T1_z) + T0_z*dz(ln_rho1)))"
+        self.linear_thermal_diff_r    = " Cv_inv*(chi_r*(Lap(T1, T1_z) + T0_z*dz(ln_rho1)))"
         self.nonlinear_thermal_diff = " Cv_inv*chi*(dx(T1)*dx(ln_rho1) + dy(T1)*dy(ln_rho1) + T1_z*dz(ln_rho1))"
         self.source =                 " Cv_inv*(chi*(T0_zz) - Qcool_z/rho_full)"
         if not easy_rho_energy:
-            self.linear_thermal_diff += '+ Cv_inv*(chi*del_ln_rho0 + del_chi)*T1_z'
+            self.linear_thermal_diff_l += '+ Cv_inv*(chi_l*del_ln_rho0 + del_chi_l)*T1_z'
+            self.linear_thermal_diff_r += '+ Cv_inv*(chi_r*del_ln_rho0 + del_chi_r)*T1_z'
             self.source              += '+ Cv_inv*(chi*del_ln_rho0 + del_chi)*T0_z'
-                
-        self.problem.substitutions['L_thermal']    = self.linear_thermal_diff 
+        if np.round(1e10*np.max(self.chi_r['g']/self.chi_l['g']))/1e10 == 0 and np.round(1e10*np.min(self.chi_r['g']/self.chi_l['g']))/1e10 == 0:
+            self.nonlinear_thermal_diff = " Cv_inv*chi*(dx(T1)*dx(ln_rho1) + T1_z*dz(ln_rho1))"
+        else:
+            self.nonlinear_thermal_diff = " Cv_inv*chi*(dx(T1)*dx(ln_rho1) + T1_z*dz(ln_rho1)) + {}".format(self.linear_thermal_diff_r)
+        self.problem.substitutions['L_thermal']    = self.linear_thermal_diff_l
         self.problem.substitutions['NL_thermal']   = self.nonlinear_thermal_diff
         self.problem.substitutions['source_terms'] = self.source
 
@@ -1303,7 +1339,7 @@ class FC_equations_3d(FC_equations):
 
         
     def initialize_output(self, solver, data_dir, full_output=False,
-                          slices=[1,1], profiles=[1,1], scalar=[1,1], coeffs=[1,1], **kwargs):
+                          slices=[1,1], profiles=[1,1], scalar=[1,1], coeffs=[1,1], coeffs_output=False, **kwargs):
         #  slices, profiles, and scalar are all [write_num, set_num]
 
         analysis_tasks = super(FC_equations_3d, self).initialize_output(solver, data_dir, full_output=full_output,

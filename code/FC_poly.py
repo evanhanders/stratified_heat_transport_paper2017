@@ -75,7 +75,7 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
     
     if threeD:
         atmosphere = equations.FC_polytrope_3d(nx=nx, ny=ny, nz=nz, mesh=mesh, constant_kappa=const_kappa, constant_mu=const_mu,\
-                                        epsilon=epsilon, n_rho_cz=n_rho_cz, Lx=Lx, aspect_ratio=aspect_ratio,\
+                                        epsilon=epsilon, n_rho_cz=n_rho_cz, aspect_ratio=aspect_ratio,\
                                         fig_dir='./FC_poly_atmosphere/')
     else:
         atmosphere = equations.FC_polytrope_2d(nx=nx, nz=nz, constant_kappa=const_kappa, constant_mu=const_mu,\
@@ -118,7 +118,7 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
     atmosphere.check_atmosphere(make_plots = False, rho=atmosphere.get_full_rho(solver), T=atmosphere.get_full_T(solver))
 
     #Set up timestep defaults
-    max_dt = atmosphere.buoyancy_time*0.05
+    max_dt = atmosphere.buoyancy_time*0.25
     dt = max_dt/5
     if epsilon < 1e-5:
         max_dt = atmosphere.buoyancy_time*0.05
@@ -180,7 +180,7 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
         solver.stop_sim_time    = 100*atmosphere.thermal_time
     
     from numpy import inf
-    solver.stop_iteration   = 100#inf
+    solver.stop_iteration   = inf
     solver.stop_wall_time   = run_time*3600
     report_cadence = 1
     output_time_cadence = out_cadence*atmosphere.buoyancy_time
