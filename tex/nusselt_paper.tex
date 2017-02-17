@@ -40,18 +40,21 @@ often occurs at high Rayleigh number (Ra) and low
 Mach number (Ma).
 Here we study stratified convection in the context of 
 plane-parallel, polytropically stratified atmospheres. 
-We hold the density stratification (\nrho) and Prandtl 
-number (Pr) constant while varying
-Ma and Ra to determine 
+We hold the density stratification ($n_{\rho}$) and Prandtl 
+number (Pr) constant while varying the superadiabaticity
+and Ra.  We find that Ma is primarily controlled by the
+superadiabaticity of the atmosphere.  We also examine
 the behavior of the Nusselt number (Nu), 
-which quantifies the efficiency of convective heat transport.
-As Ra increases and $\text{Ma} \rightarrow 1$, a scaling 
-of Nu $\propto$ Ra$^{0.45}$ is observed.  
-As Ra increases to a regime where Ma $\geq 1$,
-this scaling gives way to a weaker Nu $\propto$ Ra$^{0.19}$. 
-In the regime of Ma $\ll 1$, a consistent
-Nu $\propto$ Ra$^{0.31}$ is retrieved,  reminiscent of the 
-Nu $\propto$ Ra$^{2/7}$ seen in \RB convection.
+which quantifies the efficiency of convective heat transport,
+and the Reynolds number (Re), which quantifies how turbulent our
+solutions are.
+%As Ra increases and $\text{Ma} \rightarrow 1$, a scaling 
+%of Nu $\propto$ Ra$^{0.45}$ is observed.  
+%As Ra increases to a regime where Ma $\geq 1$,
+%this scaling gives way to a weaker Nu $\propto$ Ra$^{0.19}$. 
+%In the regime of Ma $\ll 1$, a consistent
+%Nu $\propto$ Ra$^{0.31}$ is retrieved,  reminiscent of the 
+%Nu $\propto$ Ra$^{2/7}$ seen in \RB convection.
 \end{abstract}
 \maketitle
 
@@ -60,13 +63,15 @@ Nu $\propto$ Ra$^{2/7}$ seen in \RB convection.
 \section{Introduction}
 \refstepcounter{section}
 \label{sec:intro}
-Convection is essential to heat transport in the cores of high mass stars,
+Convective heat transport is essential
+in the cores of high mass stars,
 the envelopes of low mass stars, and the atmospheres of terrestrial and 
-jovian planets.  The convective dynamics in these astrophysical objects
-are influenced by atmospheric 
-stratification, which is small in some systems (e.g. massive star cores)
-but spans about
-14 density scale heights in the Sun's convective envelope.
+jovian planets.  These astrophysical systems have density stratifications
+ranging from a few density scale heights (e.g. massive star cores)
+up to 14 density scale heights in the convective envelopes of low
+mass stars such as the Sun.
+Atmospheric stratification presumably modifies the fundamental
+dynamics and heat transport mechanisms of these atmospheres.
 Understanding the fundamental
 properties of compressible convection in stratified media is essential
 to characterizing systems in astrophysics and planetary sciences.  
@@ -333,28 +338,18 @@ for an ideal gas in hydrostatic equilibrium.  Here we specify
 $\langle \kappa \rangle = \langle (\rho_{1}/\rho_{0})\kappa_0 \rangle$.
 At large values of $\epsilon$, $\kappa$ evolves significantly as the
 density profile evolves.  At low $\epsilon$, $\langle\kappa\rangle \approx \kappa_0$.
+In the Boussinesq approximation, under which $\grad S = 0$ only when 
+$\grad T = 0$, this definition reduces the the traditional definition
+of the Nusselt number \cite{otero&all2002, johnston&doering2009}.
 
-We contend that this is the general form of the Nusselt number
-and illustrate this with a few limiting
-cases. Convection eliminates
-entropy stratification.  Under the Boussinesq approximation,
-in which density variations are ignored, entropy stratification 
-is directly proportional to temperature stratification
-and $\partial_z S \rightarrow 0$ when $\partial_z T \rightarrow 0$.  
-The familiar Nu in the RB problem is
-therefore retrieved from (\ref{eqn:nusselt}) because $\partial_z T_{\text{ad}} = 0$.  
-In the case of polytropic convection,  $g \rightarrow 0$
-as $\epsilon \rightarrow m_{\text{ad}} + 1$.
-In this limit, $\partial_z T_{\text{ad}} \rightarrow 0$ and the
-definition of the RB Nu is appropriate to use \cite{brandenburg&all2005}. 
-However, as $\epsilon \rightarrow 0$, 
-$\partial_z T_{0}\rightarrow \partial_z T_{\text{ad}}$ and increasingly
-smaller velocity and thermodynamic perturbations 
-achieve $\partial_z S = 0$ (Fig. \ref{fig:ma_v_eps}a).
-These perturbations carry what little flux exists in 
-excess of the adiabatic, so the removal of 
-$F_{\text{A}}$ in the numerator and denominator of 
-(\ref{eqn:nusselt}) is essential for a reasonable Nu measurement.
+The Reynolds number and Peclet number,
+\begin{equation}
+\text{Re} = \frac{|\bm{u}| L_z}{\nu};\,\,\,\,\text{Pe} = \text{Pr}\,\text{Re},
+\end{equation}
+quantify the importance of advection to diffusion in the evolved
+convective state.  Our choice of $\{\nu,\chi\}\propto \rho_0^{-1}$ drastically changes
+the value of Re between the top and bottom of the atmosphere.  We report values of
+Re at the midplane ($z=L_z/2$) of the atmosphere.
 
 \begin{figure}[b]
 \includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
@@ -515,7 +510,7 @@ This work was additionally supported by  NASA LWS grant number NNX16AC92G.
 Computations were conducted 
 with support by the NASA High End Computing (HEC) Program through the NASA 
 Advanced Supercomputing (NAS) Division at Ames Research Center on Pleiades
-with allocations GID s1647 and GID g26133.
+with allocations GID s1647 and GID g26133 (\textbf{AND ALSO THE NEW ONE AS OF 2017}).
 We thank Axel Brandenburg, Keith Julien, Mark Rast, and Jeff Oishi for many useful discussions.
 
 \bibliography{../biblio.bib}
