@@ -118,7 +118,7 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
     atmosphere.check_atmosphere(make_plots = False, rho=atmosphere.get_full_rho(solver), T=atmosphere.get_full_T(solver))
 
     #Set up timestep defaults
-    max_dt = atmosphere.buoyancy_time*0.25
+    max_dt = atmosphere.buoyancy_time*0.05
     dt = max_dt/5
     if epsilon < 1e-5:
         max_dt = atmosphere.buoyancy_time*0.05

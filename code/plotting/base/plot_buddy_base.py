@@ -141,9 +141,10 @@ class PlotBuddy:
                     np.exp(self.atmosphere['n_rho_cz'])
             self.atmosphere['t_buoy']           = np.sqrt(self.atmosphere['Lz']/\
                     (self.atmosphere['g']*self.atmosphere['epsilon']))
-#            self.atmosphere['t_therm']          = 2*self.atmosphere['Lz']**2 /\
-#                    (self.atmosphere['chi'][int(self.atmosphere['chi'].shape[0]/2)-1]+\
-#                            self.atmosphere['chi'][int(self.atmosphere['chi'].shape[0]/2)])
+            self.atmosphere['t_therm']          = 2*self.atmosphere['Lz']**2 /\
+                    (self.atmosphere['chi'][int(self.atmosphere['chi'].shape[0]/2)-1]+\
+                            self.atmosphere['chi'][int(self.atmosphere['chi'].shape[0]/2)])
+
 
     def _read_atmosphere(self):
         '''
@@ -157,6 +158,12 @@ class PlotBuddy:
                 self.atmosphere[key] = f[key].value
             else:
                 self.atmosphere[key] = f[key][:]
+        nu_top = np.sqrt(self.atmosphere['prandtl']*(self.atmosphere['Lz']**3 * \
+                        np.abs(self.atmosphere['delta_s_atm']/self.atmosphere['Cp'])*\
+                            self.atmosphere['g'])/self.atmosphere['rayleigh'])
+        chi_top = nu_top/self.atmosphere['prandtl']
+        self.atmosphere['chi'] = chi_top/self.atmosphere['rho0']
+        self.atmosphere['nu'] = nu_top/self.atmosphere['rho0']
 
     def _get_all_files(self):
         '''

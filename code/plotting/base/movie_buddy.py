@@ -174,15 +174,15 @@ class MovieBuddy(PlotBuddy):
 
         local_counts  = np.zeros(1, np.int16)
         global_counts = np.zeros(1, np.int16)
-        local_sum     = np.zeros(1, np.float64)
-        global_sum    = np.zeros(1, np.float64)
 
 
         local_counts[0] = field.shape[0]
 
-        collapsed_profile = np.mean(field, axis=1)
-        collapsed_profile = np.sum(collapsed_profile, axis=0)
-        local_sum[0] = collapsed_profile[0]
+        collapsed_profile   = np.mean(field, axis=1)
+        collapsed_profile   = np.sum(collapsed_profile, axis=0)
+        local_sum           = np.zeros(collapsed_profile.shape, dtype=np.float64)
+        local_sum[:]      = collapsed_profile[:]
+        global_sum          = np.zeros(local_sum.shape, dtype=np.float64)
 
         self.comm.Allreduce(local_counts, global_counts, op=MPI.SUM)
         self.comm.Allreduce(local_sum, global_sum, op=MPI.SUM)

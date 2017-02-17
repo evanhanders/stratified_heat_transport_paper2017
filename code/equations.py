@@ -34,6 +34,7 @@ class Atmosphere:
                           ny=256, Ly=4,
                           nz=128, Lz=1,
                           grid_dtype=np.float64, comm=MPI.COMM_WORLD, mesh=None):
+        self.mesh=mesh
 
         z_basis = de.Chebyshev('z', nz, interval=[0., Lz], dealias=3/2)
         if self.dimensions > 1:
@@ -1402,7 +1403,7 @@ class FC_polytrope_2d(FC_equations_2d, Polytrope):
                 elif key == 'nu_l':
                     array = self.problem.parameters[key]['g'][0,:] +\
                             self.problem.parameters['nu_r']['g'][0,:]
-                if key == 'del_chi_l':
+                elif key == 'del_chi_l':
                     array = self.problem.parameters[key]['g'][0,:] +\
                             self.problem.parameters['del_chi_r']['g'][0,:]
                 elif key == 'del_nu_l':
@@ -1465,4 +1466,81 @@ class FC_polytrope_3d(FC_equations_3d, Polytrope):
                                                         easy_rho_energy   = easy_rho_energy,
                                                         **kwargs)
         self.test_hydrostatic_balance(T=self.T0, rho=self.rho0)
+
+    def initialize_output(self, solver, data_dir, *args, **kwargs):
+        #Need to think about this more
+        super(FC_polytrope_3d, self).initialize_output(solver, data_dir, *args, **kwargs)
+#        import h5py
+#        import os
+#        from dedalus.core.field import Field
+#        dir = data_dir + '/atmosphere/'
+#        file = dir + 'atmosphere.h5'
+#        if self.domain.dist.comm_cart.rank == 0:
+#            if not os.path.exists('{:s}'.format(dir)):
+#                os.mkdir('{:s}'.format(dir))
+#        if self.domain.dist.comm_cart.rank == 0:
+#            f = h5py.File('{:s}'.format(file), 'w')
+#        for key in self.problem.parameters.keys():
+#            if 'scale' in key:
+#                continue
+#            if type(self.problem.parameters[key]) == Field:
+#                if key == 'chi_l':
+#                    array = self.problem.parameters[key]['g'][0,0,:] +\
+#                            self.problem.parameters['chi_r']['g'][0,0,:]
+#                elif key == 'nu_l':
+#                    array = self.problem.parameters[key]['g'][0,0,:] +\
+#                            self.problem.parameters['nu_r']['g'][0,0,:]
+#                if key == 'del_chi_l':
+#                    array = self.problem.parameters[key]['g'][0,0,:] +\
+#                            self.problem.parameters['del_chi_r']['g'][0,0,:]
+#                elif key == 'del_nu_l':
+#                    array = self.problem.parameters[key]['g'][0,0,:] +\
+#                            self.problem.parameters['del_nu_r']['g'][0,0,:]
+#                elif key == 'chi_r':
+#                    continue
+#                else:
+#                    print(key, self.problem.parameters[key]['g'].shape,
+#                        self.problem.parameters[key]['g'][0,0,:])
+#                    array = self.problem.parameters[key]['g'][0,0,:]
+#                self.problem.parameters[key].set_scales(1, keep_data=True)
+#                this_chunk      = np.zeros(self.nz)
+#                global_chunk    = np.zeros(self.nz)
+#                if self.mesh != None:
+#                    n_per_cpu       = int(self.nz/self.mesh[-1])
+#                else:
+#                    n_per_cpu       = int(self.nz/self.domain.dist.comm_cart.size)
+#                this_chunk[ self.domain.dist.comm_cart.rank*(n_per_cpu):\
+#                            (self.domain.dist.comm_cart.rank+1)*(n_per_cpu)] = \
+#                                    self.problem.parameters[key]['g'][0,0,:]
+#                self.domain.dist.comm_cart.Allreduce(this_chunk, global_chunk, op=MPI.SUM)
+#                if self.domain.dist.comm_cart.rank == 0:
+#                    if key != 'chi_l' and key != 'nu_l' and key != 'del_chi_l' and key != 'del_nu_l':
+#                        f[key] = global_chunk
+#                    elif key == 'chi_l':
+#                        f['chi'] = global_chunk
+#                    elif key == 'nu_l':
+#                        f['nu'] = global_chunk
+#                    elif key == 'del_chi_l':
+#                        f['del_chi'] = global_chunk
+#                    elif key == 'del_nu_l':
+#                        f['del_nu'] = global_chunk
+#                        
+#            elif self.domain.dist.comm_cart.rank == 0:
+#                f[key] = self.problem.parameters[key]
+#        if self.domain.dist.comm_cart.rank == 0:
+#            f['dimensions']     = 3
+#            f['nx']             = self.nx
+#            f['nz']             = self.nz
+#            f['ny']             = self.ny
+#            f['m_ad']           = self.m_ad
+#            f['m']              = self.m_ad - self.epsilon
+#            f['epsilon']        = self.epsilon
+#            f['n_rho_cz']       = self.n_rho_cz
+#            f['rayleigh']       = self.Rayleigh
+#            f['prandtl']        = self.Prandtl
+#            f['aspect_ratio']   = self.aspect_ratio
+#            f['atmosphere_name']= self.atmosphere_name
+#            f.close()
+        return self.analysis_tasks
+
 
