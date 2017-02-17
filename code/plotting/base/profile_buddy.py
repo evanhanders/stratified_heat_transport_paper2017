@@ -379,8 +379,8 @@ class ProfileBuddy(PlotBuddy):
                 for i in range(self.full_average_profiles['rho_full'].shape[0]):
                     current_field.set_scales(1, keep_data=False)
                     current_field['g'] = self.full_average_profiles['rho_full'][i,:]
-                    density_contrasts.append( current_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/\
-                                              current_field.interpolate(z=0)['g'][0])
+                    density_contrasts.append( current_field.interpolate(z=0)['g'][0]/\
+                                              current_field.interpolate(z=self.atmosphere['Lz'])['g'][0])
                 f['density_contrasts'] = np.array(density_contrasts, dtype=np.float32)
                     
                     
