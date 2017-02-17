@@ -315,23 +315,24 @@ The efficiency of convection is quantified by the Nusselt number.
 Nu is well-defined in RB convection
 as the total flux normalized by the steady-state conductive flux 
 \cite{johnston&doering2009, otero&all2002}.
-In stratified convection Nu is more difficult to define, but one of the earliest definitions used
-was \cite{graham1975,hurlburt&all1984}
+In stratified convection Nu is more difficult to define, and we use
+a modified version of a traditional stratified Nusselt number \cite{graham1975,hurlburt&all1984},
 \begin{equation}
-\text{Nu} \equiv \frac{F_{\text{conv, z}} + F_{\text{cond, z}} - F_{\text{A}}}{F_{\text{ref}} - F_{\text{A}}},
+\text{Nu} \equiv \frac{\langle F_{\text{conv, z}} + F_{\text{cond, z}} - F_{\text{A}}\rangle}
+{\langle F_{\text{cond, z}} - F_{\text{A}}\rangle} 
+= 1 + \frac{\langle F_{\text{conv, z}}\rangle}{\langle F_{\text{cond, z}} - F_{\text{A}} \rangle}
 \label{eqn:nusselt}
 \end{equation}
 where $F_{\text{conv, z}}$ and $F_{\text{cond, z}}$ are the 
 z-components of $\bm{F}_{\text{conv}}$ and $\bm{F}_{\text{cond}}$,
-respectively.  $F_{\text{A}} \equiv -\kappa \partial_z T_{\text{ad}}$ 
+respectively and $\langle \rangle$ implies a volume average.  
+$F_{\text{A}} \equiv -\langle\kappa\rangle \partial_z T_{\text{ad}}$ 
 is the adiabatic conductive flux and
 $\partial_z T_{\text{ad}} \equiv - g / c_{P}$ 
-for an ideal gas in hydrostatic equilibrium.
-The conductive flux of a linear profile connecting the upper
-and lower plates
-is $F_{\text{ref}} \equiv \Delta T / L_z$, 
-where $\Delta T \equiv T(L_z) - T(0)$.  $F_{\text{ref}}$ is constant for 
-the choice of fixed-temperature boundaries.
+for an ideal gas in hydrostatic equilibrium.  Here we specify
+$\langle \kappa \rangle = \langle (\rho_{1}/\rho_{0})\kappa_0 \rangle$.
+At large values of $\epsilon$, $\kappa$ evolves significantly as the
+density profile evolves.  At low $\epsilon$, $\langle\kappa\rangle \approx \kappa_0$.
 
 We contend that this is the general form of the Nusselt number
 and illustrate this with a few limiting
