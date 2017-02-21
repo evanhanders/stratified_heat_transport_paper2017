@@ -300,8 +300,8 @@ for label in ax1.get_yticklabels():
 
 fig.savefig('./figs/density_v_ra.png', dpi=1200, bbox_inches='tight')
 
-#for dir in dirs_root:
-#    print('ra: {}, eps: {}'.format(dir[2], dir[1]))
-#    for key in dir[-1].keys():
-#        print(key, dir[-1][key])
-#    
+for dir in dirs_root:
+    print('ra: {}, eps: {}'.format(dir[2], dir[1]))
+    for key in dir[-1].keys():
+        print(key, dir[-1][key])
+    
