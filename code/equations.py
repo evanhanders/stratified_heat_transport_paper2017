@@ -566,8 +566,8 @@ class Polytrope(Atmosphere):
             # consider whether to scale nccs involving chi differently (e.g., energy equation)
             self.scale['g']            = (self.z0 - self.z)
             self.scale_continuity['g'] = (self.z0 - self.z)
-            self.scale_momentum['g']   = (self.z0 - self.z)**(1)#**np.floor(self.m_cz)
-            self.scale_energy['g']     = (self.z0 - self.z)**(1)#**np.floor(self.m_cz)
+            self.scale_momentum['g']   = (self.z0 - self.z)#**np.floor(self.m_cz)
+            self.scale_energy['g']     = (self.z0 - self.z)#**np.floor(self.m_cz)
 
         # choose a particular gauge for phi (g*z0); and -grad(phi)=g_vec=-g*z_hat
         # double negative is correct.
@@ -624,7 +624,10 @@ class Polytrope(Atmosphere):
                     chi_l = chi_top/(self.rho0['g'])
                     chi_r = 0
                 else:
-                    chi_l = chi_top/(self.z0 - self.z)
+                    if self.poly_m < 1:
+                        chi_l = np.exp(self.n_rho_cz)*chi_top/(self.z0 - self.z)
+                    else:
+                        chi_l = chi_top/(self.z0 - self.z)
                     chi_r = chi_top/(self.rho0['g']) - chi_l
                 logger.info('using constant kappa')
             else:
@@ -637,11 +640,15 @@ class Polytrope(Atmosphere):
                     nu_l  = nu_top/(self.rho0['g'])
                     nu_r = 0
                 else:
-                    nu_l  = nu_top/(self.z0 - self.z)
+                    if self.poly_m < 1:
+                        nu_l  = np.exp(self.n_rho_cz)*nu_top/(self.z0 - self.z)
+                    else:
+                        nu_l  = nu_top/(self.z0 - self.z)
                     nu_r  = nu_top/(self.rho0['g']) - nu_l
                 logger.info('using constant mu')
             else:
                 nu_l  = nu_top
+                nu_r = 0
                 logger.info('using constant nu')
 
       
