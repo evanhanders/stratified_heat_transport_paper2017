@@ -31,6 +31,7 @@ Options:
 
     --rk222                              Use RK222 as timestepper
     --safety_factor=<safety_factor>      Determines CFL Danger.  Higher=Faster [default: 0.2]
+    --split_diffusivities                If True, split the chi and nu between LHS and RHS to lower bandwidth
     
     --root_dir=<root_dir>                Root directory to save data dir in [default: ./]
     --label=<label>                      Additional label for run output directory
@@ -44,6 +45,8 @@ logger = logging.getLogger(__name__)
 import dedalus.public as de
 from dedalus.tools  import post
 from dedalus.extras import flow_tools
+import numpy as np
+
 try:
     from dedalus.extras.checkpointing import Checkpoint
     do_checkpointing = True
@@ -58,7 +61,8 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
                         fixed_T=False, fixed_flux=False, const_mu=True, const_kappa=True,\
                         restart=None, start_new_files=False, \
                         rk222=False, safety_factor=0.2, run_time_buoyancies=None, \
-                        data_dir='./', out_cadence=0.1, no_coeffs=False):
+                        data_dir='./', out_cadence=0.1, no_coeffs=False,
+                        split_diffusivities=False):
     import time
     import equations
     import os
@@ -82,9 +86,11 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
                                         epsilon=epsilon, n_rho_cz=n_rho_cz, aspect_ratio=aspect_ratio,\
                                         fig_dir='./FC_poly_atmosphere/')
     if epsilon < 1e-4:
-        atmosphere.set_IVP_problem(Rayleigh, Prandtl, ncc_cutoff=1e-14)
+        atmosphere.set_IVP_problem(Rayleigh, Prandtl, ncc_cutoff=1e-14, split_diffusivities=split_diffusivities)
+    elif epsilon > 1e-1:
+        atmosphere.set_IVP_problem(Rayleigh, Prandtl, ncc_cutoff=1e-6, split_diffusivities=split_diffusivities)
     else:
-        atmosphere.set_IVP_problem(Rayleigh, Prandtl, ncc_cutoff=1e-10)
+        atmosphere.set_IVP_problem(Rayleigh, Prandtl, ncc_cutoff=1e-10, split_diffusivities=split_diffusivities)
 
     if fixed_T:
         atmosphere.set_BC(fixed_temperature=True, stress_free=True)
@@ -179,8 +185,7 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
     else:
         solver.stop_sim_time    = 100*atmosphere.thermal_time
     
-    from numpy import inf
-    solver.stop_iteration   = inf
+    solver.stop_iteration   = np.inf
     solver.stop_wall_time   = run_time*3600
     report_cadence = 1
     output_time_cadence = out_cadence*atmosphere.buoyancy_time
@@ -401,4 +406,5 @@ if __name__ == "__main__":
                       safety_factor=float(args['--safety_factor']),
                       out_cadence=float(args['--out_cadence']),
                       data_dir=data_dir,
-                      no_coeffs=args['--no_coeffs'])
+                      no_coeffs=args['--no_coeffs'],
+                      split_diffusivities=args['--split_diffusivities'])

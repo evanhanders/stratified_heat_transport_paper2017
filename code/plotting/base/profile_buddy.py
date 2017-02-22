@@ -285,91 +285,41 @@ class ProfileBuddy(PlotBuddy):
                 'viscous_flux_z' in self.full_average_profiles.keys() and   \
                 'kappa_flux_fluc_z' in self.full_average_profiles.keys() and     \
                 'ln_rho1' in self.full_average_profiles.keys() and         \
-                'T1' in self.full_average_profiles.keys():
-                new_nu, means, stdevs = [], [], []
+                'T1' in self.full_average_profiles.keys() and               \
+                'vel_rms' in self.full_average_profiles.keys():
+                ma_ad_post, means, stdevs = [], [], []
 
                 for i in range(self.full_average_profiles['enthalpy_flux_z'].shape[0]):
                     T_full = self.full_average_profiles['T1'][i,:]+self.atmosphere['T0']
                     ln_rho = self.full_average_profiles['ln_rho1'][i,:]+np.log(self.atmosphere['rho0'])
                     kappa_flux_mean = self.atmosphere['rho0']*self.atmosphere['chi']
                     rho_full = np.exp(ln_rho)
-                    
-                    
-#                    current_field.set_scales(1, keep_data=False)
-#                    current_field['g'] = ln_rho
-#                    current_field.differentiate('z', out=work_field)
-#                    work_field.set_scales(1, keep_data=True)
-#                    grad_ln_rho = work_field['g']
-
-
                     F_conv = self.full_average_profiles['enthalpy_flux_z'][i,:]+ \
                              self.full_average_profiles['KE_flux_z'][i,:]+       \
                              self.full_average_profiles['PE_flux_z'][i,:]+       \
                              self.full_average_profiles['viscous_flux_z'][i,:]
                     F_cond = self.full_average_profiles['kappa_flux_fluc_z'][i,:] + kappa_flux_mean
 
-                    #better to interpolate rho at the edge, but good first start.
-                    rho_t0   = self.atmosphere['rho0'][-1]
-                    rho_ad   = 1#rho_full[-1]
-                    work_field.set_scales(1, keep_data=True)
-                    work_field['g'] = rho_full*self.atmosphere['chi']
-                    work_field.antidifferentiate('z', ('left', 0), out=current_field)
-                    kappa_ad = current_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
-#                    kappa_ad = rho_ad*kappa_flux_mean*((self.atmosphere['Lz']+1)**(1+self.atmosphere['epsilon'])-1)/\
-#                                    (rho_t0*self.atmosphere['Lz']*(self.atmosphere['epsilon']+1))
-#                    F_ad = rho_ad*(self.atmosphere['Lz']+1-self.atmosphere['z'])**(self.atmosphere['m_ad'])*self.atmosphere['chi']*\
-                            
-                    
-                    
-                    F_ad = kappa_ad*self.atmosphere['g']/self.atmosphere['Cp']/rho_ad
-
-
-                    work_field.set_scales(1, keep_data=True)
-                    work_field['g'] = F_ad
-                    work_field.antidifferentiate('z', ('left', 0), out=current_field)
-                    top_factor = current_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
-
-                    work_field.set_scales(1, keep_data=False)
-                    work_field['g'] = rho_full*self.atmosphere['chi'] - F_ad
-                    work_field.antidifferentiate('z', ('left', 0), out=current_field)
-                    bot_factor = current_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
-
-                    work_field.set_scales(1, keep_data=False)
-                    work_field['g'] = F_conv + F_cond
-                    work_field.antidifferentiate('z', ('left', 0), out=current_field)
-                    print('avg flux', current_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz'])
-                    avg_full_flux = current_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
-
-                    work_field.set_scales(1, keep_data=False)
-                    work_field['g'] = F_conv + self.full_average_profiles['kappa_flux_fluc_z'][i,:]
-                    work_field.antidifferentiate('z', ('left', 0), out=current_field)
-                    print('avg flux', current_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz'])
-                    avg_fluc_flux =  current_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
-                    
-                    work_field.set_scales(1, keep_data=False)
-                    work_field['g'] = self.full_average_profiles['kappa_flux_fluc_z'][i,:]
-                    work_field.antidifferentiate('z', ('left', 0), out=current_field)
-                    print('avg cond flux', current_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz'])
-                    
-                    print(self.atmosphere['epsilon'], self.atmosphere['rayleigh'], top_factor, bot_factor, kappa_flux_mean[0],\
-                                self.atmosphere['g'], self.atmosphere['Cp'])
-                    Nu = (F_conv + F_cond - top_factor)/(bot_factor)
-                    
+                   
+                    ma_post = self.full_average_profiles['vel_rms'][i,:]/\
+                                np.sqrt(self.atmosphere['gamma']*T_full)
+                   
                     current_field.set_scales(1, keep_data=False)
-                    current_field['g'] = Nu
+                    current_field['g'] = ma_post
                     current_field.antidifferentiate('z', ('left', 0), out=work_field)
                     mean = work_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
                     current_field.set_scales(1, keep_data=False)
-                    current_field['g'] = (Nu - mean)**2
+                    current_field['g'] = (ma_post - mean)**2
                     current_field.antidifferentiate('z', ('left', 0), out=work_field)
                     stdev = np.sqrt(work_field['g'][-1]/self.atmosphere['Lz'])
 
-                    new_nu.append(Nu)
+                    ma_ad_post.append(ma_post)
                     means.append(mean)
                     stdevs.append(stdev)
-                f['Nusselt_new'] = np.array(new_nu, dtype=np.float32)
-                f['Nusselt_new_mean'] = np.array(means)
-                f['Nusselt_new_stdev'] = np.array(stdevs)
+                f['Ma_ad_post'] = np.array(ma_ad_post, dtype=np.float32)
+                f['Ma_ad_post_mean'] = np.array(means)
+                f['Ma_ad_post_stdev'] = np.array(stdevs)
+                print('success')
 
                 
 
@@ -400,7 +350,6 @@ class ProfileBuddy(PlotBuddy):
             f['z'] = self.z
             f.close()
             f2.close()
-        print('success')
         self.comm.Barrier()
             
             
