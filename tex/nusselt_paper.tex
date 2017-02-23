@@ -63,67 +63,95 @@ solutions are.
 \section{Introduction}
 \refstepcounter{section}
 \label{sec:intro}
-Convective heat transport is essential
-in the cores of high mass stars,
-the envelopes of low mass stars, and the atmospheres of terrestrial and 
-jovian planets.  These astrophysical systems have density stratifications
-ranging from a few density scale heights (e.g. massive star cores)
-up to 14 density scale heights in the convective envelopes of low
-mass stars such as the Sun.
-Atmospheric stratification presumably modifies the fundamental
-dynamics and heat transport mechanisms of these atmospheres.
-Understanding the fundamental
-properties of compressible convection in stratified media is essential
-to characterizing systems in astrophysics and planetary sciences.  
-Numerical constraints have often restricted studies of compressible
-convection to moderately high Mach number (Ma), appropriate to regions near 
-the Sun's surface.  Few fundamental properties of
-low Ma convection, which occurs in the deep solar interior, are known.
+Convective dynamics transport energy in stellar and planetary atmospheres.
+In these objects, flows are compressible and
+feel the atmospheric stratification.  While in some systems this stratification is
+negligible, it is significant in regions such as
+the convective envelope of the Sun, which spans 14 density scale heights.
+In the bulk of these systems, flows are at very low Mach Number (Ma), but numerical
+constrainst have restricted most studies of compressible convection to high Ma.
+These studies provide important insight to low temperature, high Ma regions
+near the Sun's surface, but few fundamental
+properties of low Ma convection which characterize deeper motions
+are known.
 
-Early numerical experiments on stratified convection
+%Convective heat transport is essential
+%in the cores of high mass stars,
+%the envelopes of low mass stars, and the atmospheres of terrestrial and 
+%jovian planets.  These astrophysical systems have density stratifications
+%ranging from a few density scale heights (e.g. massive star cores)
+%up to 14 density scale heights in the convective envelopes of low
+%mass stars such as the Sun.
+%Atmospheric stratification presumably modifies the fundamental
+%dynamics and heat transport mechanisms of these atmospheres.
+%Understanding the fundamental
+%properties of compressible convection in stratified media is essential
+%to characterizing systems in astrophysics and planetary sciences.  
+%Numerical constraints have often restricted studies of compressible
+%convection to moderately high Mach number (Ma), appropriate to regions near 
+%the Sun's surface.  Few fundamental properties of
+%low Ma convection, which occurs in the deep solar interior, are known.
+
+In the widely-studied \RB (RB) problem of Boussinesq convection, 
+upflows and downflows are symmetrical and
+the conductive flux ($\propto \grad T$) approaches zero in the convective interior.
+Early numerical experiments of moderate-to-high Ma compressible convection
 in two \cite{graham1975, chan&all1982,
 hurlburt&all1984, cattaneo&all1990} and three 
 \cite{cattaneo&all1991, brummell&all1996} dimensions
-revealed a number of basic properties in the moderate-to-high 
-Ma regime. In the widely-studied \RB (hereafter RB) problem, 
-upflows and downflows are symmetrical and
-the conductive flux approaches zero in the convective interior.
-These two hallmark characteristics of RB convection change
-significantly when stratification is included.  Stratified convection 
-exhibits narrow downflow lanes and broad upflow regions.
+revealed that these two hallmark characteristics of RB convection change
+significantly when stratification is included.  Downflow lanes
+become fast and narrow, and upflow lanes turn into broad, slow upwellings.
 Furthermore, the \emph{entropy} gradient is negated by convection 
 rather than the temperature gradient, and
 a significant conductive flux can exist in the presence of
 efficient convection.
 
-In RB convection, there exist two primary control parameters: 
+In RB convection, there exist two primary dynamical control parameters: 
 the Rayleigh number (Ra, the ratio of
 buoyant driving to diffusive damping) and the Prandtl number 
 (Pr, the ratio of viscous to thermal
-diffusivity).  These numbers coupled with the aspect ratio of 
-the physical domain and the boundary conditions
-determine the dynamics of the convection.  In stratified atmospheres, 
-in addition to specifying the equation of state and
-fundamental properties of the gas, the two control parameters of 
-RB convection are joined by the degree of
-stratification across the domain and the characteristic 
-Ma of the convective flows.  
-Polytropically stratified atmospheres, such as those used in 
-early studies \cite{graham1975, chan&all1982, hurlburt&all1984, 
-cattaneo&all1990, cattaneo&all1991, brummell&all1996}, are an ideal extension of
-RB convection into the stratified realm because the two additional 
-control parameters are directly linked to
-basic properties of the atmosphere.  The density stratification is 
-set by the number of density scale heights (\nrho)
-the atmosphere spans, and Ma is controlled 
-by the superadiabatic excess ($\epsilon$),
-the deviation of the polytropic index from the adiabatic polytropic 
-index \cite{graham1975}.
+diffusivity). These numbers control two useful
+measures of turbulence in the evolved solution:
+the Reynolds
+number (Re, the strength of advection to viscous diffusion)
+and the Peclet number (Pe = Re Pr).  Stratified atmospheres
+with negative entropy gradients are unstable to convection,
+and the magnitude of that entropy gradient, or the superadiabaticity,
+joins Ra and Pr as an important control parameter.  The
+Ma of the evolved solution is primarily controlled by 
+the \emph{superadiabatic excess}, $\epsilon$, which 
+sets the scale of the atmospheric entropy gradient \cite{graham1975}.
+
+%In RB convection, there exist two primary control parameters: 
+%the Rayleigh number (Ra, the ratio of
+%buoyant driving to diffusive damping) and the Prandtl number 
+%(Pr, the ratio of viscous to thermal
+%diffusivity).  These numbers coupled with the aspect ratio of 
+%the physical domain and the boundary conditions
+%determine the dynamics of the convection.  In stratified atmospheres, 
+%in addition to specifying the equation of state and
+%fundamental properties of the gas, the two control parameters of 
+%RB convection are joined by the degree of
+%stratification across the domain and the characteristic 
+%Ma of the convective flows.  
+%Polytropically stratified atmospheres, such as those used in 
+%early studies \cite{graham1975, chan&all1982, hurlburt&all1984, 
+%cattaneo&all1990, cattaneo&all1991, brummell&all1996}, are an ideal extension of
+%RB convection into the stratified realm because the two additional 
+%control parameters are directly linked to
+%basic properties of the atmosphere.  The density stratification is 
+%set by the number of density scale heights (\nrho)
+%the atmosphere spans, and Ma is controlled 
+%by the superadiabatic excess ($\epsilon$),
+%the deviation of the polytropic index from the adiabatic polytropic 
+%index \cite{graham1975}.
 
 In this letter we study the behavior of convective heat transport, 
 quantified by the Nusselt number (Nu), in plane-parallel, 
 two-dimensional, polytropically stratified atmospheres.  
-We vary $\epsilon$ and Ra while holding $\nrho$, Pr, and the aspect ratio
+We vary $\epsilon$ and Ra while holding Pr, aspect ratio, boundary conditions,
+and initial atmospheric stratification
 constant.  We describe experimental methods in section 
 \ref{sec:experiment}, including the construction of atmospheres, equations, and numerical methods.  
 Results are described in section \ref{sec:results} and their implications are discussed
@@ -132,7 +160,7 @@ in section \ref{sec:discussion}.
 \section{Experiment} 
 \refstepcounter{section}
 \label{sec:experiment}
-We exmine the simplest stratified extension of RB by studying a
+We examine the simplest stratified extension of RB by studying a
 fluid composed of monatomic ideal gas particles with an adiabatic 
 index of $\gamma = 5/3$ and whose equation of state is $P = R\rho T$. 
 This is consistent with the approach used in earlier work.
