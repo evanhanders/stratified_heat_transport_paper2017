@@ -428,7 +428,7 @@ can be sensibly analyzed.
 
 At large Ma ($\epsilon = 0.5$), bulk thermodynamic structures are similar but
 shock systems form in the upper atmosphere near downflow lanes 
-(Fig. \ref{fig:entropy_snapshots}b,c) once Ra is sufficiently large.
+once Ra is sufficiently large  (Fig. \ref{fig:entropy_snapshots}b,c).
 Similar shock phenomena were reported in
 both two \cite{cattaneo&all1990} and three \cite{malagoli&all1990} dimensional polytropic simulations previously.
 As Ra is increased to large values 
@@ -476,13 +476,13 @@ $\langle \kappa \rangle = \langle \rho\chi \rangle$, which is nearly
 $\kappa_0$ when $\epsilon$ is small but can change appreciably for large
 values of $\epsilon$.
 In the Boussinesq approximation, under which $\grad S = 0$ only when 
-$\grad T = 0$, this definition reduces the the traditional definition
+$\grad T = 0$, this definition reduces to the traditional definition
 of the Nusselt number \cite{otero&all2002, johnston&doering2009}.
 
 The variation of Nu with Ra$_{\text{top}}$ is shown in Fig. \ref{fig:re_and_nu_v_ra}a.
-At low to moderate Ra, Nu $\propto$ Ra$_{\text{top}}^{1/3}$ regardless of $\epsilon$ (NEED TO CITE A
+At low to moderate Ra$_{\text{top}}$, Nu $\propto$ Ra$_{\text{top}}^{1/3}$ regardless of $\epsilon$ (NEED TO CITE A
 RB PAPER WITH A 1/3 POWER LAW \cite{ahlers&all2009} maybe?).  At large Ra$_{\text{top}}$, Nu $\propto$ Ra$_{\text{top}}^{1/5}$ at $\epsilon = 0.5$.
-The scaling of Nu with Ra is unclear at low $\epsilon$ (so I'll try to fill in that space with
+The scaling of Nu with Ra$_{\text{top}}$ is unclear at low $\epsilon$ (so I'll try to fill in that space with
 data from comps...time to fish it out of Lou and do post-processing hell).
 
 The Reynolds number and Peclet number,
@@ -495,7 +495,7 @@ Our choice of $\{\nu,\chi\}\propto \rho_0^{-1}$ drastically changes
 the value of Re between the top and bottom of the atmosphere.  We report values of
 Re at the midplane ($z=L_z/2$) of the atmosphere in Fig. \ref{fig:re_and_nu_v_ra}b.
 At low Ra$_{\text{top}}$, Re $\propto$ Ra$_{\text{top}}^{3/4}$, but at high Ra$_{\text{top}}$
-where Ma $\geq 1$ for $\epsilon = 0.5$, this scaling gives way to a Re $\propto$ Ra$_{\text{top}}^{1/2}$.
+where the average Ma $\approx 1$ for $\epsilon = 0.5$, this scaling gives way to a Re $\propto$ Ra$_{\text{top}}^{1/2}$.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/density_v_ra.png}
@@ -509,7 +509,7 @@ measuring the density stratification bifurcate as density inversions form within
 boundary layers.}
 \end{figure}
 
-As these simulations evolve and the thermodynamic variables evolve, the density
+As the thermodynamic variables converge to their steady state values, the density
 profile evolves while remaining in hydrostatic equilibrium to zeroth order.  In 
 Fig. \ref{fig:nrho_v_ra} we show the number of density scale heights present in the
 evolved solution using two measures.  We find that once the average Ma of the domain
@@ -526,7 +526,13 @@ stratified convection in simplified 2-D polytropic atmospheres.
 We argue that these atmospheres are the natural extension
 of the RB problem to stratified systems, 
 and are an ideal laboratory for understanding the basic properties of stratified
-convection.  
+convection. 
+
+At low Ra and Ma, the scaling of Nu with Ra is reminiscent of RB convection.  However,
+at high Ra and Ma, the scaling breaks down to a Ra$^{1/5}$ scaling unlike what is seen
+in Boussinesq convection.  Similarly, the Reynolds number switches from a Ra$^{3/4}$ to
+a Ra$^{1/2}$ scaling in this regime shift.  It is interesting that both of these
+scaling laws turn over by roughly a factor of 2/3.
 
 Time-dependent oscillating shear states have developed spontaneously, as seen before in RB convection
 \cite{goluskin&all2014}.  While computationally difficult, the highest values of Ra and the lowest value
@@ -540,8 +546,9 @@ here will serve as a foundation both for understanding and
 comparing heat transport in stratified convection
 to that in RB convection \cite{johnston&doering2009}, 
 and for future studies of transport in stratified
-convection,  both in determining the utility of simplified equation sets (such as the
-anelastic equations) and in coming to understand more realistic systems, 
+convection.  These results can be used to determine if simplified equation sets, 
+such as the anelastic equations, carry heat in the same manner as the FC equations.
+This work will also be useful in coming to understand more realistic systems, 
 such as rapidly rotating atmospheres \cite{julien&all2012},
 atmospheres bounded by stable regions \cite{hurlburt&all1986}, 
 or regions with realistic profiles of $\kappa$.
