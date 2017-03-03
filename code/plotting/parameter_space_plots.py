@@ -96,6 +96,7 @@ for dir in root_buddy.dir_info:
     print('ra: {}, eps: {}'.format(dir[2], dir[1]))
     for key in dir[-1].keys():
         print(key, dir[-1][key])
+    print('  ')
 
 dirs_root = root_buddy.dir_info
 dirs_mach = mach_buddy.dir_info
@@ -108,7 +109,6 @@ ax2 = fig.add_subplot(2,1,2)
 ax1.grid(which='major')
 ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'Nusselt_6', grouping='eps')
 
-print(ax1, data, groups)
 x1s = np.logspace(1.5, 4, 100)
 x1s_long = np.logspace(2, 8, 100)
 y1s = (3/5)*x1s**(1/3)

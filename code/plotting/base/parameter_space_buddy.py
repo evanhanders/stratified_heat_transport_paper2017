@@ -54,11 +54,12 @@ class ParameterSpaceBuddy():
         #Get all of the directories and get info on them.
         dirs = []
 
-        for i, dir in enumerate(glob.glob('{:s}/*/'.format(self.top_dir))):
+        for i, dir in enumerate(glob.glob('{:s}/FC*/'.format(self.top_dir))):
             tag = dir.split(self.top_dir)[-1]
             info = dict()
             current_info = [dir,]
             break_loop = False
+            print(tag)
             for stem in tag.split('_'):
                 for parameter in self.parameters:
                     if parameter in stem.lower():
@@ -93,7 +94,7 @@ class ParameterSpaceBuddy():
         base_n_files = n_files
 
         for i, dir in enumerate(important_dirs):
-            if np.mod(i, comm.size) != comm.rank:
+            if np.mod(i, comm_world.size) != comm_world.rank:
                 continue
             try:
                 comm_new = comm.Create(comm.Get_group().Incl(np.ones(1)*comm.rank))
@@ -162,7 +163,6 @@ class ParameterSpaceBuddy():
         data = self.dir_info
 
         index = self.parameters.index(grouping.lower())+1
-        print(grouping, index)
         if grouping == 'eps':
             groups = np.unique(np.array(data)[:,index])
             groups = EPSILON_ORDER
@@ -185,13 +185,11 @@ class ParameterSpaceBuddy():
         plot_points = dict()
 
         for i, group in enumerate(groups):
-            print(group, 'here')
             x_vals = []
             x_err  = []
             y_vals = []
             y_err  = []
             for dir in data:
-                print(group, dir[index])
                 if group != dir[index] or dir[-1] == {}:
                     continue
                 x_vals.append(dir[x_key])
@@ -199,7 +197,6 @@ class ParameterSpaceBuddy():
 
                 y_vals.append(dir[-1][y_key][0])
                 y_err.append((dir[-1][y_key][1], dir[-1][y_key][2]))
-            print(x_vals, x_err)
             if len(x_vals) == 0:
                 continue
             x_vals, x_err, y_vals, y_err = zip(*sorted(zip(x_vals, x_err, y_vals, y_err)))
@@ -244,7 +241,6 @@ class ParameterSpaceBuddy():
                 kwargs['markerfacecolor'] = 'None'
                 kwargs['markeredgecolor'] = colors[i]
             ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, label=label, color=colors[i], marker=markers[i], ms=markersize[i], ls='None', capsize=0, **kwargs)
-            print(x_vals, y_vals, x_err, y_err)
 
             plot_points[group] = (x_vals, y_vals, x_err, y_err)
         return ax, plot_points, groups

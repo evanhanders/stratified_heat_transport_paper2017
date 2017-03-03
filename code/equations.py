@@ -1513,14 +1513,24 @@ class FC_polytrope_3d(FC_equations_3d, Polytrope):
 #                self.problem.parameters[key].set_scales(1, keep_data=True)
 #                this_chunk      = np.zeros(self.nz)
 #                global_chunk    = np.zeros(self.nz)
+#                comm = None
 #                if self.mesh != None:
-#                    n_per_cpu       = int(self.nz/self.mesh[-1])
+#                    comm = self.domain.dist.comm_cart.Create(self.domain.dist.comm_cart.Get_group().Incl(np.arange(self.mesh[-1])))
+#                    n_per_cpu       = int(np.floor(self.nz/self.mesh[-1]))
 #                else:
-#                    n_per_cpu       = int(self.nz/self.domain.dist.comm_cart.size)
-#                this_chunk[ self.domain.dist.comm_cart.rank*(n_per_cpu):\
-#                            (self.domain.dist.comm_cart.rank+1)*(n_per_cpu)] = \
-#                                    self.problem.parameters[key]['g'][0,0,:]
-#                self.domain.dist.comm_cart.Allreduce(this_chunk, global_chunk, op=MPI.SUM)
+#                    comm = self.domain.dist.comm_cart
+#                    n_per_cpu       = int(np.floor(self.nz/self.domain.dist.comm_cart.size))
+#                extra_prev = 0
+#                if comm.rank < comm.size:
+#                    if np.mod(self.nz, n_per_cpu) > comm.rank:
+#                        n_per_cpu += 1
+#                    else:
+#                        extra_prev += np.mod(self.nz, n_per_cpu)
+#
+#                    this_chunk[ comm.rank*(n_per_cpu)+extra_prev:\
+#                                (comm.rank+1)*(n_per_cpu)+extra_prev] = \
+#                                        self.problem.parameters[key]['g'][0,0,:]
+#                    comm.Allreduce(this_chunk, global_chunk, op=MPI.SUM)
 #                if self.domain.dist.comm_cart.rank == 0:
 #                    if key != 'chi_l' and key != 'nu_l' and key != 'del_chi_l' and key != 'del_nu_l':
 #                        f[key] = global_chunk
