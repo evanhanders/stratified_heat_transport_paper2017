@@ -287,18 +287,33 @@ class ProfileBuddy(PlotBuddy):
                 'ln_rho1' in self.full_average_profiles.keys() and         \
                 'T1' in self.full_average_profiles.keys() and               \
                 'vel_rms' in self.full_average_profiles.keys():
-                ma_ad_post, means, stdevs = [], [], []
+                ma_ad_post, ma_means, ma_stdevs = [], [], []
+                nu_6_post, nu_6_means, nu_6_stdevs = [], [], []
 
                 for i in range(self.full_average_profiles['enthalpy_flux_z'].shape[0]):
                     T_full = self.full_average_profiles['T1'][i,:]+self.atmosphere['T0']
                     ln_rho = self.full_average_profiles['ln_rho1'][i,:]+np.log(self.atmosphere['rho0'])
-                    kappa_flux_mean = self.atmosphere['rho0']*self.atmosphere['chi']
                     rho_full = np.exp(ln_rho)
+                    kappa_flux_mean = self.atmosphere['rho0']*self.atmosphere['chi']
+                    kappa_ad = self.atmosphere['chi']*rho_full
+                    current_field.set_scales(1, keep_data=False)
+                    current_field['g'] = kappa_ad
+                    current_field.antidifferentiate('z', ('left', 0), out=work_field)
+                    kappa_ad_mean = work_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
+                    grad_t_ad = self.atmosphere['g']/self.atmosphere['Cp']
+
                     F_conv = self.full_average_profiles['enthalpy_flux_z'][i,:]+ \
                              self.full_average_profiles['KE_flux_z'][i,:]+       \
                              self.full_average_profiles['PE_flux_z'][i,:]+       \
                              self.full_average_profiles['viscous_flux_z'][i,:]
                     F_cond = self.full_average_profiles['kappa_flux_fluc_z'][i,:] + kappa_flux_mean
+
+                    current_field.set_scales(1, keep_data=False)
+                    current_field['g'] = F_cond - kappa_ad_mean*grad_t_ad
+                    current_field.antidifferentiate('z', ('left', 0), out=work_field)
+                    nu_bottom = work_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
+
+                    Nu_6 = (F_conv + F_cond - kappa_ad_mean*grad_t_ad)/(nu_bottom)
 
                    
                     ma_post = self.full_average_profiles['vel_rms'][i,:]/\
@@ -314,11 +329,30 @@ class ProfileBuddy(PlotBuddy):
                     stdev = np.sqrt(work_field['g'][-1]/self.atmosphere['Lz'])
 
                     ma_ad_post.append(ma_post)
-                    means.append(mean)
-                    stdevs.append(stdev)
+                    ma_means.append(mean)
+                    ma_stdevs.append(stdev)
+
+                    current_field.set_scales(1, keep_data=False)
+                    current_field['g'] = Nu_6
+                    current_field.antidifferentiate('z', ('left', 0), out=work_field)
+                    mean = work_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
+                    current_field.set_scales(1, keep_data=False)
+                    current_field['g'] = (ma_post - Nu_6)**2
+                    current_field.antidifferentiate('z', ('left', 0), out=work_field)
+                    stdev = np.sqrt(work_field['g'][-1]/self.atmosphere['Lz'])
+
+                    nu_6_post.append(Nu_6)
+                    nu_6_means.append(mean)
+                    nu_6_stdevs.append(stdev)
+
+                
                 f['Ma_ad_post'] = np.array(ma_ad_post, dtype=np.float32)
-                f['Ma_ad_post_mean'] = np.array(means)
-                f['Ma_ad_post_stdev'] = np.array(stdevs)
+                f['Ma_ad_post_mean'] = np.array(ma_means)
+                f['Ma_ad_post_stdev'] = np.array(ma_stdevs)
+                if 'Nusselt_6' not in self.full_average_profiles.keys():
+                    f['Nusselt_6'] = np.array(nu_6_post, dtype=np.float32)
+                    f['Nusselt_6_mean'] = np.array(nu_6_means)
+                    f['Nusselt_6_stdev'] = np.array(nu_6_stdevs)
                 print('success')
 
                 

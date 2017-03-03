@@ -831,8 +831,10 @@ class FC_equations(Equations):
         # thermal boundary conditions
         if fixed_flux:
             logger.info("Thermal BC: fixed flux (full form)")
-            self.problem.add_bc( "left(T1_z + ln_rho1*T0_z)  =  left((exp(-ln_rho1)-1+ln_rho1)*T0_z)")
-            self.problem.add_bc("right(T1_z + ln_rho1*T0_z)  = right((exp(-ln_rho1)-1+ln_rho1)*T0_z)")
+#            self.problem.add_bc( "left(T1_z + ln_rho1*T0_z)  =  left((exp(-ln_rho1)-1+ln_rho1)*T0_z)")
+            self.problem.add_bc( "left(T1_z) + left(ln_rho1)*left(T0_z)  =  (exp(-left(ln_rho1))-1+left(ln_rho1))*left(T0_z)")
+#            self.problem.add_bc("right(T1_z + ln_rho1*T0_z)  = right((exp(-ln_rho1)-1+ln_rho1)*T0_z)")
+            self.problem.add_bc( "right(T1_z) + right(ln_rho1)*right(T0_z)  =  (exp(-right(ln_rho1))-1+right(ln_rho1))*right(T0_z)")
             self.dirichlet_set.append('T1_z')
             self.dirichlet_set.append('ln_rho1')
         elif fixed_temperature:

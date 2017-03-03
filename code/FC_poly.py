@@ -189,7 +189,10 @@ def FC_polytrope(  Rayleigh=1e4, Prandtl=1, aspect_ratio=4,\
     solver.stop_wall_time   = run_time*3600
     report_cadence = 1
     output_time_cadence = out_cadence*atmosphere.buoyancy_time
-    Hermitian_cadence = 100
+    if threeD:
+        Hermitian_cadence = 10
+    else:
+        Hermitian_cadence = 100
     
     logger.info("stopping after {:g} time units".format(solver.stop_sim_time))
     logger.info("output cadence = {:g}".format(output_time_cadence))

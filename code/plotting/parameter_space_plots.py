@@ -14,7 +14,7 @@ import matplotlib
 matplotlib.use('Agg')
 matplotlib.rcParams.update({'font.size': 11})
 import matplotlib.pyplot as plt
-from base.plot_buddy import ProfileBuddy, COLORS
+from base.plot_buddy import ParameterSpaceBuddy, ProfileBuddy, COLORS
 import os
 import numpy as np
 import glob
@@ -22,84 +22,65 @@ from docopt import docopt
 
 import dedalus.public as de
 
+EPSILON_ORDER=[1e-7, 1e0, 1e-4, 5e-1]
+FORCE_WRITE=False
 
-COLORS=['orange', 'green', 'indigo', 'black']
-MARKERS=['s', 'd', '*', 'o']
-
+def line_leastsq(x, y, y_uncert):
+    x = np.copy(x)
+    min_x = np.min(x)
+    max_x = np.max(x)
+    x_sub = 0
+    if min_x != 0:
+        if y_uncert[0] > y_uncert[-1]:
+            x_sub = max_x
+        else:
+            x_sub = min_x
+        x -= x_sub
+    s = np.sum(1/y_uncert**2)#/max_y_u**2
+    sx = np.sum(x / y_uncert**2)#/max_y_u**2
+    sy = np.sum(y / y_uncert**2)#/max_y_u
+    sx2 = np.sum(x**2 / y_uncert**2)#/max_y_u**2
+    sxy = np.sum(x*y / y_uncert**2)#/max_y_u
+    
+    Delta = (s*sx2 - sx**2) 
+    slope = (s * sxy - sx * sy) / Delta 
+    intercept = (sx2*sy - sx*sxy) / Delta - x_sub*slope
+    p = np.array((slope, intercept))
+    covar = np.array(((s, -sx),(-sx, sx2)))/Delta
+    return p, covar
+START_FILE=50
+N_FILES=1000
 golden_ratio=1.618
 FIGWIDTH=3+7.0/16
 FIGHEIGHT=(FIGWIDTH/golden_ratio)*2.25 #2 plots, with padding for x-label.
 
-#MARKERS=['s', 'o', '*']
 
 from mpi4py import MPI
-
 comm = MPI.COMM_WORLD
 
+
+#root_dir='/nobackup/eanders/sp2017/comps_data/'
 root_dir='/nobackup/eanders/sp2017/fc_poly_hydro/'
 mach_dir='/nobackup/eanders/sp2017/mach_eps/'
+param_keys = ['Ra', 'eps', 'nrhocz', 'Pr']
 
-start_file=50
-n_files=1000
-
-#change to 5
-param_keys = ['Ra', 'eps', 'nrhocz', 'Pr', 'dims']
 keys = ['Nusselt', 'Nusselt_5', 'Nusselt_6', 'norm_5_kappa_flux_z',  'Re_rms', 'Ma_ad', 'Ma_iso', 'ln_rho1', 'T1', 'vel_rms',\
     'rho_full', 'T_full', 'kappa_flux_z', 'enthalpy_flux_z', 'PE_flux_z', 'KE_flux_z', 'viscous_flux_z', 'kappa_flux_fluc_z']
-out_dir_name = '/parameter_profiles/'
-out_file_name= 'parameter'
+plot_keys = [('Nusselt_6', 'minmax'), ('Re_rms', 'midplane'), ('Ma_ad_post', 'minmax'), ('density_contrasts', 'val'), ('rho_full', 'logmaxovermin')]
 
-def get_info(start_dir, keys, out_dir_name, out_file_name):
-    #Get all of the directories and get info on them.
-    dirs = []
+root_buddy = ParameterSpaceBuddy(root_dir, parameters=param_keys)
+mach_buddy = ParameterSpaceBuddy(mach_dir, parameters=param_keys)
 
-    for i, dir in enumerate(glob.glob('{:s}/*/'.format(start_dir))):
-        tag = dir.split(start_dir)[-1]
-        info = dict()
-        for stem in tag.split('_'):
-            if 'eps' in stem:
-                info['eps'] = float(stem.split('eps')[-1])
-            if 'Ra' in stem:
-                info['Ra']  = float(stem.split('Ra')[-1])
-            if 'nrhocz' in stem:
-                info['nrhocz'] = float(stem.split('nrhocz')[-1])
-            if 'Pr' in stem:
-                info['Pr']  = float(stem.split('Pr')[-1])
-            if '2D' in stem:
-                info['dimensions'] = 2
-            elif '3D' in stem:
-                info['dimensions'] = 3
-        try:
-            dirs.append([dir, info['eps'], info['Ra'], info['Pr'], info['nrhocz'], info['dimensions'], dict()])
-        except:
-            print('not a data dir')
+root_buddy.get_info()
+mach_buddy.get_info()
+
+from docopt import docopt
+args = docopt(__doc__)
+if args['--calculate']:
+    root_buddy.calculate_parameters(keys, force_write=FORCE_WRITE, start_file=START_FILE, n_files=N_FILES)
+    mach_buddy.calculate_parameters(keys, force_write=FORCE_WRITE, start_file=START_FILE, n_files=N_FILES)
 
 
-    args = docopt(__doc__)
-    ########### Analyze raw data ########################
-    if args['--calculate']:
-        for i, dir in enumerate(dirs):
-            if np.mod(i, comm.size) != comm.rank:
-                continue
-            try:
-    #        if True:
-                comm_new = comm.Create(comm.Get_group().Incl(np.ones(1)*comm.rank))
-                
-                plotter = ProfileBuddy(dir[0], max_files=n_files, start_file=start_file, \
-                                        write_cadence=1e10, file_dirs=['scalar', 'profiles'], comm=comm_new,
-                                        outdir=out_dir_name)
-                for j, key in enumerate(keys):
-                    plotter.add_subplot(key, 0, j)
-                plotter.analyze_subplots()
-                plotter.communicate_profiles()
-                plotter.save_profiles(filename=out_file_name)
-                plotter.make_plots(figsize=(3*len(keys), 8))
-            except:
-                print('AN ERROR HAS OCCURED IN {:s}'.format(dir[0]))
-    return dirs
-
-dirs_root = get_info(root_dir, keys, out_dir_name, out_file_name)
-dirs_mach = get_info(mach_dir, keys, out_dir_name, out_file_name)
 
 comm.Barrier()
 if comm.rank != 0:
@@ -107,131 +88,123 @@ if comm.rank != 0:
     print('PROCESS {} FINISHED'.format(comm.rank))
     sys.exit()
 
-keys.append('Ma_ad_post')
-keys.append('density_contrasts')
-###########  Read in all means, stdevs of keys  ##########
-def read_data(dirs):
-    import h5py
-    for i, dir in enumerate(dirs):
-        try:
-#        if True:
-            f = h5py.File(dir[0]+out_dir_name+out_file_name+'.h5', 'r')
-            Lz = np.exp(dir[4]/(1.5-dir[1]))-1
-            z_basis = de.Chebyshev('z', len(f['z']), interval=[0, Lz],dealias=3/2)
-            domain= de.Domain([z_basis], grid_dtype=np.float64, comm=MPI.COMM_SELF)
-            current_field = domain.new_field()
-            output_field  = domain.new_field()
-            storage = dict()
-            for key in keys:
-                if key == 'density_contrasts':
-                    storage[key] = (f[key][0], 0)
-                elif key == 'Ma_ad':
-                    storage[key] = (f[key+'_mean'][0]*np.sqrt(5/3), np.sqrt(5/3)*f[key+'_stdev'][0])
-                elif key == 'Re_rms':
-                    current_field['g'] = f[key]
-    #                current_field.antidifferentiate('z', ('left', 0), out=output_field)
-                    storage[key] = (current_field.interpolate(z=Lz/2)['g'][0], 0)
-                else:
-                    storage[key] = (f[key+'_mean'][0], f[key+'_stdev'][0])
-            dirs[i][-1] = storage
-        except:
-            print("PROBLEMS READING OUTPUT FILE IN {:s}".format(dir[0]))
-    return dirs
 
-dirs_root = read_data(dirs_root)
-dirs_mach = read_data(dirs_mach)
+root_buddy.read_files(plot_keys)
+mach_buddy.read_files(plot_keys)
 
-def plot_parameter_space_comparison(ax, x_key, y_key, data, grouping='eps', color='blue'):
-    if grouping == 'eps':
-        groups = np.unique(np.array(data)[:,1])
-    if grouping == 'Ra':
-        groups = np.unique(np.array(data)[:,2])
+for dir in root_buddy.dir_info:
+    print('ra: {}, eps: {}'.format(dir[2], dir[1]))
+    for key in dir[-1].keys():
+        print(key, dir[-1][key])
 
-    if x_key == 'eps':
-        x_key = 1
-    if x_key == 'Ra':
-        x_key = 2
-    if x_key == 'Pr':
-        x_key = 3
-    if x_key == 'nrhocz':
-        x_key = 4
+dirs_root = root_buddy.dir_info
+dirs_mach = mach_buddy.dir_info
 
-    fig = plt.figure()
-
-    for i, group in enumerate(groups):
-        x_vals = []
-        x_err  = []
-        y_vals = []
-        y_err  = []
-        for dir in data:
-            if grouping == 'eps' and group != dir[1] or dir[-1] == {}:
-                continue
-            if grouping == 'Ra' and group != dir[2] or dir[-1] == {}:
-                continue
-            if type(x_key) == int:
-                x_vals.append(dir[x_key])
-                x_err.append(0)
-            else:
-                x_vals.append(dir[-1][x_key][0])
-                x_err.append(dir[-1][x_key][1])
-
-            y_vals.append(dir[-1][y_key][0])
-            y_err.append(dir[-1][y_key][1])
-        if len(x_vals) == 0:
-            continue
-        x_vals, x_err, y_vals, y_err = zip(*sorted(zip(x_vals, x_err, y_vals, y_err)))
-        print(group, x_vals, y_vals)
-#        ax.plot(x_vals, y_vals, 'o', color=COLORS[i], marker='o')
-        if grouping == 'eps':
-            label = '$\epsilon = '
-            pow = np.floor(np.log10(group))
-            front = group/10**(pow)
-            label += '{:1.1f} \\times 10^'.format(front)
-            label += '{'
-            label += '{:1d}'.format(int(pow))
-            label += '}$'
-            label = r'{:s}'.format(label)
-        elif grouping == 'Ra':
-            label = '$\mathrm{Ra} = '
-            pow = np.floor(np.log10(group))
-            front = group/10**(pow)
-            label += '{:1.1f} \\times 10^'.format(front)
-            label += '{'
-            label += '{:1d}'.format(int(pow))
-            label += '}$'
-            label = r'{:s}'.format(label)
-        else:
-            label=''
-        ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, label=label, color=COLORS[i], marker=MARKERS[i], ls='None')
-    return ax
-
-
-
-
-
-        
+#RE and NU plot 
 fig = plt.figure(figsize=(FIGWIDTH, FIGHEIGHT))
 ax1 = fig.add_subplot(2,1,1)
 ax2 = fig.add_subplot(2,1,2)
 
 ax1.grid(which='major')
-ax1 = plot_parameter_space_comparison(ax1, 'Ra', 'Nusselt_6', dirs_root, grouping='eps')
+ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'Nusselt_6', grouping='eps')
+
+print(ax1, data, groups)
+x1s = np.logspace(1.5, 4, 100)
+x1s_long = np.logspace(2, 8, 100)
+y1s = (3/5)*x1s**(1/3)
+x2s = np.logspace(4, 8, 100)
+y2s = 2*x2s**(1/5)
+y2s_diff = 0.92*x1s_long**(2/7)
+ax1.plot(x1s, y1s, dashes=(5,1.5), color='black', label=r'$\mathrm{Ra}^{1/3}$')
+ax1.plot(x2s, y2s, dashes=(2,1), color='black', label=r'$\mathrm{Ra}^{1/5}$')
+ax1.plot(x1s_long, y2s_diff, dashes=(2,1,5,1), color='black', label=r'$\mathrm{Ra}^{2/7}$')
+#for key in data.keys():
+#    x = np.array(data[key][0])
+#    y = np.array(data[key][1])
+#    y_err = np.array(data[key][-1])
+#    print(y_err)
+#    y_err = np.mean(y_err, axis=0)
+#    x1 = x[np.where(np.logical_and(x>=2.15e1, x<=1e4))]
+#    y1 = y[np.where(np.logical_and(x>=2.15e1, x<=1e4))]
+#    y_err_1 = np.ones(len(y1))#y_err[np.where(np.logical_and(x>=2.15e1, x<=1e4))]
+#    x2 = x[np.where(x>1e4)]
+#    y2 = y[np.where(x>1e4)]
+#    y_err_2 = y_err[np.where(x>1e4)]
+#    print(y_err_1)
+#    try:
+#        p, covar = line_leastsq(np.log10(x1), np.log10(y1), y_err_1)
+#        ax1.plot(x1, 10**(p[1])*(x1)**(p[0]))
+#        print(key, p)
+#        p, covar = line_leastsq(np.log10(x2), np.log10(y2), y_err_2)
+#        ax1.plot(x2, 10**(p[1])*(x2)**(p[0]))
+#        print(key, p)
+#    except:
+#        print('no high ra at {}'.format(key))
+
+handles, labels = ax1.get_legend_handles_labels()
+handles = [h[0] for h in handles[3:]] #remove error bars from label
+vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles, labels[3:])))
+legend1 = ax1.legend(handles, labels, loc='lower right', fontsize=8, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+
 #ax1.set_xlabel('Ra')
 ax1.set_ylabel(r'$\mathrm{Nu}$')
+ax1.set_ylim(1, 2e2)
 ax1.set_xscale('log')
 ax1.set_yscale('log')
-#ax1.legend(loc='lower right', fontsize=8)
+handles, labels = ax1.get_legend_handles_labels()
+handles = handles[:3]
+labels = labels[:3]
+ax1.legend(handles, labels, loc='upper left', fontsize=8, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
+ax1.add_artist(legend1)
+
 
 ax2.grid(which='major')
-ax2 = plot_parameter_space_comparison(ax2, 'Ra', 'Re_rms', dirs_root, grouping='eps')
-ax2.set_ylim(1, 1e4)
+ax2, data, groups = root_buddy.plot_parameter_space_comparison(ax2, 'Ra', 'Re_rms', grouping='eps')
+#for key in data.keys():
+#    x = np.array(data[key][0])
+#    y = np.array(data[key][1])
+#    y_err = np.array(data[key][-1])
+#    print(y_err)
+#    y_err = np.mean(y_err, axis=0)
+#    x1 = x[np.where(np.logical_and(x>=2.15e1, x<=1e4))]
+#    y1 = y[np.where(np.logical_and(x>=2.15e1, x<=1e4))]
+#    y_err_1 = np.ones(len(y1))#y_err[np.where(np.logical_and(x>=2.15e1, x<=1e4))]
+#    x2 = x[np.where(x>1e4)]
+#    y2 = y[np.where(x>1e4)]
+#    y_err_2 = np.ones(len(y2))
+#    print(y_err_1)
+#    try:
+#        p, covar = line_leastsq(np.log10(x1), np.log10(y1), y_err_1)
+#        ax2.plot(x1, 10**(p[1])*(x1)**(p[0]))
+#        print(key, p)
+#        p, covar = line_leastsq(np.log10(x2), np.log10(y2), y_err_2)
+#        ax2.plot(x2, 10**(p[1])*(x2)**(p[0]))
+#        print(key, p)
+#    except:
+#        print('no high ra at {}'.format(key))
+#
+
+x1s = np.logspace(1.5, 4, 100)
+y1s = 0.27*x1s**(3/4)
+x2s = np.logspace(4, 8, 100)
+y2s = 2.7*x2s**(1/2)
+y2s_diff = .8*x2s**(0.63)
+ax2.plot(x1s, y1s, dashes=(5,1.5), color='black', label=r'$\mathrm{Ra}^{3/4}$')
+ax2.plot(x2s, y2s, dashes=(2,1), color='black', label=r'$\mathrm{Ra}^{1/2}$')
+ax2.plot(x2s, y2s_diff, dashes=(2,1,5,1), color='black', label=r'$\mathrm{Ra}^{.63}$')
+ax2.set_ylim(1, 3e4)
 ax2.set_xlabel(r'$\mathrm{Ra}$')
 ax2.set_ylabel(r'$\mathrm{Re}$')
 ax2.set_xscale('log')
 ax2.set_yscale('log')
-ax2.legend(loc='lower right', fontsize=8)
+handles, labels = ax2.get_legend_handles_labels()
+handles = [h[0] for h in handles[3:]] #remove error bars from label
+vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles, labels[3:])))
+legend1 = ax2.legend(handles, labels, loc='lower right', fontsize=8, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+handles, labels = ax2.get_legend_handles_labels()
+ax2.legend(handles[:3], labels[:3], loc='upper left', fontsize=8, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
+ax2.add_artist(legend1)
 
-fig.savefig('./figs/re_and_nu_v_Ra.png', dpi=1200, bbox_inches='tight')
 
 for label in ax1.get_xticklabels():
     label.set_fontproperties('serif')
@@ -242,18 +215,74 @@ for label in ax2.get_xticklabels():
 for label in ax2.get_yticklabels():
     label.set_fontproperties('serif')
 
+labels = [r'$\mathrm{(a)}$', r'$\mathrm{(b)}$']
+axes   = [ax1, ax2]
+y_coords = [1e2, 1e4]
+for i, ax in enumerate(axes):
+    label = labels[i]
+    trans = ax.get_yaxis_transform() # y in data untis, x in axes fraction
+    ann = ax.annotate(label, xy=(-0.21, y_coords[i]), size=11, color='black', xycoords=trans)
 
+
+
+
+fig.savefig('./figs/re_and_nu_v_Ra.png', dpi=1200, bbox_inches='tight')
+
+
+
+#MA plot
 fig = plt.figure(figsize=(FIGWIDTH, FIGHEIGHT))
-ax1 = fig.add_subplot(2,1,1)
-ax2 = fig.add_subplot(2,1,2)
+ax2 = fig.add_subplot(2,1,1)
+ax1 = fig.add_subplot(2,1,2)
+
+
 
 ax1.grid(which='major')
-ax1 = plot_parameter_space_comparison(ax1, 'Ra', 'Ma_ad_post', dirs_root, grouping='eps')
+ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'Ma_ad_post', grouping='eps')
+#for key in data.keys():
+#    x = np.array(data[key][0])
+#    y = np.array(data[key][1])
+#    y_err = np.array(data[key][-1])
+#    print(y_err)
+#    y_err = np.mean(y_err, axis=0)
+#    x1 = x[np.where(np.logical_and(x>=2.15e1, x<=1e4))]
+#    y1 = y[np.where(np.logical_and(x>=2.15e1, x<=1e4))]
+#    y_err_1 = np.ones(len(y1))#y_err[np.where(np.logical_and(x>=2.15e1, x<=1e4))]
+#    x2 = x[np.where(x>1e4)]
+#    y2 = y[np.where(x>1e4)]
+#    y_err_2 = np.ones(len(y2))
+#    print(y_err_1)
+#    try:
+#        p, covar = line_leastsq(np.log10(x1), np.log10(y1), y_err_1)
+#        ax1.plot(x1, 10**(p[1])*(x1)**(p[0]))
+#        print(key, p)
+#        p, covar = line_leastsq(np.log10(x2), np.log10(y2), y_err_2)
+#        ax1.plot(x2, 10**(p[1])*(x2)**(p[0]))
+#        print(key, p)
+#    except:
+#        print('no high ra at {}'.format(key))
+x1s = np.logspace(1.5, 4, 100)
+y1s = 0.03*x1s**(1/4)
+x1s_long = np.logspace(1.5, 6, 100)
+y1s_long = 0.03*x1s_long**(1/4)/60
+x2s = np.logspace(4, 7, 100)
+y2s = 0.5*x2s**(-1/20)
+y3s = 2e-3*x2s**(1/10)
+ax1.plot(x1s, y1s, dashes=(5,1.5), color='black')#, label=r'$\mathrm{Ra}^{1/3}$')
+ax1.plot(x1s_long, y1s_long, dashes=(5,1.5), color='black')#, label=r'$\mathrm{Ra}^{1/3}$')
+ax1.plot(x1s, y1s/3.16e3, dashes=(5,1.5), color='black')#, label=r'$\mathrm{Ra}^{1/3}$')
+ax1.plot(x2s, y2s, dashes=(2,1), color='black')#, label=r'$\mathrm{Ra}^{1/5}$')
+#ax1.plot(x2s, y3s, dashes=(2,1,5,1), color='black')#, label=r'$\mathrm{Ra}^{1/5}$')
+
 ax1.set_xlabel(r'$\mathrm{Ra}$')
 ax1.set_ylabel(r'$\mathrm{Ma}_{\mathrm{ad}}$')
 ax1.set_xscale('log')
 ax1.set_yscale('log')
-ax1.legend(loc='lower right', fontsize=8)
+
+handles, labels = ax1.get_legend_handles_labels()
+handles = [h[0] for h in handles] #remove error bars from labels
+vals, handles, labels = zip(*sorted(zip(groups, handles, labels)))
+ax1.legend(handles, labels, loc='lower right', fontsize=8, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
 
 for label in ax1.get_xticklabels():
     label.set_fontproperties('serif')
@@ -264,13 +293,33 @@ for label in ax2.get_xticklabels():
 for label in ax2.get_yticklabels():
     label.set_fontproperties('serif')
 
-ax2.grid(which='majors')
-ax2 = plot_parameter_space_comparison(ax2, 'eps', 'Ma_ad_post', dirs_mach, grouping='Ra')
+ax2.grid(which='major')
+ax2, data, groups = mach_buddy.plot_parameter_space_comparison(ax2, 'eps', 'Ma_ad_post', grouping='Ra')
+#for key in data.keys():
+#    x = np.array(data[key][0])
+#    y = np.array(data[key][1])
+#    y_err = np.array(data[key][-1])
+#    y_err = np.mean(y_err, axis=0)
+#    p, covar = line_leastsq(np.log10(x), np.log10(y), y_err)
+#    ax2.plot(x, 10**(p[1])*(x)**(p[0]))
+#    print(key, p)
+x1s = np.logspace(-7, 1, 100)
+y1s = (0.5)*x1s**(1/2)
+ax2.plot(x1s, y1s, dashes=(5,1.5), color='black', label=r'$\mathrm{Ra}^{1/2}$')
+
+handles, labels = ax2.get_legend_handles_labels()
+legend1 = ax2.legend(handles[:1], labels[:1], loc='upper left', fontsize=8, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
+
 ax2.set_xlabel(r'$\epsilon$')
+ax2.xaxis.set_label_position('top')
 ax2.set_ylabel(r'$\mathrm{Ma}_{\mathrm{ad}}$')
 ax2.set_xscale('log')
 ax2.set_yscale('log')
-ax2.legend(loc='lower right', fontsize=8)
+handles, labels = ax2.get_legend_handles_labels()
+handles = [h[0] for h in handles[1:]] #remove error bars from labels
+vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles, labels[1:])))
+ax2.legend(handles, labels, loc='lower right', fontsize=8, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+ax2.add_artist(legend1)
 
 for label in ax1.get_xticklabels():
     label.set_fontproperties('serif')
@@ -281,17 +330,35 @@ for label in ax2.get_xticklabels():
 for label in ax2.get_yticklabels():
     label.set_fontproperties('serif')
 
+
+
+labels = [r'$\mathrm{(b)}$', r'$\mathrm{(a)}$']
+axes   = [ax1, ax2]
+y_coords = [3.16e0, 3.16e0]
+for i, ax in enumerate(axes):
+    label = labels[i]
+    trans = ax.get_yaxis_transform() # y in data untis, x in axes fraction
+    ann = ax.annotate(label, xy=(-0.21, y_coords[i]), size=11, color='black', xycoords=trans)
+
 fig.savefig('./figs/ma_v_Ra.png', dpi=1200, bbox_inches='tight')
+
+
+#Density plot
 
 fig = plt.figure(figsize=(FIGWIDTH, FIGWIDTH/golden_ratio))
 ax1 = fig.add_subplot(1,1,1)
 
 ax1.grid(which='major')
-ax1 = plot_parameter_space_comparison(ax1, 'Ra', 'density_contrasts', dirs_root, grouping='eps')
+ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'rho_full', grouping='eps', empty_markers=True)
+ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'density_contrasts', grouping='eps')
 ax1.set_xlabel(r'$\mathrm{Ra}$')
-ax1.set_ylabel(r'$\rho(0)/\rho(L_z)$')
+ax1.set_ylabel(r'$n_{\rho}$')
+ax1.set_ylim(-1, 3.3)
 ax1.set_xscale('log')
-ax1.legend(loc='center right', fontsize=8)
+handles, labels = ax1.get_legend_handles_labels()
+handles = [h[0] for h in handles] #remove error bars from labels
+vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles[4:], labels[4:])))
+ax1.legend(handles, labels, loc='lower right', fontsize=8, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
 
 for label in ax1.get_xticklabels():
     label.set_fontproperties('serif')
@@ -299,9 +366,4 @@ for label in ax1.get_yticklabels():
     label.set_fontproperties('serif')
 
 fig.savefig('./figs/density_v_ra.png', dpi=1200, bbox_inches='tight')
-
-for dir in dirs_root:
-    print('ra: {}, eps: {}'.format(dir[2], dir[1]))
-    for key in dir[-1].keys():
-        print(key, dir[-1][key])
     
