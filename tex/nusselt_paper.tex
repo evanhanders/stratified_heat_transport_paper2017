@@ -184,6 +184,8 @@ Throughout this letter we set $n_{\rho} = 3$.  Satisfying hydrostatic
 equilibrium sets the value of gravity, $g = R T_t (m + 1)$, which is
 constant with depth.  We study two-dimensional atmospheres with aspect
 ratios of 4 where the $x$ coordinate has the range $[0, 4L_z]$.
+Select cases have been run in three dimensions with $y$ in the range
+$[0, 4L_z]$.
 
 %
 %We examine the simplest stratified extension of RB by studying a
@@ -260,8 +262,8 @@ as the density profile changes.
 
 We decompose our thermodynamic variables such that $T = T_0 + T_1$ and
 $\ln\rho = (\ln\rho)_0 + (\ln\rho)_1$, 
-and the velocity $\bm{u} = u\hat{x} + w\hat{z}$ 
-has no background component.    
+and the velocity $\bm{u} = u\hat{x} + v\hat{y} +  w\hat{z}$ 
+has no background component, and that $v = 0$ in our 2D runs..    
 We evolve the Fully Compressible Navier-Stokes equations,
 \begin{align}
 &\begin{aligned}
@@ -327,8 +329,9 @@ Variables are time-evolved on a dealiased Chebyshev (vertical)
 and Fourier (horizontal, periodic) domain in which the
 physical grid dimensions are 3/2 the size of the coefficient grid.  
 Physical grid sizes range from
-96x384 grid points at the lowest values of 
-Ra to 1536x6144 grid points at Ra$_{\text{top}} > 10^{7}$. 
+64x256 coefficient points at the lowest values of 
+Ra to 1024x4096 coefficient points at Ra$_{\text{top}} > 10^{7}$ in 2D,
+and 64x128$^2$ to  128x256$^2$ in 3D. 
 By using IMEX timestepping, we implicitly step the 
 stiff linear acoustic wave contribution and are able to
 efficiently study flows at moderate ($\approx 1$) 
@@ -387,7 +390,8 @@ showed little
 variance with depth. By performing a linear stability analysis, 
 we determined that the onset of convection in 2D
 occurs at $\text{Ra}_{\text{c,top}} = \{11.15, 10.06, 10.97, 10.97\}$ 
-for $\epsilon = \{1.0, 0.5, 10^{-4}, 10^{-7}\}$ respectively.  
+for $\epsilon = \{1.0, 0.5, 10^{-4}, 10^{-7}\}$ respectively.  Results
+in 3D appear to be consistent with our 2D onset values.
 We studied Rayleigh
 numbers from values at onset to values $\geq 10^6$Ra$_{\text{c,top}}$ 
 for $\epsilon = 0.5$, up to
