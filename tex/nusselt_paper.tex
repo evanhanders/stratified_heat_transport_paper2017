@@ -331,7 +331,7 @@ physical grid dimensions are 3/2 the size of the coefficient grid.
 Physical grid sizes range from
 64x256 coefficient points at the lowest values of 
 Ra to 1024x4096 coefficient points at Ra$_{\text{top}} > 10^{7}$ in 2D,
-and 64x128$^2$ to  128x256$^2$ in 3D. 
+and 64x128$^2$ to  256x512$^2$ in 3D. 
 By using IMEX timestepping, we implicitly step the 
 stiff linear acoustic wave contribution and are able to
 efficiently study flows at moderate ($\approx 1$) 
@@ -374,13 +374,10 @@ assure our results are not biased by the convective transient.
 \caption{The mean adiabatic Mach number of long-time-averaged profiles
 is shown.  Error bars show the full range of Ma over the depth of the
 atmosphere.
-(a) When $Ma < 1$ (below the black horizontal line), 
-Ma $\propto \epsilon^{1/2}$.
-t low ($10^2$) and moderate ($10^5$) values of Ra.
-(b) When Ra is small, Ma $\propto Ra^{1/2}$ (dashed lines).
-Once the mean Ma reaches 1 ($\epsilon = \{0.5, 1\}$), this scaling breaks down
-and nearly all flows in the atmosphere are at Ma = 1.
-At low $\epsilon$, a consistent power law of Ma $\propto Ra^{1/4}$ is retrieved.
+(a) Ma is plotted as a function of $\epsilon$, the superadiabatic excess,
+at various values of Ra.
+(b) Ma is plotted as a function of Ra at various values of $\epsilon$.
+Larger symbols with white dots designate 3D runs.
 \label{fig:ma_v_eps} }
 \end{figure}
 
@@ -436,21 +433,20 @@ cause symmetry breaking in up- and downflows
 \cite{hurlburt&all1984}, at low $\epsilon$ this 
 effect seems to be secondary to flows obeying mass conservation as they traverse
 the stratified medium.  
-Our choice of fixed-temperature boundary conditions allows the flux at the 
-boundaries to vary, and runs at $\text{Ra }> 10^4$
+Our choice of fixed-temperature, stress free boundary conditions 
+allows the flux at the boundaries to vary, while also allowing
+for large-scale ``axisymmetric'' horizontal velocities.
+Runs at $\text{Ra }> 10^4$
 and $\epsilon = 10^{-4}$ exhibit long-term states of
-flux disequilibrium.  
-Roll solutions such as those pictured in Fig. \ref{fig:entropy_snapshots}a
-are punctuated by states of vigorous shearing, similar to those previously
+flux disequilibrium, in which roll solutions such as those pictured in 
+Fig. \ref{fig:entropy_snapshots}a
+are punctuated by shearing states similar to those previously
 reported in two-dimensional RB convection \cite{goluskin&all2014}.  
-During the roll states, 
-the flux at the lower boundary exceeds that at the upper boundary
-and energy is stored in the system.
-During shearing states, 
-convective transport is suppressed and Nu diminishes while
-the flux at the upper boundary exceeds that at the lower boundary.  Long term
-averages over both of these states produce flat flux profiles which
-can be sensibly analyzed.
+During both of these states, the system is in flux disequilibrium.
+A long time average
+over both of these states produce flat flux profiles which
+can be sensibly analyzed, but the presence of these time-dependent states
+makes it difficult to measure fluid quantities in these cases.
 
 At large Ma ($\epsilon = 0.5$), bulk thermodynamic structures are similar but
 shock systems form in the upper atmosphere near downflow lanes 
@@ -467,18 +463,13 @@ times before diffusing.
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/re_and_nu_v_Ra.png}
 \caption{
-Variation of Nu as Ra increases at high and low $\epsilon$. 
-At high $\epsilon$ (purple circles), 
-a clear transition from the subsonic to supersonic regime 
-is evident in the scaling
-of Nu with Ra at $\text{Ra}_{\text{top}} \approx 10^4$.  
-In the low $\epsilon$ regime (green diamonds and yellow squares), 
-our observed Nu scalings collapse onto a similar line which is
-indistinguishable from a $\text{Ra}_{\text{top}}^{2/7}$ scaling, 
-as observed in RB convection \cite{johnston&doering2009}.  
+(a) Variation of Nu as Ra increases at high and low $\epsilon$. 
 Errors bars indicate the properly normalized range of the
 value of Nu as a function of depth and
 large error bars indicate a poorly converged solution.
+(b) Variation of Re as Ra increases at high and low $\epsilon$.
+Re is measured at the midplane of the atmosphere.
+Larger symbols with white dots designate 3D runs.
  \label{fig:re_and_nu_v_ra}.
 }
 \end{figure}
@@ -518,8 +509,11 @@ as predicted by classical \RB theory \cite{king&all2012}.
 At large Ra$_{\text{top}}$, Nu $\propto$ Ra$_{\text{top}}^{1/5}$ 
 at $\epsilon = 0.5$.
 The scaling of Nu with Ra$_{\text{top}}$ 
-is unclear at low $\epsilon$ (so I'll try to fill in that space with
-data from comps...time to fish it out of Lou and do post-processing hell).
+is unclear at low $\epsilon$ once Ra is sufficiently large
+for shearing states to occur.  It would be beneficial to study
+low $\epsilon$ flows with fixed-flux boundary conditions or
+no-slip boundary conditions that disallow these large scale
+structures.
 
 The Reynolds number and Peclet number,
 \begin{equation}
@@ -534,23 +528,25 @@ Fig. \ref{fig:re_and_nu_v_ra}b.
 At low Ra$_{\text{top}}$, Re $\propto$ Ra$_{\text{top}}^{3/4}$, but at high 
 Ra$_{\text{top}}$ where the average Ma $\approx 1$ for $\epsilon = 0.5$, 
 this scaling gives way to a Re $\propto$ Ra$_{\text{top}}^{1/2}$.
+For large values of Ra but at low $\epsilon$, there appears to be a scaling
+of Re $\propto$ Ra$^{2/3}$.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/density_v_ra.png}
-\caption{\label{fig:nrho_v_ra} We measure the stratification of 
-evolved solutions
-in two ways.  The solid symbols show $\ln(\rho(0)/\rho(L_z))$, 
-or the density contrast
+\caption{\label{fig:nrho_v_ra} The stratification of 
+evolved solutions is measured
+in two ways.  Solid symbols show $\ln(\rho(z=0)/\rho(z=L_z))$, 
+the density contrast
 as measured at the upper and lower boundary.  The empty symbols show 
 $\ln(\text{max}(\rho)/\text{min}(\rho))$. 
 Unsurprisingly, at low $\epsilon$ the evolved
 $n_{\rho}$ is not different from the initial conditions to first order.  
 At high $\epsilon$,
 the density contrast shrinks, and once the mean 
-Ma approaches 1 the two methods of
+Ma approaches 1 (as in Fig. \ref{fig:ma_v_eps}b), the two methods of
 measuring the density stratification bifurcate as density 
 inversions form within the thermal
-boundary layers.}
+boundary layers. Larger symbols with white dots represent 3D runs.}
 \end{figure}
 
 As the thermodynamic variables converge to their steady state values, 
@@ -567,7 +563,7 @@ low Ra, despite the difference in effective stratifications is striking.
 \refstepcounter{section}
 \label{sec:discussion}
 In this letter we have studied fundamental heat transport by 
-stratified convection in simplified 2-D polytropic atmospheres.
+stratified convection in simplified 2D and 3D polytropic atmospheres.
 We argue that these atmospheres are the natural extension
 of the RB problem to stratified systems, 
 and are an ideal laboratory for understanding the basic 
@@ -577,27 +573,34 @@ the properties of our 2D and 3D results, which aligns with expectations
 of Boussinesq theory and DNS results at values of Pr $\geq$ 1 \cite{ahlers&all2009}.
 
 At low Ra and Ma, the scaling of Nu with Ra is reminiscent of RB convection.  
-However, at high Ra and Ma, the scaling breaks down to a Ra$^{1/5}$ 
-scaling unlike what is seen in Boussinesq convection.  
-Similarly, the Reynolds number switches from a Ra$^{3/4}$ to
-a Ra$^{1/2}$ scaling in this regime shift.  
-It is interesting that both of these
-scaling laws turn over by roughly a factor of 2/3.
+However, at high Ra and Ma, the scaling of Nu becomes weakear, decreasing
+from a 1/3 to a 1/5 power law, a decrease by roughly a factor of 1/3.
+Similarly, the Reynolds number switches from a 3/4 power law to
+a 1/2 scaling in this regime shift, a similar decrease by a factor of 1/3.
+This seems to suggest that a large portion of the scaling of the Nusselt number
+comes from increases in velocity as Ra increases.  Once the velocity reaches
+its natural maximum, heat transport can no longer benefit from increased velocities.
+The same is true of the Reynolds number, which tracks increases in velocities as
+the flows become more turbulent, but which can only scale with the diffusivities
+once the Mach number reaches its maximum value.
 
 Time-dependent oscillating shear states have developed spontaneously, 
-as seen before in RB convection \cite{goluskin&all2014}.  
-While computationally difficult, 
-the highest values of Ra and the lowest value
-of $\epsilon$ studied here are far from values found in nature.  
-Future work will aim to better understand the mechanisms of shearing states and
-whether or not these states are attainable in 
-three-dimensional, non-rotating atmospheres. 
+as seen before in RB convection \cite{goluskin&all2014}, and these should
+be studied in more detail.  These states are fundamentally in flux disequilibrium
+and make it very difficult to calculate a meaningful Nusselt number.  It would
+be beneficial for future studies to study solutions with fixed flux or no slip
+boundary conditions to better converge and study cases at high $\epsilon$ and low
+Ra.
 
-Furthermore, we have found that the stratification of 
+Finally, we have found that the stratification of 
 these atmospheres evolves in a complex
-manner, and future work should aim to 
-understand the importance of changing stratification on
-convective heat transport. Our studies
+manner.  Future work should aim to 
+understand the importance of stratification on
+convective heat transport, and the manner in which
+boundary layer density inversions interact with
+thermal plumes.
+
+Our studies
 here will serve as a foundation both for understanding and 
 comparing heat transport in stratified convection
 to that in RB convection \cite{johnston&doering2009}, 
