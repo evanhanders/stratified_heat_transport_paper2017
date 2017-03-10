@@ -1,20 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Professional Formal Letter
-% LaTeX Template
-% Version 2.0 (12/2/17)
-%
-% This template originates from:
-% http://www.LaTeXTemplates.com
-%
-% Authors:
-% Brian Moses
-% Vel (vel@LaTeXTemplates.com)
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
@@ -31,6 +14,13 @@
 \noindent
 Dear Editor,
 $\,$\newline
+
+\newenvironment{myquotation}{
+\begin{quotation}
+\itshape
+}{ 
+\end{quotation}
+}
 
 \begin{singlespace}
 We have returned the revised version of our paper, 
@@ -81,7 +71,7 @@ $\,$
 
 \textbf{Detailed response to referee report A:}
 
-\begin{quotation}
+\begin{myquotation}
 The refereed paper is a reasonable step forward in an extremely
 difficult and very important for understanding of fundamental physics
 in planetary and star atmospheres problem of heat transfer in
@@ -107,7 +97,7 @@ known example (incompressible hydrodynamic turbulence, governed by the
 Euler equation), in which an additional integral of motion in
 two-dimensional case completely changes the basic physics of the
 problem, including the direction of the energy flux over scales.
-\end{quotation}
+\end{myquotation}
 
 We have run and analyzed select 3D cases at both low and high $\epsilon$
 at select values of the Rayleigh number.  These simulations have shown
@@ -118,7 +108,7 @@ but the high $\epsilon$ results agree almost perfectly.  These results are shown
 in Figs. 1, 3, and 4, and the agreement suggests that 2D cases
 represent the bulk properties of the 3D dynamics well.
 
-\begin{quotation}
+\begin{myquotation}
 The Letter is clearly written with a well balanced general
 introduction to the field, a formulation of particular simplifications
 of basic equations of motion and a presentation of the results of
@@ -128,7 +118,7 @@ manuscript for publication in PRL, after detailed clarification of the
 relations between two- and three-dimensional description on the basics
 of Rayleigh-Bernard convection and on their generalization to the
 compressible case.
-\end{quotation}
+\end{myquotation}
 
 Boussinesq theory and DNS results have shown that the scaling of Nu with Ra
 is nearly the same in 2D and 3D for fluids with Pr $\geq$ 1 \cite{ahlers&all2009}.
@@ -146,7 +136,7 @@ $\,$
 
 \textbf{Detailed response to referee report A:}
 
-\begin{quotation}
+\begin{myquotation}
 This paper essentially examines the heat transport in compressible
 convection as as function of Rayleigh number and Mach number for fixed
 density stratification and Prandtl number via 2D simulations The major
@@ -169,12 +159,12 @@ The description of the modelling used is perplexing and misleading,
 and the major results are buried. I will try to explain my issues
 below. Overall, my feeling is that this paper needs substantial
 re-writing to be publishable.
-\end{quotation}
+\end{myquotation}
 We thank referee B for their honesty regarding the confusing
 structure of the paper.  We have tried to restructure the text in
-a more sequential and hopefully less confusing way.
+a more sequential and thoughtful manner.
 
-\begin{quotation}
+\begin{myquotation}
 My first and major issue is that this paper presents the model as
 though the Mach number is a parameter. The Mach number is a diagnostic
 of compressible convection. Compressible convection is governed by 4
@@ -200,7 +190,7 @@ flows'. What the authors generally mean in their writeup is that
 they are either choosing a small or large superadiabaticity (epsilon)
 at fixed Ra, or small or large Ra at fixed epsilon. The former is used
 for most of the results section.  ...
-\end{quotation}
+\end{myquotation}
 It is true that $\epsilon$ is the primary control parameter we are
 referring to when we mentioned ``high'' or ``low'' Mach number. This
 is because Ma is a very strong function of $\epsilon$, and a weaker
@@ -221,7 +211,7 @@ whereas setting $\epsilon$ near 1 allows us to study high Ma convection.  We
 have chosen to retain the title of the letter while adding clarification to
 the text.
 
-\begin{quotation}
+\begin{myquotation}
 ...However, it is true that the
 interesting change in transport results appear when the flow becomes
 supersonic, but this could mean high superadiabaticity (epsilon) *or*
@@ -234,7 +224,18 @@ small paragraph at the end of the results section without much
 elaboration or explanation. I personally would like a much more causal
 relationship explained between the shock heating and `spinners'
 and the heat transport results.
+\end{myquotation}
+It appears that the ``spinners'' are not the primary cause of the change
+of the Nu scaling at about Ma = 1.  We see a similar change in the scaling
+of the Reynolds number, and this suggests that a large fraction of the
+increase in energy transport with Ra is caused by increasing velocities.
+Once the mean flow speed is at Ma = 1, the convective transport
+can no longer benefit from increases in velocities, and only changes in
+the size of thermodynamic variables or changes in the strength of the
+diffusivity are left to increase the Nusselt Number.  This is
+mentioned in the second paragraph of the Discussion section.
 
+\begin{myquotation}
 Beyond this main issue, there are a lot of small things that I don't
 understand, which I will try and list here, in chronological order.
 
@@ -242,43 +243,45 @@ Introduction
 
 'Numerical constraints ... to moderately high Ma': What is the
 numerical constraint of low Ma flow?
-\end{quotation}
+\end{myquotation}
 When the convection is low Ma, the convective dynamics are much slower
 than the linear acoustic waves.  By stepping this linear component
 implicitly, we bypass the high Ma component of these waves and timestep
-on the order of the convective dynamics.
+on the order of the convective dynamics.  This is noted in the second to
+last paragraph of the Experiment section.
 
-\begin{quotation}
+\begin{myquotation}
 'RB' By `Rayleigh-Benard problem' here I assume that the
 authors are referring to Boussinesq dynamics? It might be a good idea
 to make this clear.
-\end{quotation}
-We have reworded this sentence at the beginning of paragraph 3 to make it
-clear that we are referring to Boussinesq convection.
+\end{myquotation}
+We have reworded this sentence at the beginning of the second paragraph of the
+Introduction to clarify that we are referring to Boussinesq convection.
 
-\begin{quotation}
+\begin{myquotation}
 'the Ma is controlled by the superadiabatic excess': It is clear
 from Fig 1 that this is not a complete statement.
-\end{quotation}
-We have removed this sentence from the introduction, and mentioned that
-the superadiabaticity is the important control parameter.
+\end{myquotation}
+The third paragraph of the introduction has been restructured.  We note
+that $\epsilon$ is a control parameter whose primary job is to modify
+the Ma of the resulting solution.
 
-\begin{quotation}
+\begin{myquotation}
 Experiment
 
 Eqn (1): Better define co-ordinates, especially $z$ and $z_0$
-\end{quotation}
-$z_0$ was confusing and has been removed.  We define $z$ shortly
-below the eqn (1).
+\end{myquotation}
+$z_0 = L_z + 1$ was confusing notation and has been removed.  
+We define $z$ shortly below Eqn (1).
 
-\begin{quotation}
+\begin{myquotation}
 The non-dimensionalization is very confusingly written. Can you write
 out the non-dimensionalised polytope? This section also says that the
 `timescale is the isothermal sound crossing time of the layer'
 and then two sentences later says that `we use buoyancy time
 units', so which is it? The definition of the latter does look like
 the sqrt(epsilon) so maybe these are the same?
-\end{quotation}
+\end{myquotation}
 Ben, what is he asking us to write out?
 In our numerical simulations, one time unit is the isothermal sound
 crossing time at the top of the layer.  However, convective dynamics
@@ -286,16 +289,18 @@ have a typical overturn time which can be a few simulation time units
 (at high $\epsilon$) or it can have an overturn time of many simulation
 time units (at low $\epsilon$).  The buoyancy time allows us to estimate this.
 
-\begin{quotation}
+\begin{myquotation}
 'The scaling of the entropy gradient with epsilon ... evolved
 values ': I really have no idea what these two sentences mean,
 sorry!
-\end{quotation}
+\end{myquotation}
 The initial entropy gradient of the polytrope is $\nabla S \propto -\epsilon$,
 and as a result evolved variables are $O(\epsilon)$.  We have removed this
-sentence, as it is confusing, and said this in the results section.
+sentence, as it is confusing, and mentioned the scaling of thermodynamic variables
+with $\epsilon$ in the second paragraph of the Results section, where we now describe
+Fig. 1.
 
-\begin{quotation}
+\begin{myquotation}
 Eqns: I don't understand why these equations are formulated with
 gradients of nu when mu is constant. The stress tensor only depends on
 mu and so this can be pulled out of all derivatives. Or am I missing
@@ -304,93 +309,102 @@ harder. Similarly for the formulation in terms of chi and not the
 thermal conductivity; variable thermal conductivity is hard but
 variable chi is easy. Why not write in terms of mu and k not nu and
 chi?
-\end{quotation}
+\end{myquotation}
 $\mu$ is initially constant, which means that $\mu = \nu\rho_0$
 must be constant.  Since we are in a stratified atmosphere, this
 means that $\nu \propto 1/\rho_0$.  A similar relation between
-$\kappa$ and $\chi$ exists.  Thus the gradients of $\nu$ and $\chi$
-are present.  $\mu$ and $\kappa$ are allowed to evolve with the
-density profile, and we have discussed this more clearly in section X.
+$\kappa$ and $\chi$ exists.  Thus, while $\nu$ and $\chi$ are constant
+in time, they are \emph{not} constant with height, and their
+gradients must be included in the equation set.
+$\mu$ and $\kappa$ are allowed to evolve with the
+density profile, and we have discussed this more clearly in the
+second paragraph of the Experiment section.
 
-\begin{quotation}
+\begin{myquotation}
 'IMEX': I am assuming this acronym stands for implicit-explicit?
 Maybe write out?
-\end{quotation}
-We have spelled this out in the paragraph after the paragraph
-containing Eq. 7.
+\end{myquotation}
+We have spelled this out in the second to last paragraph of the Experiment section.
 
-\begin{quotation}
+\begin{myquotation}
 'extended to include variable nu and chi' : see above. This seems
 very unnecessary!
-\end{quotation}
-See above discussion
 
-\begin{quotation}
 Results
 
 $d_z T_{ad} = 0$: This is only true for liquids not gases. See Speigel and
 Veronis 1960.
-\end{quotation}
+\end{myquotation}
 This is a good point that we had not appreciated.  Most of the studies of Boussinesq
 convection with which we are familiar make the assumption that the fluid is incompressible.
 It is true that in an ideal gas which is compressible but barely stratified, the
 adiabatic temperature gradient is what we found and what is reported by
 Spiegel and Veronis, $\partial_z T_{ad} = -g/c_P$, \cite{spiegel&veronis1960}.
-We have updated the text following eqn 8 to reflect this.
+We have updated the text following Eqn 8 to reflect this.
 
-\begin{quotation}
+\begin{myquotation}
 'While it has been suggested that pressure forces...': I do not
 understand the discussion here. Do the authors regard the breakup of
 the down flows as an extreme version of asymmetry?
-\end{quotation}
-We are merely stating that at low Ma, pressure fluctuations are small and
+\end{myquotation}
+In our low Ma simulations, pressure fluctuations are small and
 tend to not be positive in the upper atmosphere and negative in the lower atmosphere
 regardless of whether we are observing an upflow or a downflow.  The classical argument
 \cite{hurlburt&all1984} of ``buoyancy breaking accelerates downflows and deccelerates
-upflows'' seems to break down when the Mach number is small from the cases we've studied.
+upflows'' appears to break down at low Ma.
 
-\begin{quotation}
+\begin{myquotation}
 'exhibit states in which the flux entering...': Surely in a
 stationary state the flux in has to equal the flux out. Are the
 authors saying that this is not a stationary state?
-\end{quotation}
+\end{myquotation}
 We are saying this is a non-stationary state.  The combination of fixed-temperature
 boundary conditions and no-slip boundary conditions allows the system to fluctuate between
 roll states of convection and shear states of convection.  These states persist over long
 time scales (hundreds of buoyancy times) and the atmosphere is in flux disequilibrium in both states.
-We have tried to update the text to make this clearer.
+We have updated the text in the third paragraph of the Results section to make this clearer.
 
-\begin{quotation}
+\begin{myquotation}
 Discussion
 
 Can the authors demonstrate the basic principles of whatever balance
 is described by the Grossman-Lohse theory?
-\end{quotation}
+\end{myquotation}
 We believe that the Grossman-Lohse theory, which models the energy dissipation rate of both
 kinetic and potential energies, could be extended to stratified, compresible flows which also
 have potential energy.  At low $\epsilon$, where the density profile is simple and very similar
 to the initial polytrope in the evolved state, it seems that this extension would be easier to
 develop.  However, we are inexperienced in applying boundary layer theory and 
 will need to educate ourselves
-further on how the Grossman-Lohse theory was developed and applied before we can say anything
-with certainty regarding how to expand this theory to stratified convection. 
+further on the development of the Grossman-Lohse theory before we can say
+with certainty that an expansion of this theory to stratified convection is tractable. 
 We have removed this suggestion from
 the Discussion section and made suggestions towards further experiments which we are certain our
 work can inform.
 
 
-\begin{quotation}
+\begin{myquotation}
 'under solar conditions ... we expect that epsilon  $\approx 10^{-20}$
 ...': Is this small epsilon a reflection of efficient mixing of
 convection in the ultimate nonlinear state or of the initial linear
 convective driving?
-\end{quotation}
+\end{myquotation}
 These approximations in the initial letter were a representation of the choices of
 parameters necessary to achieve the desired Mach number and Rayleigh number of convective
-motions in the deep solar interior.  There, Ma $\approx 10^{-4}$ and Ra $\approx 10^{20}$,
-and due to the scaling of Mach number with $\epsilon$ and Ra, we made a best-guess estimate
-based on our scaling laws in fig. 1 for what $\epsilon$ could describe that low Ma at such
-extreme values of Ra.
+motions in the deep solar interior.  There, Ma $\approx 10^{-4}$ and Ra $\approx 10^{20}$.
+We made an estimate of what $\epsilon$ would be necessary to achieve low Ma at such large
+values of Ra based on the observed scaling of Mach number with $\epsilon$ and Ra
+in Fig. 1.
+
+$\,$
+\newline
+\noindent
+\textbf{Closing}
+\newline
+$\,$\newline
+We hope that these modifications to the text have sufficiently clarified our work for experts
+in the field while also keeping it broad enough to remain interesting for non-experts.
+Thank you for considering our newly revised manuscript for publication.
 
 \end{singlespace}
 
