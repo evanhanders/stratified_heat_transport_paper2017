@@ -268,7 +268,7 @@ we will use Ra and Ra$_{\text{top}}$ interchangeably.
 We decompose our thermodynamic variables such that $T = T_0 + T_1$ and
 $\ln\rho = (\ln\rho)_0 + (\ln\rho)_1$, 
 and the velocity $\bm{u} = u\hat{x} + v\hat{y} +  w\hat{z}$ 
-has no background component, and that $v = 0$ in our 2D runs..    
+has no background component.  In our 2D runs, $v = 0$.
 We evolve the Fully Compressible Navier-Stokes equations,
 \begin{align}
 &\begin{aligned}
@@ -333,10 +333,10 @@ Runge-Kutta timestepping scheme RK443 \cite{ascher&all1997}.
 Variables are time-evolved on a dealiased Chebyshev (vertical)
 and Fourier (horizontal, periodic) domain in which the
 physical grid dimensions are 3/2 the size of the coefficient grid.  
-Physical grid sizes range from
+Grid sizes range from
 64x256 coefficient points at the lowest values of 
 Ra to 1024x4096 coefficient points at Ra $> 10^{7}$ in 2D,
-and 64x128$^2$ to  256x512$^2$ in 3D. 
+and from 64x128$^2$ to  256x512$^2$ in 3D. 
 By using IMEX timestepping, we implicitly step the 
 stiff linear acoustic wave contribution and are able to
 efficiently study flows at moderate ($\approx 1$) 
@@ -363,9 +363,9 @@ simulation timescale is the isothermal sound crossing time,
 $\tau_I$, of this unit length.
 Meaningful convective dynamics occur on 
 timescales of the atmospheric buoyancy time,
-$t_b = \tau_I \sqrt{L_z/g\epsilon}$, 
-and all reported results are taken from time averages
-over many buoyancy times starting 100$t_b$ 
+$t_b = \tau_I \sqrt{L_z/g\epsilon}$. 
+All reported results are taken from time averages
+over many buoyancy times beginning 100$t_b$ 
 after the start of our simulations in order to
 assure our results are not biased by the convective transient.
 
