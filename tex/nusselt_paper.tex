@@ -157,12 +157,14 @@ quantified by the Nusselt number (Nu), in plane-parallel,
 two- and three-dimensional, polytropically stratified atmospheres.  
 We vary $\epsilon$ and Ra while holding Pr, aspect ratio, boundary conditions,
 and initial atmospheric stratification
-constant.  We describe experimental methods in section 
-\ref{sec:experiment}, including the construction of atmospheres, 
-equations, and numerical methods.  
-Results are described in section \ref{sec:results} 
-and their implications are discussed
-in section \ref{sec:discussion}.
+constant.  We also examie the behavior of flow speeds, as quantifed by Ma,
+and the level of turbulence in solutions, as quantified by Re.
+%We describe experimental methods in section 
+%\ref{sec:experiment}, including the construction of atmospheres, 
+%equations, and numerical methods.  
+%Results are described in section \ref{sec:results} 
+%and their implications are discussed
+%in section \ref{sec:discussion}.
 
 \section{Experiment} 
 \refstepcounter{section}
@@ -185,10 +187,9 @@ specify the depth of the atmosphere, $L_z = e^{n_{\rho}/m} - 1$, by choosing
 the number of density scale heights, $n_{\rho}$, it spans.
 Throughout this letter we set $n_{\rho} = 3$.  Satisfying hydrostatic
 equilibrium sets the value of gravity, $g = R T_t (m + 1)$, which is
-constant with depth.  We study two-dimensional atmospheres with aspect
-ratios of 4 where the $x$ coordinate has the range $[0, 4L_z]$.
-Select cases have been run in three dimensions with $y$ in the range
-$[0, 4L_z]$.
+constant with depth.  We study atmospheres with aspect
+ratios of 4 where both the $x$ and $y$ coordinates have the range $[0, 4L_z]$.
+In our 2D cases, we only consider $x$ and $z$.
 
 %
 %We examine the simplest stratified extension of RB by studying a
@@ -253,7 +254,7 @@ at the top of the domain,
 \begin{equation}
 \text{Ra}_{\text{top}} = \frac{g L_z^3 (\Delta S_0 / c_P)}{\nu_t\chi_t},
 \end{equation}
-where $\Delta S_0 = \epsilon\ln z_0$ is the entropy difference 
+where $\Delta S_0 = \epsilon\ln (L_z + 1)$ is the entropy difference 
 between the top and bottom boundaries and
 $c_P = R\gamma(\gamma-1)^{-1}$ is the specific heat 
 at constant pressure. The profiles of $\nu$ and $\chi$ are constant with
@@ -261,7 +262,8 @@ time, and Ra at the bottom of the atmosphere is greater than Ra$_{\text{top}}$
 by a factor of $e^{2n_{\rho}}$.  This formulation leaves
 the thermal conductivity, $\kappa = \rho\chi$, and
 the dynamic viscosity, $\mu = \rho\chi$, free to evolve
-as the density profile changes.
+as the density profile changes.  Throughout this letter,
+when we refer to Ra, we are referring to Ra$_{\text{top}}$.
 
 We decompose our thermodynamic variables such that $T = T_0 + T_1$ and
 $\ln\rho = (\ln\rho)_0 + (\ln\rho)_1$, 
@@ -333,7 +335,7 @@ and Fourier (horizontal, periodic) domain in which the
 physical grid dimensions are 3/2 the size of the coefficient grid.  
 Physical grid sizes range from
 64x256 coefficient points at the lowest values of 
-Ra to 1024x4096 coefficient points at Ra$_{\text{top}} > 10^{7}$ in 2D,
+Ra to 1024x4096 coefficient points at Ra $> 10^{7}$ in 2D,
 and 64x128$^2$ to  256x512$^2$ in 3D. 
 By using IMEX timestepping, we implicitly step the 
 stiff linear acoustic wave contribution and are able to
@@ -389,15 +391,15 @@ Solutions were time-evolved until a long time average of the fluxes
 showed little
 variance with depth. By performing a linear stability analysis, 
 we determined that the onset of convection in 2D
-occurs at $\text{Ra}_{\text{c,top}} = \{11.15, 10.06, 10.97, 10.97\}$ 
+occurs at $\text{Ra}_{\text{crit}} = \{11.15, 10.06, 10.97, 10.97\}$ 
 for $\epsilon = \{1.0, 0.5, 10^{-4}, 10^{-7}\}$ respectively.  Results
 in 3D appear to be consistent with our 2D onset values.
 We studied Rayleigh
-numbers from values at onset to values $\geq 10^6$Ra$_{\text{c,top}}$ 
+numbers from values at onset to values $\geq 10^6$Ra$_{\text{crit}}$ 
 for $\epsilon = 0.5$, up to
-$\sim 10^5$Ra$_{\text{c,top}}$ at $\epsilon = 10^{-4}$, 
-up to $\sim 10^4$Ra$_{\text{c,top}}$ for $\epsilon = 1$,
-and up to $\sim 10^3$Ra$_{\text{c,top}}$ for $\epsilon = 10^{-7}$.
+$\sim 10^5$Ra$_{\text{crit}}$ at $\epsilon = 10^{-4}$, 
+up to $\sim 10^4$Ra$_{\text{crit}}$ for $\epsilon = 1$,
+and up to $\sim 10^3$Ra$_{\text{crit}}$ for $\epsilon = 10^{-7}$.
 
 We find that the Mach number is a strong function of 
 $\epsilon$ and a weak function of Ra.  
@@ -504,14 +506,14 @@ In incompressible Boussinesq convection, where $\grad S = 0$ only when
 $\grad T = 0$, this definition reduces to the traditional definition
 of the Nusselt number \cite{otero&all2002, johnston&doering2009}.
 
-The variation of Nu with Ra$_{\text{top}}$ is shown in 
+The variation of Nu with Ra is shown in 
 Fig. \ref{fig:re_and_nu_v_ra}a.
-At low to moderate Ra$_{\text{top}}$, 
-Nu $\propto$ Ra$_{\text{top}}^{1/3}$ regardless of $\epsilon$,
+At low to moderate Ra, 
+Nu $\propto$ Ra$^{1/3}$ regardless of $\epsilon$,
 as predicted by classical \RB theory \cite{king&all2012}.
-At large Ra$_{\text{top}}$, Nu $\propto$ Ra$_{\text{top}}^{1/5}$ 
+At large Ra, Nu $\propto$ Ra$^{1/5}$ 
 at $\epsilon = 0.5$.
-The scaling of Nu with Ra$_{\text{top}}$ 
+The scaling of Nu with Ra 
 is unclear at low $\epsilon$ once Ra is sufficiently large
 for shearing states to occur.  It would be beneficial to study
 low $\epsilon$ flows with fixed-flux boundary conditions or
@@ -528,9 +530,9 @@ Our choice of $\{\nu,\chi\}\propto \rho_0^{-1}$ drastically changes
 the value of Re between the top and bottom of the atmosphere.  We report values of
 Re at the midplane ($z=L_z/2$) of the atmosphere in
 Fig. \ref{fig:re_and_nu_v_ra}b.
-At low Ra$_{\text{top}}$, Re $\propto$ Ra$_{\text{top}}^{3/4}$, but at high 
-Ra$_{\text{top}}$ where the average Ma $\approx 1$ for $\epsilon = 0.5$, 
-this scaling gives way to a Re $\propto$ Ra$_{\text{top}}^{1/2}$.
+At low Ra, Re $\propto$ Ra$^{3/4}$, but at high 
+Ra where the average Ma $\approx 1$ for $\epsilon = 0.5$, 
+this scaling gives way to a Re $\propto$ Ra$^{1/2}$.
 For large values of Ra but at low $\epsilon$, there appears to be a scaling
 of Re $\propto$ Ra$^{2/3}$.
 
