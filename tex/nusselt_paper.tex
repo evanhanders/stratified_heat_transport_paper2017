@@ -412,16 +412,15 @@ but can be O(1) for values of $\epsilon$ near $m_{\text{ad}}$.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
-\caption{Characteristic entropy fluctuations in evolved flows. 
+\caption{Characteristic entropy fluctuations in evolved flows roughly
+140$t_b$ after the start of simulations. 
 The time- and horizontally-averaged profile is removed in all cases.  
-(a) At high $\epsilon$, shock systems form near the upper downflow lanes 
-($x \approx 45, z \approx 15-19$) at sufficiently high Ra.
-Shock-heated fluid then flows into the downflows as the shocks propagate across upflows.
-(b) At low $\epsilon$ but at the same Ra, shock systems are absent, 
-but otherwise the dynamics are similar.  
-(c) As Ra is increased, downflows no longer span
-the entirety of the domain and individual 
-small eddies are responsible for carrying the flux.
+(a) An $\epsilon = 10^{-4}$, low Ma flow. (b) An $\epsilon = 0.5$, flow,
+in which shock systems can be seen in the upper atmosphere (e.g.
+$(x, z) \approx (30, 18-19), (70, 15-19))$.
+(c) A high Ra, $\epsilon = 0.5$ case.  Convective structures become
+much smaller scale, and shock systems can be see near $(x, z) \approx (30, 16-19),
+(65, 17-19)$.
 \label{fig:entropy_snapshots} }
 \end{figure}
 
@@ -515,9 +514,11 @@ At large Ra, Nu $\propto$ Ra$^{1/5}$
 at $\epsilon = 0.5$.
 The scaling of Nu with Ra 
 is unclear at low $\epsilon$ once Ra is sufficiently large
-for shearing states to occur.  It would be beneficial to study
-low $\epsilon$ flows with fixed-flux boundary conditions or
-no-slip boundary conditions that disallow time-dependent shear states.
+for shearing states to occur.  It is also important to note that
+the value of Nu is heavily dependent upon the specific thermodynamic
+structures of the solution, as double roll states will transport
+heat more efficiently than single roll states, and slight changes in
+Ra can result in a solution latching on to one solution or the other.
 
 The Reynolds number (Re = $|\bm{u}|L_z/\nu$) and Peclet number
 (Pe = Pr Re)
