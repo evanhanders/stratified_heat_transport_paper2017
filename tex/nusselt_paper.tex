@@ -44,13 +44,14 @@ We hold the density stratification ($n_{\rho}$), aspect
 ratio, and Prandtl 
 number (Pr) constant while varying the superadiabaticity
 and Ra.  We find that Ma is a strong function of the superadiabaticity
-and a weak function of the Rayleigh number.
-We also examine the behavior of the Nusselt number (Nu), 
-which quantifies the efficiency of convective heat transport,
-and the Reynolds number (Re), which quantifies how turbulent our
-solutions are.  Both of these measures experience weaker scaling when
-the evolved solution has an average Ma of one than they do in the
-low Ma regime.
+in both 2D and 3D simulations, and that it is a 
+weak function of Ra in 2D.
+In 2D simulations, the scaling of the Nusselt Number (Nu) and the Reynolds number (Re)
+with Ra weaken
+once the mean Ma of the solution is unity, but in 3D
+Re and Nu seem to have consistent scaling across Ra.
+We further find that when the superadiabaticity and Ma are large,
+density inversions form in the thermal boundary layers.
 %As Ra increases and $\text{Ma} \rightarrow 1$, a scaling 
 %of Nu $\propto$ Ra$^{0.45}$ is observed.  
 %As Ra increases to a regime where Ma $\geq 1$,
@@ -400,10 +401,12 @@ for $\epsilon = \{0.5, 10^{-4}, 1.0, 10^{-7}\}$, respectively.
 
 We find that the Mach number is a strong function of 
 $\epsilon$ and a weak function of Ra.  
-When Ma $< 1$, we observe a scaling law of
+In our 2D runs, when Ma $< 1$ we observe a scaling law of
 Ma(Ra$, \epsilon) \propto \epsilon^{1/2}$Ra$^{1/4}$, 
 but this relation breaks down as the mean
 Ma approaches 1 and the flows become supersonic (see Fig. \ref{fig:ma_v_eps}).  
+In 3D, Ma appears to be a function of $\epsilon$ alone, with
+Ma $\propto \epsilon^{1/2}$.
 Furthermore, the value of $\epsilon$ sets the size of the
 evolved thermodynamic variables, such that
 $T_1/T_0 \propto \epsilon$ and $\rho_1/\rho_0 \propto \epsilon$.  
@@ -412,7 +415,7 @@ but can be O(1) for values of $\epsilon$ near $m_{\text{ad}}$.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
-\caption{Characteristic entropy fluctuations in evolved flows roughly
+\caption{Characteristic entropy fluctuations in evolved 2D flows roughly
 140$t_b$ after the start of simulations. 
 The time- and horizontally-averaged profile is removed in all cases.  
 (a) An $\epsilon = 10^{-4}$, low Ma flow. (b) An $\epsilon = 0.5$, flow,
@@ -507,7 +510,7 @@ of the Nusselt number \cite{otero&all2002, johnston&doering2009}.
 
 The variation of Nu with Ra is shown in 
 Fig. \ref{fig:re_and_nu_v_ra}a.
-At low to moderate Ra, 
+In 2D and at low to moderate Ra, 
 Nu $\propto$ Ra$^{1/3}$ regardless of $\epsilon$,
 reminiscent of scaling laws in classical \RB theory \cite{king&all2012}.
 At large Ra, Nu $\propto$ Ra$^{1/5}$ 
@@ -519,6 +522,8 @@ the value of Nu is heavily dependent upon the specific thermodynamic
 structures of the solution, as double roll states will transport
 heat more efficiently than single roll states, and slight changes in
 Ra can result in a solution latching on to one solution or the other.
+In 3D, it appears that Nu $\propto$ Ra$^{2/7}$, a classic scaling law
+seen in RB studies \cite{johnston&doering2009}.
 
 The Reynolds number (Re = $|\bm{u}|L_z/\nu$) and Peclet number
 (Pe = Pr Re)
@@ -528,14 +533,17 @@ Our choice of $\{\nu,\chi\}\propto \rho_0^{-1}$ drastically changes
 the value of Re between the top and bottom of the atmosphere.  We report values of
 Re at the midplane ($z=L_z/2$) of the atmosphere in
 Fig. \ref{fig:re_and_nu_v_ra}b.
-At low Ra, Re $\propto$ Ra$^{3/4}$.  At high Ra and $\epsilon$, 
+In 2D and at low Ra, Re $\propto$ Ra$^{3/4}$.  At high Ra and $\epsilon$, 
 where the average Ma $\approx 1$, 
 this scaling gives way to a Re $\propto$ Ra$^{1/2}$,
 where all changes in Re are due to the lowering of the diffusivity
 through raising Ra.
 For large values of Ra but at low $\epsilon$, there appears to be a scaling
 of Re $\propto$ Ra$^{2/3}$, but once again the shearing states have made
-these points difficult to measure.
+these points difficult to measure.  In 3D, the scaling of Re appears to
+consistently be Re $\propto$ Ra$^{1/2}$, consistent with the high-$\epsilon$,
+high Ra results seen in 2D and the lack of scaling of Ma with Ra in Fig. 
+\ref{fig:ma_v_eps}b.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/density_v_ra.png}
@@ -559,13 +567,14 @@ As the thermodynamic variables converge to their steady state values,
 the density profile evolves while remaining in hydrostatic equilibrium 
 to zeroth order.  In Fig. \ref{fig:nrho_v_ra} we show the number of density 
 scale heights present in the evolved solution using two measures.  
-We find that once the average Ma of the domain
+We find that in 2D, once the average Ma of the domain
 becomes approximately one, large density inversions begin to 
 form in the boundary layers, as was reported by \cite{brandenburg&all2005}.  
 The agreement of Nu across $\epsilon$ (Fig. \ref{fig:re_and_nu_v_ra}a), 
 particularly at low Ra in which all four of our cases collapse onto a single
 power law, is striking in light of the vastly different evolved stratifications
-felt by the flows.
+felt by the flows.  In 3D, despite the Ma not scaling with Ra, we see similar density
+inversions at high $\epsilon$ once Ra is sufficiently large.
 
 \section{Discussion}
 \refstepcounter{section}
@@ -576,10 +585,12 @@ We argue that these atmospheres are the natural extension
 of the RB problem to stratified systems, 
 and are an ideal laboratory for understanding the basic 
 properties of stratified convection. 
-We see little difference between
-the properties of our 2D and 3D results, which aligns with expectations
+The primary difference we see between our 2D and 3D results is that the Ma
+is not a function of Ra in 3D, and this has far-reaching consequences.  Otherwise,
+we see only slightly different scaling in Nu(Ra) in 2D and 3D, 
+which aligns with expectations
 of Boussinesq theory and numerical simulation results at 
-values of Pr $\geq$ 1 \cite{ahlers&all2009}.
+values of Pr $\geq$ 1 \cite{ahlers&all2009}.  
 
 At low Ra and Ma, the scaling of Nu with Ra is reminiscent of RB convection.  
 However, at high Ra and Ma, the scaling of Nu becomes weaker, changing
