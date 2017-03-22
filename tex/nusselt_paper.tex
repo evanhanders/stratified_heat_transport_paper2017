@@ -329,7 +329,7 @@ over many $t_b$ beginning \{100, 40\}$t_b$
 after the start of our \{2D, 3D\} simulations in order to
 assure our results are not biased by the convective transient.
 
-\section{Results}
+\section{Results \& Discussion}
 \refstepcounter{section}
 \label{sec:results}
 
@@ -516,52 +516,27 @@ particularly at low Ra in which all four of our cases collapse onto a single
 power law, is striking in light of the vastly different evolved stratifications
 felt by the flows. 
 
-\section{Discussion}
-\refstepcounter{section}
-\label{sec:discussion}
-In this letter we have studied fundamental heat transport by 
-stratified convection in simplified 2D and 3D polytropic atmospheres.
-We argue that these atmospheres are the natural extension
-of the RB problem to stratified systems, 
-and are an ideal laboratory for understanding the basic 
-properties of stratified convection. 
-The primary difference we see between our 2D and 3D results is that the Ma
-is not a function of Ra in 3D, and this has far-reaching consequences.  Otherwise,
-we see only slightly different scaling in Nu(Ra) in 2D and 3D, 
-which aligns with expectations
-of Boussinesq theory and numerical simulation results at 
-values of Pr $\geq$ 1 \cite{ahlers&all2009}.  
+%Discussion
 
-At low Ra and Ma, the scaling of Nu with Ra is reminiscent of RB convection.  
-However, at high Ra and Ma, the scaling of Nu becomes weaker, changing
-from a 1/3 to a 1/5 power law, a decrease by nearly a factor of 1/3.
-Similarly, the Reynolds number switches from a 3/4 power law to
-a 1/2 scaling in this regime shift, a similar decrease.
-This seems to suggest that a large portion of the scaling of the Nusselt number
-and Reynolds number in the low-Ma regime
-comes from increases in velocity.  Once the velocity reaches
-its natural maximum, heat transport can no longer benefit from increased velocities.
-The same is true of the Reynolds number, which scales directly with system diffusivities
-once the Mach number reaches its maximum value.
+In summary, we have found that the evolved flow properties of stratified,
+compressible convection scale in a manner reminiscent of RB convection.
+We argue that polytropically stratified atmospheres are the natural
+extension of the RB problem with an additional control parameter, $\epsilon$,
+whose primary role is to set the Ma of the flows.  We show that other properties
+of the evolved solutions (Nu, Re) are nearly identical at vastly different values
+of $\epsilon$, except for where there is a transition between the subsonic
+and supersonic regimes.  We also see that Nu scales similarly in 3D and 2D,
+and that Ma in 3D solutions seems to be a function of $\epsilon$ alone,
+allowing for simple specification of the evolved Ma using input parameters.
 
-Time-dependent oscillating shear states have developed spontaneously
-at values of $\epsilon=10^{-4}$ and Ra $\gtrsim 10^3$Ra$_{\text{crit}}$ in our 2D simulations.  
-Similar states have been observed in 2D RB convection \cite{goluskin&all2014}, and these should
-be studied in more detail.  These states are fundamentally in flux disequilibrium
-and last for large time scales (O(100$t_b$)),
-making it very difficult to choose a proper time window over which to calculate a 
-meaningful Nusselt number.  It would
-be beneficial for future studies to examine atmosperes with fixed flux or no slip
-boundary conditions to better converge and study cases at low $\epsilon$ and high
-Ra.
-
-Finally, we have found that the stratification of 
-these atmospheres evolves in a complex
+We have observed interesting phenomena, such as time-dependent oscillating shearing ``windy''
+states in our 2D simulations.  Unlike in RB \cite{goluskin&all2014}, our solutions with
+windy states have transport which scales in line with our non-windy solutions.
+Furthermore, the stratification of 
+these polytropic atmospheres evolves in a complex
 manner.  Future work should aim to 
 understand the importance of stratification on
-convective heat transport, and the manner in which
-boundary layer density inversions interact with
-the formation and transport properties of thermal plumes.
+convective heat transport and other flow properties.
 
 Our studies
 here will serve as a foundation both for understanding and 
@@ -588,7 +563,7 @@ Advanced Supercomputing (NAS) Division at Ames Research Center on Pleiades
 with allocations GID s1647 and GID g26133.
 We thank Jon Aurnou, Axel Brandenburg, Keith Julien, Mark Rast, and Jeff Oishi 
 for many useful discussions. We also thank the two anonymous referees whose
-critical comments greatly improved the quality of this letter.
+careful comments greatly improved the quality of this letter.
 
 \bibliography{../biblio.bib}
 \end{document}
