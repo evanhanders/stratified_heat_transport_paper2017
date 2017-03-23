@@ -53,7 +53,7 @@ follows scaling relationships similar to those found in the well-studied,
 incompressble Rayleigh-B\'{e}nard problem.
 The scaling of evolved fluid properties (Nu, Reynolds number,
 stratification) differs in the subsonic and supersonic regimes; 
-aside from the sonic transition, the evolved flow properties
+aside from the sonic transition, the evolved fluid properties
 of low and high Ma flows are nearly identical.  
 Our limited 3D runs suggest that
 evolved fluid properties behave similarly in 2D and 3D.
@@ -94,7 +94,7 @@ revealed a different evolved state from the RB case.
 Downflow lanes
 become fast and narrow, and upflow lanes turn into broad, slow upwellings.
 Furthermore, the \emph{entropy} gradient is negated by convection in the interior, so
-a significant temperature gradient and conductive flux persist despite
+a significant temperature gradient and conductive flux can persist despite
 efficient convection.
 
 In RB convection, there exist two primary dynamical control parameters: 
@@ -106,7 +106,7 @@ measures of turbulence in the evolved solution:
 the Reynolds
 number (Re, the strength of advection to viscous diffusion)
 and the Peclet number (Pe, advection vs. thermal diffusion).  
-In stratified atmospheres, the magnitude of the unstable entropy gradient, 
+In stratified atmospheres, the magnitude of the unstable entropy gradient
 joins Ra and Pr as an important control parameter.  This 
 \emph{superadiabatic excess} \cite{graham1975}, $\epsilon$,
 sets the scale of the atmospheric entropy gradient.
@@ -123,11 +123,10 @@ constant.  We also examine the behavior of flow properties, as quantified by Ma 
 \refstepcounter{section}
 \label{sec:experiment}
 We examine a monatomic ideal gas with an adiabatic index of
-$\gamma = 5/3$ whose equation of state is $P = R\rho T$. In this
-work we take $R = 1$.
-This is consistent with the approach used in earlier work \cite{graham1975, chan&all1982,
+$\gamma = 5/3$ whose equation of state is $P = R\rho T$. This is consistent with the approach used in earlier work \cite{graham1975, chan&all1982,
 hurlburt&all1984, cattaneo&all1990, cattaneo&all1991, brummell&all1996} 
 and is the simplest stratified extension of RB.
+In this work we take $R = 1$.
 We study atmospheres which are initially polytropically stratified,
 \begin{equation}
 \begin{split}
@@ -137,9 +136,9 @@ T_0(z)    &= T_{t}(1 + L_z - z),
 \end{split}
 \end{equation}
 where $m$ is the polytropic index and $L_z$ is the depth of the atmosphere.
+The height coordinate, $z$, increases upwards in the range $[0, L_z]$.
 Subscript 0 indicates initial conditions and subscript $t$ indicates values
-at $z = L_z$.
-The height coordinate, $z$, increases upwards in the range $[0, L_z]$.  We
+at $z = L_z$.   We
 specify the depth of the atmosphere, $L_z = e^{n_{\rho}/m} - 1$, by choosing
 the number of density scale heights, $n_{\rho}$, it spans initially.
 Throughout this letter we set $n_{\rho} = 3$.  Satisfying hydrostatic
@@ -241,7 +240,7 @@ using an implicit-explicit (IMEX), third-order, four-step
 Runge-Kutta timestepping scheme RK443 \cite{ascher&all1997}.  
 We decompose our thermodynamic variables such that $T = T_0 + T_1$ and
 $\ln\rho = (\ln\rho)_0 + (\ln\rho)_1$, 
-and the velocity $\bm{u} = u\hat{x} + v\hat{y} +  w\hat{z}$.
+and the velocity is $\bm{u} = u\hat{x} + v\hat{y} +  w\hat{z}$.
 In our 2D runs, $v = 0$.
 Subscript 0 variables, set by (\ref{eqn:polytrope}), 
 have no time derivative and vary only in $z$.
@@ -271,7 +270,7 @@ compared to $T_0$ and $\epsilon$.
 We filter this noise spectrum in coefficient space, 
 such that only the lower 25\% of the coefficients
 have power. We nondimensionalize our computational domains by setting
-all thermodynamic variables to unity at $z = L_z$ choosing
+all thermodynamic variables to unity at $z = L_z$, choosing
 $R = T_t = \rho_t = 1$.  By this choice, the non-dimensional
 length scale is the inverse temperature gradient scale and the 
 timescale is the isothermal sound crossing time, 
@@ -313,16 +312,16 @@ for $\epsilon = \{1.0, 0.5, 10^{-4}, 10^{-7}\}$, respectively.
 We measure the adiabatic Mach number (Ma = $|\bm{u}|/\sqrt{\gamma T}$).
 We find that Ma is a strong function of 
 $\epsilon$ and a weak function of Ra.  
-In our 2D runs, when Ma $< 1$ we observe a scaling law of
-Ma(Ra$, \epsilon) \propto \epsilon^{1/2}$Ra$^{1/4}$.
+In our 2D runs, when Ma $< 1$, we observe a scaling law of
+Ma(Ra$, \epsilon) \appropto \epsilon^{1/2}$Ra$^{1/4}$.
 This relation breaks down as the mean
 Ma approaches 1 (see Fig. \ref{fig:ma_v_eps}).  This transition
 occurs near Ra/Ra$_\text{crit} \approx \{10^{2}, 10^{3}\}$ for $\epsilon = \{1, 0.5\}$.
 In our limited 3D runs, Ma appears to be a function of $\epsilon$ alone, with
-Ma $\propto \epsilon^{1/2}$, so at high Ra, Ma$_{\text{3D}} < \text{Ma}_{\text{2D}}$.
+Ma $\appropto \epsilon^{1/2}$, so at high Ra, Ma$_{\text{3D}} < \text{Ma}_{\text{2D}}$.
 The value of $\epsilon$ also sets the size of the
 evolved thermodynamic fluctuations, such that
-$T_1/T_0 \propto \epsilon$ and $\rho_1/\rho_0 \propto \epsilon$.  
+$T_1/T_0 \appropto \epsilon$ and $\rho_1/\rho_0 \appropto \epsilon$.  
 These fluctuations are very small when $\epsilon$ and Ma are small,
 but can be O(1) for values of $\epsilon$ near 1.
 
@@ -332,9 +331,9 @@ but can be O(1) for values of $\epsilon$ near 1.
 140$t_b$ after the start of simulations. 
 The time- and horizontally-averaged profile is removed in all cases.  
 (a) A low Ma flow at moderate Ra. (b) A high Ma flow at the same Ra as in (a).
-(c) a high Ma flow at high Ra.
+(c) A high Ma flow at high Ra.
 Shock systems can be seen in the upper atmosphere of the high Ma flows,
-for example at $(x, z) \approx (70, 15-19)$ in (b) and $(x, z) \approx 
+for example at $(x, z) \sim (70, 15-19)$ in (b) and $(x, z) \sim 
 (65, 17-19)$ in (c).
 \label{fig:entropy_snapshots} }
 \end{figure}
@@ -353,7 +352,7 @@ As Ra is increased to large values
 (Fig. \ref{fig:entropy_snapshots}c), thermodynamic structures 
 no longer span the domain depth; rather, they break up into 
 small eddies which traverse the domain multiple
-times before diffusing.  Our choice of fixed-temperature, stress free boundary conditions 
+times before diffusing.  Our choice of fixed temperature, stress free boundary conditions 
 allows the flux at the boundaries to vary, while also allowing
 for mean horizontal velocity profiles along the boundaries (winds).
 We find these windy convective states, reminiscent of similar states
@@ -393,8 +392,8 @@ where $F_{\text{conv,z}}$ and $F_{\text{cond,z}}$ are the
 z-components of $\bm{F}_{\text{conv}}$ and $\bm{F}_{\text{cond}}$,
 and $\langle \rangle$ are volume averages.  
 $F_{\text{A}} \equiv -\langle\kappa\rangle \partial_z T_{\text{ad}}$ 
-is the conductive flux of the proper corresponding adiabatic atmosphere
-For a compressible ideal gas in hydrostatic equilibrium,
+is the conductive flux of the proper corresponding adiabatic atmosphere.
+For a compressible, ideal gas in hydrostatic equilibrium,
 $\partial_z T_{\text{ad}} \equiv - g / c_{P}$ \cite{spiegel&veronis1960}.  
 It is important to measure the evolved value of
 $\langle \kappa \rangle = \langle \rho\chi \rangle$, which is nearly
@@ -408,10 +407,10 @@ The variation of Nu with Ra is shown in
 Fig. \ref{fig:re_and_nu_v_ra}a.  We find that the Nu depends primarily
 on Ra, not on $\epsilon$, except where dynamical regimes change.
 In 2D and at low to moderate Ra, 
-Nu $\propto$ Ra$^{1/3}$ regardless of $\epsilon$,
+Nu $\appropto$ Ra$^{1/3}$ regardless of $\epsilon$,
 reminiscent of scaling laws in classical \RB theory \cite{king&all2012}.
-As the flow becomes supersonic,  Nu $\propto$ Ra$^{1/5}$.
-2D runs at $\text{Ra }> 10^3$Ra$_{\text{crit}}$
+As the flow becomes supersonic,  Nu $\appropto$ Ra$^{1/5}$.
+2D runs at $\text{Ra }\gtrsim 10^3$Ra$_{\text{crit}}$
 and $\epsilon = 10^{-4}$ exhibit windy convective states.
 In these runs, the system is in flux equilibrium only when
 time averaged over roll states and windy states.
@@ -424,7 +423,7 @@ the value of Nu is heavily dependent upon the specific thermodynamic
 structures of the solution, as double roll states will transport
 heat more efficiently than single roll states, and slight changes in
 Ra can result in a simulation latching on to one solution or the other.
-In our limited 3D runs, it appears that Nu $\propto$ Ra$^{2/7}$, a classic scaling law
+In our limited 3D runs, it appears that Nu $\appropto$ Ra$^{2/7}$, a classic scaling law
 seen in RB studies \cite{johnston&doering2009}.
 
 The rms Reynolds number (Re = $|\bm{u}|L_z/\nu$) and Peclet number
@@ -434,14 +433,14 @@ convective state.  For Pr = 1, such as in this work, Pe = Re.
 Our choice of $\{\nu,\chi\}\propto \rho_0^{-1}$ drastically changes
 the value of Re between the top and bottom of the atmosphere.  We report values of
 Re at the midplane ($z=L_z/2$) of the atmosphere in
-Fig. \ref{fig:re_and_nu_v_ra}b.  Largely we find that Ra and
-Pe depend on Ra, but not $\epsilon$, except when the flow states
+Fig. \ref{fig:re_and_nu_v_ra}b.  Largely we find that Re
+depends on Ra, but not $\epsilon$, except when the flow states
 change.
-In 2D and at low Ra, Re $\propto$ Ra$^{3/4}$.  When the flows
+In 2D and at low Ra, Re $\appropto$ Ra$^{3/4}$.  When the flows
 become supersonic, 
-this scaling gives way to Re $\propto$ Ra$^{1/2}$.
+this scaling gives way to Re $\appropto$ Ra$^{1/2}$.
 In our limited 3D runs, the scaling of Re is
-Re $\propto$ Ra$^{1/2}$, consistent with the supersonic results.
+Re $\appropto$ Ra$^{1/2}$, consistent with the supersonic results.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/density_v_ra.png}
@@ -467,7 +466,7 @@ in the boundary layers, as
 was reported by \cite{brandenburg&all2005}.  We find this in 2D and 3D.
 Surprisingly, the evolved $n_\rho$ is always less than the initial $n_\rho = 3$,
 and turbulent pressure support plays a larger role than atmospheric slumping.
-The agreement of Nu, Re across $\epsilon$ (Fig. \ref{fig:re_and_nu_v_ra}), 
+The agreement of Nu \& Re across $\epsilon$ (Fig. \ref{fig:re_and_nu_v_ra}), 
 particularly at low Ra in which all four of our cases collapse onto a single
 power law, is striking in light of the vastly different evolved stratifications
 felt by the flows. 
