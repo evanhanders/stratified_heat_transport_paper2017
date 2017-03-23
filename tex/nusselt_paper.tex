@@ -35,24 +35,28 @@
 \title{Convective heat transport in stratified atmospheres at low and high Mach number}
 
 \begin{abstract}
-Convection in astrophysical systems is stratified and
-often occurs at high Rayleigh number (Ra) and low
-Mach number (Ma).
-Here we study stratified convection in the context of 
+%Convection in astrophysical systems is stratified and
+%often occurs at high Rayleigh number (Ra) and low
+%Mach number (Ma).
+We study stratified convection in the context of 
 plane-parallel, polytropically stratified atmospheres. 
 We perform a suite of 2D and 3D simulations in which we vary the initial
-superadiabaticity ($\epsilon$) and Ra at a set
-initial density stratification ($n_{\rho}$), aspect
-ratio, and Prandtl number (Pr).
-We find that Ma is a strong function of $\epsilon$
+superadiabaticity ($\epsilon$) and the Rayleigh number (Ra) at a set
+initial density stratification, aspect
+ratio, and Prandtl number.
+We find that the Mach number (Ma) is a strong function of $\epsilon$
 in both 2D and 3D simulations, and that it is a 
 weak function of Ra in 2D.
-The scaling of evolved fluid properties (Nusselt number, Reynolds number,
-stratification) differs in the subsonic and supersonic regimes; however,
+Surprisingly, we find that the evolved heat transport, 
+quantified by the Nusselt number (Nu),
+follows scaling relationships similar to those found in the well-studied, 
+incompressble Rayleigh-B\'{e}nard problem.
+The scaling of evolved fluid properties (Nu, Reynolds number,
+stratification) differs in the subsonic and supersonic regimes; 
 aside from the sonic transition, the evolved flow properties
-of low and high Ma flows are nearly identical.  Our limited 3D runs suggest that
-evolved fluid properties behave similarly in 2D and 3D, but with modified
-scaling laws.
+of low and high Ma flows are nearly identical.  
+Our limited 3D runs suggest that
+evolved fluid properties behave similarly in 2D and 3D.
 \end{abstract}
 \maketitle
 
@@ -113,7 +117,7 @@ quantified by the Nusselt number (Nu), in plane-parallel,
 two- and three-dimensional, polytropically stratified atmospheres.  
 We vary $\epsilon$ and Ra while holding Pr, aspect ratio, boundary conditions,
 and initial atmospheric stratification
-constant.  We also examine the behavior of flow properties, as quantifed by Ma and Re.
+constant.  We also examine the behavior of flow properties, as quantified by Ma and Re.
 
 \section{Experiment} 
 \refstepcounter{section}
@@ -143,49 +147,6 @@ equilibrium sets the value of gravity, $g = T_t (m + 1)$, which is
 constant with depth.  We study atmospheres with aspect
 ratios of 4 where both the $x$ and $y$ coordinates have the range $[0, 4L_z]$.
 In our 2D cases, we only consider $x$ and $z$.
-
-%
-%We examine the simplest stratified extension of RB by studying a
-%fluid composed of monatomic ideal gas particles with an adiabatic 
-%index of $\gamma = 5/3$ and whose equation of state is $P = R\rho T$. 
-%This is consistent with the approach used in earlier work.
-%The initial atmosphere is a plane-parallel polytrope in which 
-%the gravitational acceleration and conductive flux, 
-%$\bm{F}_{\text{cond,0}} = -\kappa \partial_z T_0$, do not vary with depth. To
-%achieve the latter condition, both $\kappa$ and $\partial_z T_0$ are constant.
-%Under these assumptions, satisfying hydrostatic 
-%equilibrium produces a stratification of
-%\begin{equation}
-%\begin{split}
-%\rho_0(z) &= \rho_{t}(z_0 - z)^m, \\
-%T_0(z)    &= T_{t}(z_0 - z),
-%\label{eqn:polytrope}
-%\end{split}
-%\end{equation}
-%where $m = m_{\text{ad}} - \epsilon$ is the polytropic index.
-%The adiabatic polytropic index is $m_{\text{ad}} \equiv (\gamma-1)^{-1}$, and
-%the superadiabatic excess is $\epsilon$ which sets the scale 
-%of the entropy gradient ($\partial_z S_0 \propto -\epsilon$).
-%A significant advance of this work is the ability to study large 
-%and small values of $\epsilon$, as will be discussed.
-%Thermodynamic variables are nondimensionalized at the 
-%top of the atmosphere as  $P_0(L_z) = \rho_0(L_z) = T_0(L_z) = 1$, 
-%requiring $z_0 \equiv L_z + 1$ and $R = T_{t} = \rho_{t} = 1$.
-%By this choice, the non-dimensional length scale is the inverse 
-%temperature gradient scale and the timescale is the isothermal 
-%sound crossing time of this unit length.
-%The height $z$ increases upwards within $[0, L_{z}]$, 
-%where $L_{z} = e^{n_{\rho}/m} - 1$ is
-%determined by $n_\rho$ and $\epsilon$.
-%The characteristic timescale of convective dynamics
-%is related to the atmospheric buoyancy time, 
-%$t_{\text{b}} = \sqrt{L_z/g\epsilon}$, with $g = (m+1)$.
-%Throughout this letter, we use buoyancy time units and 
-%choose $n_{\rho} = 3$ such that the 
-%initial density varies by a factor of 20.
-%All atmospheres studied here have an aspect ratio of 4, 
-%such that $L_x = 4L_z$.
-%
 
 Convective dynamics are controlled by the superadiabaticity
 of the atmospheres as well as the atmospheric diffusivities.
@@ -309,7 +270,7 @@ random white noise whose magnitude is infinitesimal
 compared to $T_0$ and $\epsilon$.
 We filter this noise spectrum in coefficient space, 
 such that only the lower 25\% of the coefficients
-have power. We non-dimensionalize our computational domains by setting
+have power. We nondimensionalize our computational domains by setting
 all thermodynamic variables to unity at $z = L_z$ choosing
 $R = T_t = \rho_t = 1$.  By this choice, the non-dimensional
 length scale is the inverse temperature gradient scale and the 
@@ -354,7 +315,7 @@ We find that Ma is a strong function of
 $\epsilon$ and a weak function of Ra.  
 In our 2D runs, when Ma $< 1$ we observe a scaling law of
 Ma(Ra$, \epsilon) \propto \epsilon^{1/2}$Ra$^{1/4}$.
-this relation breaks down as the mean
+This relation breaks down as the mean
 Ma approaches 1 (see Fig. \ref{fig:ma_v_eps}).  This transition
 occurs near Ra/Ra$_\text{crit} \approx \{10^{2}, 10^{3}\}$ for $\epsilon = \{1, 0.5\}$.
 In our limited 3D runs, Ma appears to be a function of $\epsilon$ alone, with
@@ -381,22 +342,23 @@ for example at $(x, z) \approx (70, 15-19)$ in (b) and $(x, z) \approx
 Low Ma flows (e.g., $\epsilon = 10^{-4}$)
 display the classic narrow downflow and broad upflow lanes of stratified
 convection (Fig. \ref{fig:entropy_snapshots}a).
-At high Ma (e.g., $\epsilon = 0.5$), bulk thermodynamic structures are similar but
+At high Ma (e.g., $\epsilon = 0.5$, Ra/Ra$_{\text{crit}} \gtrsim 10^3$), 
+bulk thermodynamic structures are similar but
 shock systems form in the upper atmosphere near downflow lanes 
-for sufficiently large values of $\epsilon$ and Ra (Fig. \ref{fig:entropy_snapshots}b,c).
-Similar shock phenomena were reported in
-both two \cite{cattaneo&all1990} and 
+(Fig. \ref{fig:entropy_snapshots}b\&c).
+These shock phenomena were reported in
+two \cite{cattaneo&all1990} and 
 three \cite{malagoli&all1990} dimensional polytropic simulations previously.
 As Ra is increased to large values 
 (Fig. \ref{fig:entropy_snapshots}c), thermodynamic structures 
-no longer span the whole domain but rather break up into 
+no longer span the domain depth; rather, they break up into 
 small eddies which traverse the domain multiple
 times before diffusing.  Our choice of fixed-temperature, stress free boundary conditions 
 allows the flux at the boundaries to vary, while also allowing
 for mean horizontal velocity profiles along the boundaries (winds).
 We find these windy convective states, reminiscent of similar states
-in RB convection \cite{goluskin&all2014}, at $\epsilon = 10^{-4}$ for high
-values of Ra. Roll states (Fig. \ref{fig:entropy_snapshots}a) with high convective
+in RB convection \cite{goluskin&all2014}, at $\epsilon = 10^{-4}$ and
+Ra/Ra$_{\text{crit}} \gtrsim 10^{3}$. Roll states (Fig. \ref{fig:entropy_snapshots}a) with high convective
 transport alternate with windy states of lower transport.
 
 
@@ -523,8 +485,9 @@ and supersonic regimes.  We also see that Nu scales similarly in 3D and 2D,
 and that Ma in 3D solutions seems to be a function of $\epsilon$ alone,
 allowing for simple specification of the evolved Ma using input parameters.
 
-We have observed interesting phenomena, such as time-dependent oscillating shearing windy
-states in our 2D simulations.  Unlike in RB \cite{goluskin&all2014}, our solutions with
+We observe interesting phenomena, such as time-dependent, windy
+states of shear in our 2D simulations.  
+Unlike in RB \cite{goluskin&all2014}, our solutions with
 windy states have transport which scales in line with our non-windy solutions.
 Furthermore, the stratification of 
 these polytropic atmospheres evolves in a complex
@@ -532,18 +495,17 @@ manner.  Future work should aim to
 understand the importance of stratification on
 convective heat transport and other flow properties.
 
-Our studies
-here will serve as a foundation both for understanding and 
+Our studies here will serve as a foundation for 
 comparing heat transport in stratified convection
-to that in RB convection \cite{johnston&doering2009}, 
-and for future studies of transport in stratified convection.  
-These results can be used to determine if simplified equation sets, 
-such as the anelastic equations, carry heat in the same manner as the 
-FC equations.
+to that in RB convection \cite{johnston&doering2009}
+and for better quantifying transport in stratified convection.  
+These results can be used to determine if fluid properties
+scale appropriately in simplified equation sets, 
+such as the anelastic equations.
 This work will also be useful in coming to understand more realistic systems, 
 such as rapidly rotating atmospheres \cite{julien&all2012},
 atmospheres bounded by stable regions \cite{hurlburt&all1986}, 
-or regions with realistic profiles of $\kappa$.
+and regions with realistic profiles of $\kappa$.
 
 
 
