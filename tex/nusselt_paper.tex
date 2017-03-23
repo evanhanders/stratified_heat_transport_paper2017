@@ -40,25 +40,19 @@ often occurs at high Rayleigh number (Ra) and low
 Mach number (Ma).
 Here we study stratified convection in the context of 
 plane-parallel, polytropically stratified atmospheres. 
-We hold the density stratification ($n_{\rho}$), aspect
-ratio, and Prandtl 
-number (Pr) constant while varying the superadiabaticity
-and Ra.  We find that Ma is a strong function of the superadiabaticity
+We perform a suite of 2D and 3D simulations in which we vary the initial
+superadiabaticity ($\epsilon$) and Ra at a set
+initial density stratification ($n_{\rho}$), aspect
+ratio, and Prandtl number (Pr).
+We find that Ma is a strong function of $\epsilon$
 in both 2D and 3D simulations, and that it is a 
 weak function of Ra in 2D.
-In 2D simulations, the scaling of the Nusselt Number (Nu) and the Reynolds number (Re)
-with Ra weaken
-once the mean Ma of the solution is unity, but in 3D
-Re and Nu seem to have consistent scaling across Ra.
-We further find that when the superadiabaticity and Ma are large,
-density inversions form in the thermal boundary layers.
-%As Ra increases and $\text{Ma} \rightarrow 1$, a scaling 
-%of Nu $\propto$ Ra$^{0.45}$ is observed.  
-%As Ra increases to a regime where Ma $\geq 1$,
-%this scaling gives way to a weaker Nu $\propto$ Ra$^{0.19}$. 
-%In the regime of Ma $\ll 1$, a consistent
-%Nu $\propto$ Ra$^{0.31}$ is retrieved,  reminiscent of the 
-%Nu $\propto$ Ra$^{2/7}$ seen in \RB convection.
+The scaling of evolved fluid properties (Nusselt number, Reynolds number,
+stratification) differs in the subsonic and supersonic regimes; however,
+aside from the sonic transition, the evolved flow properties
+of low and high Ma flows are nearly identical.  Our limited 3D runs suggest that
+evolved fluid properties behave similarly in 2D and 3D, but with modified
+scaling laws.
 \end{abstract}
 \maketitle
 
@@ -81,22 +75,22 @@ properties of low Ma convection, which characterizes deeper motions,
 are known.
 
 In the widely-studied \RB (RB) problem of incompressible Boussinesq convection, 
-a negative temperature gradient leads to convective instability.
+a negative temperature gradient causes convective instability.
 In the evolved solution, upflows and downflows are symmetrical, the
-temperature in the interior becomes isothermal and
+temperature in the interior becomes isothermal, and
 the conductive flux ($\propto \grad T$) approaches 
 zero there. 
 For compressible convection in a stratified atmosphere, a
-negative entropy gradient leads to convective instability.
+negative entropy gradient causes convective instability.
 Early numerical experiments of moderate-to-high Ma compressible convection
 in two \cite{graham1975, chan&all1982,
 hurlburt&all1984, cattaneo&all1990} and three 
 \cite{cattaneo&all1991, brummell&all1996} dimensions
-revealed that the evolved state differs from the RB case.
+revealed a different evolved state from the RB case.
 Downflow lanes
 become fast and narrow, and upflow lanes turn into broad, slow upwellings.
-Furthermore, the \emph{entropy} gradient is negated by convection in the interior, and
-a significant temperature gradient and conductive flux persist in the presence of
+Furthermore, the \emph{entropy} gradient is negated by convection in the interior, so
+a significant temperature gradient and conductive flux persist despite
 efficient convection.
 
 In RB convection, there exist two primary dynamical control parameters: 
@@ -350,8 +344,8 @@ Larger symbols with white dots designate 3D runs.
 
 Solutions were time-evolved until a long time average of the fluxes
 showed little
-variance with depth. By performing a linear stability analysis, 
-we determined that the onset of convection
+variance with depth. A linear stability analysis determined
+that convective onset
 occurs at $\text{Ra}_{\text{crit}} = \{11.15, 10.06, 10.97, 10.97\}$ 
 for $\epsilon = \{1.0, 0.5, 10^{-4}, 10^{-7}\}$, respectively.  
 
@@ -442,11 +436,11 @@ For a compressible ideal gas in hydrostatic equilibrium,
 $\partial_z T_{\text{ad}} \equiv - g / c_{P}$ \cite{spiegel&veronis1960}.  
 It is important to measure the evolved value of
 $\langle \kappa \rangle = \langle \rho\chi \rangle$, which is nearly
-$\kappa_0$ when $\epsilon$ is small but can change appreciably for large
+$\kappa_0$ for small $\epsilon$ but changes appreciably for large
 values of $\epsilon$.
 In incompressible Boussinesq convection, where $\grad S = 0$ only when 
-$\grad T = 0$, this definition reduces to the traditional definition
-of the Nusselt number \cite{otero&all2002, johnston&doering2009}.
+$\grad T = 0$, this definition reduces to the traditionally defined
+Nusselt number \cite{otero&all2002, johnston&doering2009}.
 
 The variation of Nu with Ra is shown in 
 Fig. \ref{fig:re_and_nu_v_ra}a.  We find that the Nu depends primarily
@@ -529,7 +523,7 @@ and supersonic regimes.  We also see that Nu scales similarly in 3D and 2D,
 and that Ma in 3D solutions seems to be a function of $\epsilon$ alone,
 allowing for simple specification of the evolved Ma using input parameters.
 
-We have observed interesting phenomena, such as time-dependent oscillating shearing ``windy''
+We have observed interesting phenomena, such as time-dependent oscillating shearing windy
 states in our 2D simulations.  Unlike in RB \cite{goluskin&all2014}, our solutions with
 windy states have transport which scales in line with our non-windy solutions.
 Furthermore, the stratification of 
