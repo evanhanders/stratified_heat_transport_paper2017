@@ -35,7 +35,7 @@ Nusselt number (Nu) was flawed, and have since defined
 a slightly modified, more appropriate Nu.  This new definition better unifies
 the results at low and high Mach number (Ma) and makes it easier to understand
 the changes between the low and high Ma regimes. We have streamlined our discussion
-of the control parameters and have shown how evolved properties (e.g, Ma) depend
+of the control parameters and have shown how evolved properties (e.g., Ma) depend
 on the control parameters of our experiment.  Our previous presentation of the
 experiment was confusing, and following the report's comments we feel that we
 have improved the presentation.
@@ -236,7 +236,9 @@ Fig. 4 fully.  We find that the density contrast across the domain at high $\eps
 appreciably shrinks in the evolved state compared to the initial state.  Furthermore, we find
 that density inversions form near the boundary layers of these atmospheres once the mean atmospheric Mach number approaches
 one, and show that this density inversion becomes significant at high Ra and high $\epsilon$,
-and persists in 3D.  This is discussed fully in the Results \& Discussion section.
+and persists in 3D.  This is discussed fully in the Results \&
+Discussion section.  We have combined the Results \& Discussion sections in the revised draft.
+
 
 $\,$\newline\noindent
 We have addressed the major points in the critique; we now continue with the
@@ -319,12 +321,15 @@ variable chi is easy. Why not write in terms of mu and k not nu and
 chi?
 \end{myquotation}
 Our equations are formulated as the evolution of velocities rather
-than momentum, and in this formulation $\nu$ and $\chi$ are the
+than momentum; this formluation is crucial to our current IMEX
+timestepping of acoustic waves at low Mach numbers.  
+In this velocity-based formulation, $\nu$ and $\chi$ are the
 natural variables.  If $\nu$ and $\chi$ are constant in space,
 the problem becomes a constant coefficient problem and is numerically
 simple.  However, a spatially constant $\nu$ and $\chi$ does not satisfy
 thermal equilibrium within the initial polytrope, which is only satisfied when
-$\kappa = \rho\chi$ is constant.  To satisfy thermal equilibrium requires
+$\kappa_0 = \rho_0\chi$ is constant (where as in the letter, subscript 0
+denotes initial values).  To satisfy thermal equilibrium requires
 a gradient in $\chi$, and to satisfy a constant Pr through the domain we
 must also have a gradient in $\nu$.  $\nu$ and $\chi$ are now nonconstant
 coefficients, and this approach, as we take here, is much more challenging numerically. 
@@ -341,7 +346,10 @@ We have spelled this out in the second to last paragraph of the Experiment secti
 \begin{myquotation}
 `extended to include variable nu and chi' : see above. This seems
 very unnecessary!
+\end{myquotation}
+See above description of $\nu$ and $\chi$ in our equations.
 
+\begin{myquotation}
 Results
 
 $d_z T_{ad} = 0$: This is only true for liquids not gases. See Speigel and
@@ -359,6 +367,8 @@ We have updated the text following Eqn 8 to reflect this.
 understand the discussion here. Do the authors regard the breakup of
 the down flows as an extreme version of asymmetry?
 \end{myquotation}
+On further reflection, we realized that we are uncertain about how to
+quantify asymmetries as the flows break up.  
 Being unable to determine how $\epsilon$ affects symmetries in the
 flow, we have removed this discussion.
 
@@ -380,8 +390,6 @@ Discussion
 Can the authors demonstrate the basic principles of whatever balance
 is described by the Grossman-Lohse theory?
 \end{myquotation}
-We have combined the Results \& Discussion sections in the revised draft.
-
 We believe that the Grossman-Lohse theory, which models the energy dissipation rate of both
 kinetic and potential energies, could be extended to stratified, compressible flows which also
 have potential energy.  At low $\epsilon$, it seems the extension would be easier to
