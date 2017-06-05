@@ -1,0 +1,16 @@
+#PBS -S /bin/bash
+#PBS -N Ra1e4_eps1
+#PBS -l select=147:ncpus=28:mpiprocs=28:model=bro_ele
+#PBS -l walltime=8:00:00
+#PBS -j oe
+#PBS -q normal
+
+cd $PBS_O_WORKDIR
+
+source /home5/bpbrown/dedalus/bin/activate
+
+date
+mpiexec_mpt -np 4096 python3 FC_poly.py --3D --mesh=64,64 --run_time=7.75 \
+	    --nz=128 --nx=256 --eps=1 --split \
+	    --Rayleigh=1e4 --n_rho_cz=3 > $dedalus_script.out.$PBS_JOBID
+date
