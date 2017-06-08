@@ -135,7 +135,10 @@ class ProfileBuddy(PlotBuddy):
                 for j in range(current_writes.shape[0]):
                     old_avg = np.copy(avg)
                     avg *= j
-                    avg += current_writes[j,:]
+                    try:
+                        avg += current_writes[j,:]
+                    except:
+                        avg[:] += current_writes[j,0,:]
                     avg /= j+1
 
                     if j == 0:
@@ -283,8 +286,10 @@ class ProfileBuddy(PlotBuddy):
                 'KE_flux_z' in self.full_average_profiles.keys() and        \
                 'PE_flux_z' in self.full_average_profiles.keys() and        \
                 'viscous_flux_z' in self.full_average_profiles.keys() and   \
-                'kappa_flux_fluc_z' in self.full_average_profiles.keys() and     \
-                'ln_rho1' in self.full_average_profiles.keys() and         \
+                ('kappa_flux_z' in self.full_average_profiles.keys() or
+                'kappa_flux_fluc_z' in self.full_average_profiles.keys()) and     \
+                ('rho_full' in self.full_average_profiles.keys() or 
+                'ln_rho1' in self.full_average_profiles.keys()) and         \
                 'T1' in self.full_average_profiles.keys() and               \
                 'vel_rms' in self.full_average_profiles.keys():
                 ma_ad_post, ma_means, ma_stdevs = [], [], []
@@ -292,8 +297,11 @@ class ProfileBuddy(PlotBuddy):
 
                 for i in range(self.full_average_profiles['enthalpy_flux_z'].shape[0]):
                     T_full = self.full_average_profiles['T1'][i,:]+self.atmosphere['T0']
-                    ln_rho = self.full_average_profiles['ln_rho1'][i,:]+np.log(self.atmosphere['rho0'])
-                    rho_full = np.exp(ln_rho)
+                    try:
+                        ln_rho = self.full_average_profiles['ln_rho1'][i,:]+np.log(self.atmosphere['rho0'])
+                        rho_full = np.exp(ln_rho)
+                    except:
+                        rho_full = self.full_average_profiles['rho_full'][i,:]
                     kappa_flux_mean = self.atmosphere['rho0']*self.atmosphere['chi']
                     kappa_ad = self.atmosphere['chi']*rho_full
                     current_field.set_scales(1, keep_data=False)
@@ -306,14 +314,20 @@ class ProfileBuddy(PlotBuddy):
                              self.full_average_profiles['KE_flux_z'][i,:]+       \
                              self.full_average_profiles['PE_flux_z'][i,:]+       \
                              self.full_average_profiles['viscous_flux_z'][i,:]
-                    F_cond = self.full_average_profiles['kappa_flux_fluc_z'][i,:] + kappa_flux_mean
+                    try:
+                        F_cond = self.full_average_profiles['kappa_flux_fluc_z'][i,:] + kappa_flux_mean
+                    except:
+                        F_cond = self.full_average_profiles['kappa_flux_z'][i,:] 
 
                     current_field.set_scales(1, keep_data=False)
                     current_field['g'] = F_cond - kappa_ad_mean*grad_t_ad
                     current_field.antidifferentiate('z', ('left', 0), out=work_field)
                     nu_bottom = work_field.interpolate(z=self.atmosphere['Lz'])['g'][0]/self.atmosphere['Lz']
-
-                    Nu_6 = (F_conv + F_cond - kappa_ad_mean*grad_t_ad)/(nu_bottom)
+                    
+                    if 'Nusselt_AB17' in self.full_average_profiles.keys():
+                        Nu_6 = self.full_average_profiles['Nusselt_AB17'][0,0,:]
+                    else:
+                        Nu_6 = (F_conv + F_cond - kappa_ad_mean*grad_t_ad)/(nu_bottom)
 
                    
                     ma_post = self.full_average_profiles['vel_rms'][i,:]/\

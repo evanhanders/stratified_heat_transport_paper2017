@@ -1208,9 +1208,14 @@ class FC_equations_3d(FC_equations):
         self.problem.substitutions['UdotGrad(f, f_z)'] = "(u*dx(f) + v*dy(f) + w*(f_z))"
                     
         # analysis operators
-        self.problem.substitutions['plane_avg(A)'] = 'integ(A, "x", "y")/Lx/Ly'
-        self.problem.substitutions['vol_avg(A)']   = 'integ(A)/Lx/Ly/Lz'
-        self.problem.substitutions['plane_std(A)'] = 'sqrt(plane_avg((A - plane_avg(A))**2))'
+        if self.dimensions > 1:
+            self.problem.substitutions['plane_avg(A)'] = 'integ(A, "x", "y")/Lx/Ly'
+            self.problem.substitutions['vol_avg(A)']   = 'integ(A)/Lx/Ly/Lz'
+            self.problem.substitutions['plane_std(A)'] = 'sqrt(plane_avg((A - plane_avg(A))**2))'
+        else:
+            self.problem.substitutions['plane_avg(A)'] = 'A'
+            self.problem.substitutions['vol_avg(A)']   = 'integ(A)/Lz'
+            self.problem.substitutions['plane_std(A)'] = 'sqrt(plane_avg((A - plane_avg(A))**2))'
 
         self.problem.substitutions["σxx"] = "(2*dx(u) - 2/3*Div_u)"
         self.problem.substitutions["σyy"] = "(2*dy(v) - 2/3*Div_u)"
@@ -1221,9 +1226,16 @@ class FC_equations_3d(FC_equations):
            
         super(FC_equations_3d, self)._set_subs()
                 
-    def set_equations(self, Rayleigh, Prandtl, kx = 0, EVP_2 = False, 
+    def set_equations(self, Rayleigh, Prandtl, kx = 0, ky = 0, EVP_2 = False, 
                       easy_rho_momentum=False, easy_rho_energy=False, split_diffusivities=False):
 
+        if self.dimensions == 1:
+            self.problem.parameters['j'] = 1j
+            self.problem.substitutions['dx(f)'] = "j*kx*(f)"
+            self.problem.parameters['kx'] = kx
+            self.problem.substitutions['dy(f)'] = "j*ky*(f)"
+            self.problem.parameters['ky'] = ky
+            logger.info('Solving and evp with kx={}, ky={}'.format(kx, ky))
         self._set_diffusivities(Rayleigh=Rayleigh, Prandtl=Prandtl, split_diffusivities=split_diffusivities)
         self._set_parameters()
         if EVP_2:

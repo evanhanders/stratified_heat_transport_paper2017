@@ -14,6 +14,7 @@ import matplotlib
 matplotlib.use('Agg')
 matplotlib.rcParams.update({'font.size': 11})
 import matplotlib.pyplot as plt
+from matplotlib.colors import ColorConverter
 from profile_buddy import ProfileBuddy, COLORS
 import os
 import numpy as np
@@ -54,12 +55,12 @@ class ParameterSpaceBuddy():
         #Get all of the directories and get info on them.
         dirs = []
 
+
         for i, dir in enumerate(glob.glob('{:s}/FC*/'.format(self.top_dir))):
             tag = dir.split(self.top_dir)[-1]
             info = dict()
             current_info = [dir,]
-            break_loop = False
-            print(tag)
+            continue_loop = False
             for stem in tag.split('_'):
                 for parameter in self.parameters:
                     if parameter in stem.lower():
@@ -69,11 +70,11 @@ class ParameterSpaceBuddy():
                     current_info.append(info[parameter])
                 except:
                     current_info.append(None)
-                    break_loop = True
+                    continue_loop = True
                     if comm_world.rank == 0:
                         print('Dir {} does not have parameter {} in string'.format(dir, parameter))
-            if break_loop:
-                break
+            if continue_loop:
+                continue
 
             current_info.append(dict())
             dirs.append(current_info)
@@ -85,7 +86,8 @@ class ParameterSpaceBuddy():
         important_dirs = []
         for i, dir in enumerate(self.dir_info):
             if os.path.exists('{:s}/{:s}'.format(dir[0], self.out_dir_name)) and not force_write:
-                print('skipping {:s}, already solved there'.format(dir[0]))
+                if comm_world.rank == 0:
+                    print('skipping {:s}, already solved there'.format(dir[0]))
                 continue
             else:
                 important_dirs.append(dir)
@@ -97,7 +99,8 @@ class ParameterSpaceBuddy():
             if np.mod(i, comm_world.size) != comm_world.rank:
                 continue
             try:
-                comm_new = comm.Create(comm.Get_group().Incl(np.ones(1)*comm.rank))
+#            if True:
+                comm_new = comm_world.Create(comm_world.Get_group().Incl(np.ones(1)*comm_world.rank))
 
                 #This exception exists because my old data is crappy -- consider removing this point.
                 start_files = base_start_file
@@ -107,12 +110,12 @@ class ParameterSpaceBuddy():
                 
                 plotter = ProfileBuddy(dir[0], max_files=n_files, start_file=start_file, \
                                         write_cadence=1e10, file_dirs=['scalar', 'profiles'], comm=comm_new,
-                                        outdir=out_dir_name)
+                                        outdir=self.out_dir_name)
                 for j, key in enumerate(keys):
                     plotter.add_subplot(key, 0, j)
                 plotter.analyze_subplots()
                 plotter.communicate_profiles()
-                plotter.save_profiles(filename=out_file_name)
+                plotter.save_profiles(filename=self.out_file_name.split('.h5')[0])
                 plotter.make_plots(figsize=(3*len(keys), 8))
             except:
                 print('AN ERROR HAS OCCURED IN {:s}'.format(dir[0]))
@@ -159,7 +162,7 @@ class ParameterSpaceBuddy():
 
 
     def plot_parameter_space_comparison(self, ax, x_key, y_key, grouping='eps', color='blue', plot_log_x=False, plot_log_y=False,
-            empty_markers=False):
+            empty_markers=False, markersize=None, label=True, annotate='', onsets_norm=False, onsets=[], saturation=1):
         data = self.dir_info
 
         index = self.parameters.index(grouping.lower())+1
@@ -168,18 +171,23 @@ class ParameterSpaceBuddy():
             groups = EPSILON_ORDER
             colors = COLORS
             markers = MARKERS
-            markersize = MARKERSIZE
+            if markersize == None:
+                markersize = MARKERSIZE
         elif grouping.lower() == 'ra':
             groups = np.unique(np.array(data)[:,index])
             colors = COLORS_2
             markers = MARKERS_2
-            markersize = MARKERSIZE_2
+            if markersize == None:
+                markersize = MARKERSIZE_2
         else:
             colors = COLORS
             markers = MARKERS
-            markersize = MARKERSIZE
-
-        x_key = int(self.parameters.index(x_key.lower()))+1
+            if markersize == None:
+                markersize = MARKERSIZE
+        try:
+            x_key = int(self.parameters.index(x_key.lower()))+1
+        except:
+            print('x_key is a field, not a run parameter')
 
         fig = plt.figure()
         plot_points = dict()
@@ -192,8 +200,19 @@ class ParameterSpaceBuddy():
             for dir in data:
                 if group != dir[index] or dir[-1] == {}:
                     continue
-                x_vals.append(dir[x_key])
-                x_err.append(0)
+                try:
+                    if onsets_norm:
+                        x_vals.append(dir[x_key]/onsets[i])
+                    else:
+                        x_vals.append(dir[x_key])
+                    x_err.append(0)
+                except:
+                    if onsets_norm:
+                        x_vals.append(dir[-1][x_key][0]/onsets[i])
+                        x_err.append((dir[-1][x_key][1]/onsets[i], dir[-1][x_key][2]/onsets[i]))
+                    else:
+                        x_vals.append(dir[-1][x_key][0])
+                        x_err.append((dir[-1][x_key][1], dir[-1][x_key][2]))
 
                 y_vals.append(dir[-1][y_key][0])
                 y_err.append((dir[-1][y_key][1], dir[-1][y_key][2]))
@@ -205,8 +224,17 @@ class ParameterSpaceBuddy():
             y_err_prev = y_err
             y_err = np.zeros((2, len(y_err)))
             y_err_almost = np.array(y_err_prev)
-            y_err[0,:] = y_err_almost[:,0]
-            y_err[1,:] = y_err_almost[:,1]
+            for e in range(y_err_almost.shape[1]):
+                y_err[e,:] = y_err_almost[:,e]
+            x_err_prev = x_err
+            x_err = np.zeros((2, len(x_err)))
+            x_err_almost = np.array(x_err_prev)
+            try:
+                for e in range(x_err_almost.shape[1]):
+                    x_err[e,:] = x_err_almost[:,e]
+            except:
+                for e in range(x_err_almost.shape[0]):
+                    x_err[0,e] = x_err_almost[e]
 
     #        ax.plot(x_vals, y_vals, 'o', color=COLORS[i], marker='o')
             if grouping == 'eps':
@@ -216,7 +244,10 @@ class ParameterSpaceBuddy():
                 if pow >= -1:
                     label += '{:1.1f}$'.format(group)
                 else:
-                    label += '{:1.1f} \\times 10^'.format(front)
+                    if '{:1.1f}'.format(front) == '1.0':
+                        label += '10^'
+                    else:
+                        label += '{:1.1f} \\times 10^'.format(front)
                     label += '{'
                     label += '{:1d}'.format(int(pow))
                     label += '}$'
@@ -225,7 +256,10 @@ class ParameterSpaceBuddy():
                 label = '$\mathrm{Ra} = '
                 pow = np.floor(np.log10(group))
                 front = group/10**(pow)
-                label += '{:1.1f} \\times 10^'.format(front)
+                if '{:1.1f}'.format(front) == '1.0':
+                    label += '10^'
+                else:
+                    label += '{:1.1f} \\times 10^'.format(front)
                 label += '{'
                 label += '{:1d}'.format(int(pow))
                 label += '}$'
@@ -237,10 +271,27 @@ class ParameterSpaceBuddy():
             if plot_log_y:
                 yvals, y_err = np.log10(yvals), np.log10(y_err)
             kwargs = dict()
+            converter = ColorConverter()
+            color = converter.to_rgba(colors[i], alpha=saturation)
             if empty_markers:
                 kwargs['markerfacecolor'] = 'None'
-                kwargs['markeredgecolor'] = colors[i]
-            ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, label=label, color=colors[i], marker=markers[i], ms=markersize[i], ls='None', capsize=0, **kwargs)
+                kwargs['markeredgecolor'] = color
+            if label:
+                kwargs['label'] = label
+            ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, color=color, marker=markers[i], ms=markersize[i], ls='None', capsize=0, **kwargs)
+            if annotate != '':
+                for x, y in zip(x_vals, y_vals):
+                    if empty_markers:
+                        ax.plot(x, y, color=color, marker=markers[i], ms=markersize[i], \
+                            markerfacecolor='None', markeredgecolor=color)
+                        ax.plot(x, y, color=color, marker='o', ms=2)
+                    else:
+                        ax.plot(x, y, color=color, marker=markers[i], ms=markersize[i])
+                        white = converter.to_rgba('white', alpha=0.8)
+                        ax.plot(x, y, color=white, marker='o', ms=2)
+                        
+                    
+#                    ax.annotate(annotate, xy=(x,y), fontsize=5, color='white', verticalalignment='center', horizontalalignment='center')
 
             plot_points[group] = (x_vals, y_vals, x_err, y_err)
         return ax, plot_points, groups

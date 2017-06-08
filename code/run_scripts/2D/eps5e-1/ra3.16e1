@@ -1,0 +1,39 @@
+#PBS -S /bin/bash
+#PBS -N nusselt_ra3.16e1_eps5e-1
+#PBS -l select=2:ncpus=20:mpiprocs=20:model=ivy
+#PBS -l walltime=4:00:00
+#PBS -j oe
+#PBS -q normal
+
+export dedalus_script=FC_poly
+export dedalus_dir=$HOME/workdir/sp2017/fc_poly_hydro/
+
+cd $PBS_O_WORKDIR
+
+RA=3.16e1
+EPS=5e-1
+
+mkdir $dedalus_dir
+
+echo running the job
+
+date
+mpiexec_mpt -np 32 python3 $dedalus_script.py \
+        --Rayleigh=$RA  \
+        --Prandtl=1     \
+		--n_rho_cz=3    \
+		--epsilon=$EPS  \
+        --aspect=4 \
+		--nz=64        \
+        --nx=256        \
+		--run_time=3.5 \
+        --run_time_buoy=500 \
+        --fixed_T \
+        --safety_factor=0.20 \
+		--root_dir=$dedalus_dir \
+		--label=nusselt_fixedT \
+        --out_cadence=0.1 \
+        --no_coeffs \
+		 > $dedalus_dir/out.$PBS_JOBID
+date
+#also chkpt 61
