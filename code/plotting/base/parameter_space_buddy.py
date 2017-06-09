@@ -98,8 +98,8 @@ class ParameterSpaceBuddy():
         for i, dir in enumerate(important_dirs):
             if np.mod(i, comm_world.size) != comm_world.rank:
                 continue
-            try:
-#            if True:
+#            try:
+            if True:
                 comm_new = comm_world.Create(comm_world.Get_group().Incl(np.ones(1)*comm_world.rank))
 
                 #This exception exists because my old data is crappy -- consider removing this point.
@@ -117,16 +117,16 @@ class ParameterSpaceBuddy():
                 plotter.communicate_profiles()
                 plotter.save_profiles(filename=self.out_file_name.split('.h5')[0])
                 plotter.make_plots(figsize=(3*len(keys), 8))
-            except:
-                print('AN ERROR HAS OCCURED IN {:s}'.format(dir[0]))
-                import sys
-                sys.stdout.flush()
+#            except:
+#                print('AN ERROR HAS OCCURED IN {:s}'.format(dir[0]))
+#                import sys
+#                sys.stdout.flush()
 
     def read_files(self, keys):
         import h5py
         for i, dir in enumerate(self.dir_info):
-            try:
-#            if True:
+#            try:
+            if True:
                 f = h5py.File(dir[0]+self.out_dir_name+self.out_file_name, 'r')
 
                 Lz = np.exp(dir[self.parameters.index('nrhocz')+1]/(1.5-dir[self.parameters.index('eps')+1]))-1
@@ -154,10 +154,10 @@ class ParameterSpaceBuddy():
                     if np.isnan(storage[key][0]):
                         raise
                 dir[-1] = storage
-            except:
-                print("PROBLEMS READING OUTPUT FILE IN {:s}".format(dir[0]))
-                import sys
-                sys.stdout.flush()
+#            except:
+#                print("PROBLEMS READING OUTPUT FILE IN {:s}".format(dir[0]))
+#                import sys
+#                sys.stdout.flush()
         return self.dir_info
 
 

@@ -14,6 +14,7 @@ import matplotlib
 matplotlib.use('Agg')
 matplotlib.rcParams.update({'font.size': 11})
 import matplotlib.pyplot as plt
+plt.style.use('classic')
 from base.plot_buddy import ParameterSpaceBuddy, ProfileBuddy, COLORS
 import os
 import numpy as np
@@ -53,7 +54,7 @@ def line_leastsq(x, y, y_uncert):
     p = np.array((slope, intercept))
     covar = np.array(((s, -sx),(-sx, sx2)))/Delta
     return p, covar
-START_FILE=50
+START_FILE=20
 N_FILES=1000
 golden_ratio=1.618
 FIGWIDTH=3+7.0/16
@@ -69,16 +70,18 @@ comm = MPI.COMM_WORLD
 #root_dir='/nobackup/eanders/sp2017/comps_data/'
 root_dir='/nobackup/eanders/sp2017/fc_poly_hydro/'
 mach_dir='/nobackup/eanders/sp2017/mach_eps/'
-threeD_dir = '/nobackup/bpbrown/polytrope-evan/'
+threeD_dir = '/nobackup/bpbrown/polytrope-evan-3D/'
+threeD_out_dir='/parameter_calcs/'
 param_keys = ['Ra', 'eps', 'nrhocz', 'Pr']
 
-keys = ['Nusselt', 'Nusselt_5', 'Nusselt_6', 'norm_5_kappa_flux_z',  'Re_rms', 'Ma_ad', 'Ma_iso', 'ln_rho1', 'T1', 'vel_rms',\
-    'rho_full', 'T_full', 'kappa_flux_z', 'enthalpy_flux_z', 'PE_flux_z', 'KE_flux_z', 'viscous_flux_z', 'kappa_flux_fluc_z']
+keys = ['Nusselt_AB17', #'Nusselt', 'Nusselt_5', 'Nusselt_6', 'norm_5_kappa_flux_z',  
+    'Re_rms', 'Ma_ad', 'Ma_iso', 'ln_rho1', 'T1', 'vel_rms',\
+    'rho_full', 'T_full', 'kappa_flux_z', 'enthalpy_flux_z', 'PE_flux_z', 'KE_flux_z', 'viscous_flux_z', 'kappa_flux_z']# 'kappa_flux_fluc_z']
 plot_keys = [('Nusselt_6', 'minmax'), ('Re_rms', 'midplane'), ('Ma_ad_post', 'minmax'), ('density_contrasts', 'val'), ('rho_full', 'logmaxovermin')]
 
 root_buddy = ParameterSpaceBuddy(root_dir, parameters=param_keys)
 mach_buddy = ParameterSpaceBuddy(mach_dir, parameters=param_keys)
-threeD_buddy = ParameterSpaceBuddy(threeD_dir, parameters=param_keys)
+threeD_buddy = ParameterSpaceBuddy(threeD_dir, parameters=param_keys, out_dir_name=threeD_out_dir)
 
 root_buddy.get_info()
 mach_buddy.get_info()

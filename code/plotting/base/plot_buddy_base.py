@@ -153,16 +153,18 @@ class PlotBuddy:
         '''
         file_name = self.root_dir + '/atmosphere/atmosphere.h5'
         f = h5py.File('{:s}'.format(file_name))
+        print(file_name)
         self.atmosphere = dict()
         for key in f.keys():
             if f[key].shape == ():
                 self.atmosphere[key] = f[key].value
             else:
                 self.atmosphere[key] = f[key][:]
-        nu_top = np.sqrt(self.atmosphere['prandtl']*(self.atmosphere['Lz']**3 * \
+        nu_top = np.sqrt(self.atmosphere['prandtl']
+                        *(self.atmosphere['Lz']**3 * \
                         np.abs(self.atmosphere['delta_s_atm']/self.atmosphere['Cp'])*\
                             self.atmosphere['g'])/self.atmosphere['rayleigh'])
-        chi_top = nu_top/self.atmosphere['prandtl']
+        chi_top = nu_top/1#self.atmosphere['prandtl']
         self.atmosphere['chi'] = chi_top/self.atmosphere['rho0']
         self.atmosphere['nu'] = nu_top/self.atmosphere['rho0']
 
@@ -228,7 +230,7 @@ class PlotBuddy:
         my_weirds = 0
         my_weird_indices = []
         for i, item in enumerate(self.local_files[self.file_dirs[0]]):
-            f = h5py.File("{:s}".format(item[0]), flag='r')
+            f = h5py.File("{:s}".format(item[0]), 'r')
             t = np.array(f['scales']['sim_time'][:], dtype=np.float32)
             f.close()
             if '_s1.h5' in item[0] and t[0] == 0:
@@ -343,7 +345,7 @@ class PlotBuddy:
         count = 0
         for i, file in enumerate(file_list):
             logger.info('opening file {}'.format(file[0]))
-            f = h5py.File("{:s}".format(file[0]), flag='r')
+            f = h5py.File("{:s}".format(file[0]), 'r')
             for j in range(len(profile_name)):
                 field = np.array(f[str(subkey[j])][str(profile_name[j])], dtype=np.float32)
                 if i == 0:
