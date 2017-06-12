@@ -1,0 +1,235 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[aps, 11pt, singlecolumn]{revtex4-1} % Set the font size (10pt, 11pt and 12pt) and paper size (letterpaper, a4paper, etc)
+\usepackage{natbib}
+\bibliographystyle{apsrev}
+\usepackage{setspace}
+
+\begin{document}
+%----------------------------------------------------------------------------------------
+%	LETTER CONTENT
+%----------------------------------------------------------------------------------------
+\noindent
+Dear Editor,
+$\,$\newline
+
+\newenvironment{myquotation}{
+\begin{quotation}
+\itshape
+}{ 
+\end{quotation}
+}
+
+\begin{singlespace}
+Editor letter goes here
+
+$\,$\newline
+\noindent
+Sincerely,
+
+Evan H. Anders \& Benjamin P. Brown
+
+
+
+%\end{singlespace}
+
+$\,$
+\newline
+$\,$
+\newline
+\noindent
+\Large{\textbf{Response to report B:}}\newline$\,$\newline\indent
+
+\begin{myquotation}
+
+The second submission of this paper, after the first round of review,
+is SUBSTANTIALLY different from the first time around, and essentially
+needs refereeing from scratch as a new paper. The paper does still
+essentially examine the heat transport in compressible convection as
+as function of superadiabaticity and Rayleigh number (and therefore
+varying thermal diffusivity) for fixed density stratification and
+Prandtl number via 2D simulations The new paper adjusted the
+formulation of the Nusselt number, changing the results substantially,
+and added some 3D simulations to the previously all-2D simulations.
+The major result is the scalings of the heat transport (measured by
+their Nusselt number) with the Rayleigh number bears a remarkable
+similarity to standard Boussinesq Rayleigh-Benard convection, at all
+the wide range of superadiabaticities simulated. This in itself is an
+interesting result, as it somewhat surprising considering that their
+fixed background stratification has quite a strong density contrast
+($\sim$20) and some of their departures from adiabaticity are large
+($\epsilon \sim$ 1 $\rightarrow$ adiabatic index m=0.5).
+
+I think this paper is getting closer to publishable, although I still
+find the explanation of the setup of the model in particular somewhat
+opaque though, and the interesting results not really addressed in any
+detail, as I'll explain below.
+
+I am glad that the authors took my comments on the setup from before
+at least partially to heart! I still think things could be clearer.
+Most specifically again, is the question of what are the salient
+parameters of compressible convection. There are 4, as mentioned
+previously, and the authors here have chosen to keep one fixed -- a
+measure of the stratification, for which they use $n_\rho$. For the
+others, it is nice to cast things in terms of a Rayleigh number and a
+Prandtl number since this gels nicely with standard Boussinesq
+Rayleigh-Benard convection (RBC). However, then the third parameter,
+the superadiabaticity, which the authors call $\epsilon$, is also part of
+the definition of the Rayleigh number, and therefore, as it should be,
+the Rayleigh parameter is really a definition of the thermal
+diffusivity. To the unaware reader more familiar with RBC, this can be
+a bit confusing, since there are no independent measures of the
+driving (superadiabaticity) and the thermal diffusivity there. It
+would really help the reader here to point out the following in
+relation to the simulation sets that are performed:
+
+\begin{itemize}
+\item At fixed $\epsilon$, varying Ra means that the thermal diffusivity $\chi_t$
+scales like 1/$\sqrt{\text{Ra}}$.
+\item At fixed Ra, varying $\epsilon$ means that the thermal diffusivity $\chi_t$
+scales like $\epsilon$.
+\item Since Pr=fixed, viscous diffusivity scales like thermal diffusivity.
+\item (and of course, all vary with depth individually)
+\end{itemize}
+\end{myquotation}
+I need to add this to the experiment section.
+
+\begin{myquotation}
+Beyond that, I think everything is right. The expression for the
+polytopes in terms of the number of density scale heights makes the
+notation a little over-complex. There are some disconnects in where
+the non-dimensionalisation is performed (they say that ``take R=1'' at
+one point and then non-dimensionalise R out again later, for example).
+The description of which of the diffusivities or the
+conductivity/dynamic viscosity are constant could certainly be
+tightened up.
+\end{myquotation}
+I need to tighten up the description of polytropes, and only talk about
+non-dimensionalizing R once.
+
+\begin{myquotation}
+With regard to the results:
+
+In light of what I said above, the results in Fig 2. are not
+surprising. Higher Ra here at fixed epsilon means lower thermal
+diffusivity, and therefore eddies might be expected to retain their
+identity longer. The above explanation would help.
+\end{myquotation}
+Agreed, we hope that the added explanation makes this clearer to the
+reader.
+
+\begin{myquotation}
+There is quite a bit of mention of “windy” states without any real
+technical description of what they are. Please either give more
+information (at least something visual to distinguish from non-windy
+states) or remove the distraction.
+\end{myquotation}
+I think it might be a good idea to remove them in order to keep it 
+letter-length, but I'll see if I can keep it short \& explain 
+relevant pieces.
+
+\begin{myquotation}
+Nusselt number: Usually this is a ratio of heat transport in the
+turbulent state to that in the conduction state. So therefore, aren’t
+the two $F_A$’s different on the top and the bottom? The top has a
+modified kappa but the bottom has the original kappa profile?
+\end{myquotation}
+Nope!  That's our new change.  Maybe make this clearer.
+
+\begin{myquotation}
+I think the paragraphs on the Nu vs Ra and the Re/Pe vs Ra are the
+meat of the paper! It would really be nice here to know what causes
+the difference between 2D and 3D in the Nu plots. The 2/7 law is often
+associated with more “windy” states. That seems LESS likely in 3D, so
+what is going on? Note also that the sensitive dependence on the exact
+roll or other structure seems to imply that the simulation box is too
+small. This dependence should not be the case.
+\end{myquotation}
+Yeah, AR=4, 8, and 16 all return the windy states, so there's some strange
+physics here.  I'll try to explain the discrepancy between 2D and 3D, though.
+
+\begin{myquotation}
+The Re vs Ra are a bit mysterious at low Ra. I would expect the Re ~
+RA$^{1/2}$. Can you explain these alternative scalings or at least why the
+expected scaling emerges at large Ra? Are the 2D ones just
+over-constrained?
+\end{myquotation}
+Yes, can explain: we're combining the 1/2 scaling law that we expect from
+the Ra changing diffusivity with the 1/4 scaling law of rising Ma in 2D,
+which produces the 3/4 law.
+
+\begin{myquotation}
+Regarding Fig 4 — are the authors calculating the integrated evolved
+density profile to get this number? If the effect is only in the
+boundary layer as they mention, I am surprised that the deviation is
+so large. This figure needs much more explanation!
+\end{myquotation}
+We're calculating the horizontally averaged, time-integrated, evolved density
+profile and then taking two measures of it.  One is max/min, one is top of domain
+/ bottom of domain.  We should probably explain this more and mention that it persists
+even at high $\epsilon$ in 3D.
+
+\noindent
+This concludes our response to report B.  We thank referee B for this second report.
+
+
+
+
+$\,$
+\newline
+$\,$
+\newline
+\noindent
+\Large{\textbf{Response to report C:}}\newline$\,$\newline\indent
+
+\begin{myquotation}
+This Letter reports results from a numerical study of thermal
+convection in a compressible fluid at unity Prandtl number and a range
+of initial stratification. The main result is the scaling of the
+Nusselt number with the Rayleigh number, supplemented by some
+observations such as characteristic changes in the transition between
+subsonic and supersonic regimes.
+
+This problem is highly challenging. Ideally, a numerical exploration
+should be guided by some theoretical insights or practical
+observations. The present paper appears to be ``purely'' numerical
+without such guidance, albeit some comparison with the well-known
+problem of incompressible Rayleigh--Bernard convection. Nevertheless,
+the results are significant and should be published. While I do not
+wholeheartedly recommend this paper to PRL, I would not object to its
+acceptance.
+\end{myquotation}
+Is there any way we can bring in some more ``we're guided by X and thus
+we expected to get our results''?
+
+\begin{myquotation}
+Below is a minor comment that the authors may find useful.
+
+Most parts of the paper is relatively well written, except in the
+introduction. Here, there is room for improvement. The introductory
+paragraph is virtually empty. I would cite a couple of papers for
+"These prior studies" and be specific about both "important insight"
+and known "fundamental properties". The final paragraph of the
+introduction has failed to fulfill its mission. I would explicitly
+state (at least) the most significant result of the paper in this
+paragraph.
+\end{myquotation}
+We need to beef up the intro, as specified here.
+
+$\,$\newline\noindent
+This concludes our response to report C.  We thank referee C for this report.
+
+$\,$
+\newline
+\noindent
+
+
+\end{singlespace}
+
+
+
+
+\bibliography{../../biblio.bib}
+\end{document}
