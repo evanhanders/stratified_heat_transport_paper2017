@@ -54,7 +54,7 @@ def line_leastsq(x, y, y_uncert):
     p = np.array((slope, intercept))
     covar = np.array(((s, -sx),(-sx, sx2)))/Delta
     return p, covar
-START_FILE=20
+START_FILE=100
 N_FILES=1000
 golden_ratio=1.618
 FIGWIDTH=3+7.0/16
@@ -71,21 +71,24 @@ comm = MPI.COMM_WORLD
 root_dir='/nobackup/eanders/sp2017/fc_poly_hydro/'
 mach_dir='/nobackup/eanders/sp2017/mach_eps/'
 threeD_dir = '/nobackup/bpbrown/polytrope-evan-3D/'
+mach_threeD_dir = '/nobackup/eanders/sp2017/mach_eps_3D/'
 threeD_out_dir='/parameter_calcs/'
 param_keys = ['Ra', 'eps', 'nrhocz', 'Pr']
 
-keys = ['Nusselt_AB17', #'Nusselt', 'Nusselt_5', 'Nusselt_6', 'norm_5_kappa_flux_z',  
+keys = ['Nusselt', 'Nusselt_5', 'Nusselt_6', 'norm_5_kappa_flux_z',  
     'Re_rms', 'Ma_ad', 'Ma_iso', 'ln_rho1', 'T1', 'vel_rms',\
-    'rho_full', 'T_full', 'kappa_flux_z', 'enthalpy_flux_z', 'PE_flux_z', 'KE_flux_z', 'viscous_flux_z', 'kappa_flux_z']# 'kappa_flux_fluc_z']
+    'rho_full', 'T_full', 'kappa_flux_z', 'enthalpy_flux_z', 'PE_flux_z', 'KE_flux_z', 'viscous_flux_z', 'kappa_flux_z', 'kappa_flux_fluc_z']
 plot_keys = [('Nusselt_6', 'minmax'), ('Re_rms', 'midplane'), ('Ma_ad_post', 'minmax'), ('density_contrasts', 'val'), ('rho_full', 'logmaxovermin')]
 
 root_buddy = ParameterSpaceBuddy(root_dir, parameters=param_keys)
 mach_buddy = ParameterSpaceBuddy(mach_dir, parameters=param_keys)
 threeD_buddy = ParameterSpaceBuddy(threeD_dir, parameters=param_keys, out_dir_name=threeD_out_dir)
+mach_threeD_buddy = ParameterSpaceBuddy(mach_threeD_dir, parameters=param_keys, out_dir_name=threeD_out_dir)
 
 root_buddy.get_info()
 mach_buddy.get_info()
 threeD_buddy.get_info()
+mach_threeD_buddy.get_info()
 
 from docopt import docopt
 args = docopt(__doc__)
@@ -106,6 +109,7 @@ if comm.rank != 0:
 root_buddy.read_files(plot_keys)
 mach_buddy.read_files(plot_keys)
 threeD_buddy.read_files(plot_keys)
+mach_threeD_buddy.read_files(plot_keys)
 
 for dir in threeD_buddy.dir_info: #root_buddy.dir_info:
     print('ra: {}, eps: {}'.format(dir[2], dir[1]))
@@ -161,7 +165,9 @@ ax1.annotate(r'$\mathrm{3D}$', xy=(3e3, 8), va='center', ha='center', fontsize=1
 handles, labels = ax1.get_legend_handles_labels()
 handles = [h[0] for h in handles[3:-2]] #remove error bars from label
 vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles, labels[3:-2])))
-legend1 = ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+legend1 = ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, 
+                                              borderpad=0.3, labelspacing=0.3, handletextpad=0.3, borderaxespad=0.3, fancybox=True)
+#legend1 = ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
 
 #ax1.set_xlabel('Ra')
 ax1.set_ylabel(r'$\mathrm{Nu}$')
@@ -171,7 +177,9 @@ ax1.set_yscale('log')
 handles, labels = ax1.get_legend_handles_labels()
 handles = handles[:3]
 labels = labels[:3]
-ax1.legend(handles, labels, loc='upper left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
+ax1.legend(handles, labels, loc='upper left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, 
+                            labelspacing=0.1, handletextpad=0, fancybox=True, borderaxespad=0.3, columnspacing=0)
+#ax1.legend(handles, labels, loc='upper left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
 ax1.add_artist(legend1)
 
 
@@ -218,9 +226,13 @@ ax2.set_yscale('log')
 handles, labels = ax2.get_legend_handles_labels()
 handles = [h[0] for h in handles[2:]] #remove error bars from label
 vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles, labels[2:])))
-legend1 = ax2.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+#legend1 = ax2.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+legend1 = ax2.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, 
+                                              borderpad=0.3, labelspacing=0.3, handletextpad=0.3, borderaxespad=0.3, fancybox=True)
 handles, labels = ax2.get_legend_handles_labels()
-ax2.legend(handles[:2], labels[:2], loc='upper left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
+ax2.legend(handles[:2], labels[:2], loc='upper left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, 
+                            labelspacing=0.1, handletextpad=0, fancybox=True, borderaxespad=0.3, columnspacing=0)
+#ax2.legend(handles[:2], labels[:2], loc='upper left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
 ax2.add_artist(legend1)
 
 
@@ -301,12 +313,14 @@ ax1.set_ylabel(r'$\mathrm{Ma}$')
 ax1.set_xscale('log')
 ax1.set_yscale('log')
 handles, labels = ax1.get_legend_handles_labels()
-legend1 = ax1.legend(handles[:1], labels[:1], loc='center right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
+legend1 = ax1.legend(handles[:1], labels[:1], loc='center right', fontsize=legend_fontsize, numpoints=1, 
+                                              borderpad=0.3, labelspacing=0.3, handletextpad=0.3, borderaxespad=0.3, fancybox=True)
 
 handles, labels = ax1.get_legend_handles_labels()
 handles = [h[0] for h in handles[1:]] #remove error bars from labels
 vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles, labels[1:])))
-ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.2, 
+                            labelspacing=0.1, handletextpad=0, fancybox=True, borderaxespad=0.3, columnspacing=0)
 ax1.add_artist(legend1)
 
 for label in ax1.get_xticklabels():
@@ -319,7 +333,11 @@ for label in ax2.get_yticklabels():
     label.set_fontproperties('serif')
 
 ax2.grid(which='major')
+ax2, data, groups = mach_threeD_buddy.plot_parameter_space_comparison(ax2, 'eps', 'Ma_ad_post', grouping='Ra',
+            markersize=np.array(THREED_MARKERSIZE)*1.3, label=False, annotate='3',
+            saturation=threeD_saturation)
 ax2, data, groups = mach_buddy.plot_parameter_space_comparison(ax2, 'eps', 'Ma_ad_post', grouping='Ra')
+
 #for key in data.keys():
 #    x = np.array(data[key][0])
 #    y = np.array(data[key][1])
@@ -333,16 +351,20 @@ y1s = (0.5)*x1s**(1/2)
 ax2.plot(x1s, y1s, dashes=(5,1.5), color='black', label=r'$\mathrm{Ra}^{1/2}$')
 
 handles, labels = ax2.get_legend_handles_labels()
-legend1 = ax2.legend(handles[:1], labels[:1], loc='upper left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
+legend1 = ax2.legend(handles[:1], labels[:1], loc='upper left', fontsize=legend_fontsize, numpoints=1, 
+                                              borderpad=0.3, labelspacing=0.3, handletextpad=0.3, borderaxespad=0.3, fancybox=True)
+#legend1 = ax2.legend(handles[:1], labels[:1], loc='upper left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
 
 ax2.set_xlabel(r'$\epsilon$', labelpad=-3)
 ax2.set_ylabel(r'$\mathrm{Ma}$')
 ax2.set_xscale('log')
 ax2.set_yscale('log')
 handles, labels = ax2.get_legend_handles_labels()
-handles = [h[0] for h in handles[1:]] #remove error bars from labels
-vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles, labels[1:])))
-ax2.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+handles = [h[0] for h in handles[4:]] #remove error bars from labels
+vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles, labels[4:])))
+ax2.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, 
+                            labelspacing=0.1, handletextpad=0, fancybox=True, borderaxespad=0.3, columnspacing=0)
+#ax2.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
 ax2.add_artist(legend1)
 ax2.set_xlim(7e-8, 2e0)
 
@@ -374,24 +396,26 @@ fig = plt.figure(figsize=(FIGWIDTH, FIGWIDTH/golden_ratio))
 ax1 = fig.add_subplot(1,1,1)
 
 ax1.grid(which='major')
+ax1, data, groups3 = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'rho_full', grouping='eps',
+            markersize=[10, 7, 7, 13], label=False, annotate='3', empty_markers=True, onsets_norm=True, onsets=threeD_onset_shift*np.array(RA_ONSETS),
+            saturation=threeD_saturation)
+ax1, data, groups3 = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'density_contrasts', grouping='eps',
+            saturation=threeD_saturation,
+            markersize=[10, 7, 7, 13], label=False, annotate='3', onsets_norm=True, onsets=threeD_onset_shift*np.array(RA_ONSETS))
 ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'rho_full', grouping='eps', empty_markers=True,
                 onsets_norm=True, onsets=RA_ONSETS, saturation=twoD_saturation)
 ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'density_contrasts', grouping='eps',
                 onsets_norm=True, onsets=RA_ONSETS, saturation=twoD_saturation)
-ax1, data, groups = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'rho_full', grouping='eps',
-            markersize=THREED_MARKERSIZE, label=False, annotate='3', empty_markers=True, onsets_norm=True, onsets=threeD_onset_shift*np.array(RA_ONSETS),
-            saturation=threeD_saturation)
-ax1, data, groups = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'density_contrasts', grouping='eps',
-            saturation=threeD_saturation,
-            markersize=THREED_MARKERSIZE, label=False, annotate='3', onsets_norm=True, onsets=threeD_onset_shift*np.array(RA_ONSETS))
 ax1.set_xlabel(r'$\mathrm{Ra}/\mathrm{Ra}_{\mathrm{crit}}$')
 ax1.set_ylabel(r'$n_{\rho}$')
 ax1.set_ylim(-1, 3.3)
 ax1.set_xscale('log')
 handles, labels = ax1.get_legend_handles_labels()
 handles = [h[0] for h in handles] #remove error bars from labels
-vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles[-8:-4], labels[-8:-4])))
-ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles[-4:], labels[-4:])))
+ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, 
+                            labelspacing=0.1, handletextpad=0, fancybox=True, borderaxespad=0.3, columnspacing=0)
+#ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
 
 for label in ax1.get_xticklabels():
     label.set_fontproperties('serif')
@@ -410,7 +434,7 @@ ax1, data, groups = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_pos
             markersize=THREED_MARKERSIZE, label=False, annotate='3', empty_markers=True, onsets_norm=True, onsets=RA_ONSETS, saturation=threeD_saturation)
 ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'density_contrasts', grouping='eps',
                 onsets_norm=True, onsets=RA_ONSETS, saturation=twoD_saturation)
-ax1, data, groups = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'density_contrasts', grouping='eps',
+ax1, data, groups3 = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'density_contrasts', grouping='eps',
             markersize=THREED_MARKERSIZE, label=False, annotate='3', onsets_norm=True, onsets=RA_ONSETS, saturation=threeD_saturation)
 ax1.set_xlabel(r'$\mathrm{Ma}$')
 ax1.set_ylabel(r'$n_{\rho}$')
@@ -418,7 +442,7 @@ ax1.set_ylim(-1, 3.3)
 ax1.set_xscale('log')
 handles, labels = ax1.get_legend_handles_labels()
 handles = [h[0] for h in handles] #remove error bars from labels
-vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles[-6:-2], labels[-6:-2])))
+vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles[-7:-3], labels[-7:-3])))
 ax1.legend(handles, labels, loc='lower left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
 
 for label in ax1.get_xticklabels():
