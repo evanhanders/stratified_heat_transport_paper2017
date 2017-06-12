@@ -152,31 +152,41 @@ of the atmospheres as well as the atmospheric diffusivities.
 The superadiabaticity, or the magnitude of the (negative) 
 entropy gradient, is set by 
 the superadiabatic excess, $\epsilon = m_{ad} - m$, where 
-$m_{ad} = (\gamma - 1)^{-1}$.
+$m_{ad} = (\gamma - 1)^{-1}$ and the initial entropy
+difference between the top and bottom boundaries is
+$\Delta S_0 = \epsilon\ln (1 + L_z)$.  At a fixed value of
+$\epsilon$, the diffusivities are set by the
+Rayleigh number (Ra) and the Prandtl number (Pr),
+\begin{equation}
+\text{Ra}_{t} = \frac{g L_z^3 (\Delta S_0 / c_P)}{\nu_t\chi_t},
+\qquad
+\text{Pr} = \frac{\nu}{\chi},
+\end{equation}
+where $c_P = \gamma/(\gamma-1)$ is the specific heat at
+constant pressure, and $\nu$ and $\chi$ are the thermal diffusivity and
+kinematic viscosity, respectively.
 The atmospheric thermal diffusivity, $\chi$,
 and kinematic viscosity (viscous diffusivity), $\nu$,
 are determined by the Rayleigh number (Ra) and the Prandtl
-number (Pr).  We set $\text{Pr } = \nu/\chi = 1$ throughout
-this work. The polytropic initial conditions are in
-thermal equilibrium, $\kappa_0 \partial_z T_0 =$ const,
-so $\kappa_0 = \chi \rho_0$ must be constant. To keep
-Pr constant with height, we set $\chi = \chi_t/\rho_0$
-and $\nu = \nu_t/\rho_0$.  Under these constraints, the
-diffusivity profiles are specified by choosing Ra
-at the top of the domain,
+number (Pr).  These polytropes are initially in
+thermal equilibrium, so the initial thermal
+conductivity, $\kappa_0 = \chi \rho_0$ must be
+constant.  Throughout this work we specify
+that Pr $= 1$ and is constant with depth.  By this
+choice, $\chi = \chi_t / \rho_0$ and $\nu = \nu_t / \rho_0$.
+We leave $\kappa = \rho\chi$ and the dynamic viscosity,
+$\mu = \rho\nu$, free to evolve as the density 
+profile evolves.  This formulation 
+means Ra at the bottom of the domain is greater than
+Ra$_t$ by a factor of $e^{2n_\rho}$, and henceforth
+when we specify Ra we are referring to Ra$_t$.  
+
+Our diffusivities thus scale as
 \begin{equation}
-\text{Ra}_{\text{top}} = \frac{g L_z^3 (\Delta S_0 / c_P)}{\nu_t\chi_t},
+\chi_t \propto \sqrt{\frac{\epsilon}{\text{Pr}\cdot\text{Ra}_t}}, \qquad
+\nu_t \propto \sqrt{\frac{\epsilon\cdot\text{Pr}}{\text{Ra}_t}},
 \end{equation}
-where $\Delta S_0 = \epsilon\ln (1 + L_z)$ is the initial entropy difference 
-between the top and bottom of the atmosphere and
-$c_P = \gamma(\gamma-1)^{-1}$ is the specific heat 
-at constant pressure. The profiles of $\nu$ and $\chi$ are constant with
-time, and Ra at the bottom of the atmosphere is greater than Ra$_{\text{top}}$
-by a factor of $e^{2n_{\rho}}$.  This formulation leaves
-the thermal conductivity, $\kappa = \rho\chi$, and
-the dynamic viscosity, $\mu = \rho\nu$, free to evolve
-as the density profile changes.  Henceforth,
-when we use Ra, we are referring to Ra$_{\text{top}}$.
+and for constant Pr = 1, as in this work, $\chi_t = \nu_t$.
 
 We evolve the Fully Compressible Navier-Stokes equations,
 \begin{align}
@@ -271,7 +281,7 @@ We filter this noise spectrum in coefficient space,
 such that only the lower 25\% of the coefficients
 have power. We nondimensionalize our computational domains by setting
 all thermodynamic variables to unity at $z = L_z$, choosing
-$R = T_t = \rho_t = 1$.  By this choice, the non-dimensional
+$T_t = \rho_t = 1$.  By this choice, the non-dimensional
 length scale is the inverse temperature gradient scale and the 
 timescale is the isothermal sound crossing time, 
 $\tau_I$, of this unit length.
