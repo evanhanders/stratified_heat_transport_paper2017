@@ -41,22 +41,18 @@
 We study stratified convection in the context of 
 plane-parallel, polytropically stratified atmospheres. 
 We perform a suite of 2D and 3D simulations in which we vary the initial
-superadiabaticity ($\epsilon$) and the Rayleigh number (Ra) at a set
+superadiabaticity ($\epsilon$) and the Rayleigh number (Ra) while fixing the
 initial density stratification, aspect
 ratio, and Prandtl number.
-We find that the Mach number (Ma) is a strong function of $\epsilon$
-in both 2D and 3D simulations, and that it is a 
-weak function of Ra in 2D.
-Surprisingly, we find that the evolved heat transport, 
+The evolved Mach number (Ma) scales according to
+$\text{Ma} \propto \epsilon^{1/2}\text{Ra}^{\alpha}$, where
+$\alpha = 0$ in 3D and $\alpha \approx 1/4$ in 2D.
+The evolved heat transport, 
 quantified by the Nusselt number (Nu),
 follows scaling relationships similar to those found in the well-studied, 
-incompressible Rayleigh-B\'{e}nard problem.
-The scaling of evolved fluid properties (Nu, Reynolds number,
-stratification) differs in the subsonic and supersonic regimes; 
-aside from the sonic transition, the evolved fluid properties
-of low and high Ma flows are nearly identical.  
-Our limited 3D runs suggest that
-evolved fluid properties behave similarly in 2D and 3D.
+incompressible Rayleigh-B\'{e}nard problem in both 2D and 3D.
+At large values of $\epsilon$, significant density inversions appear in the
+evolved atmospheres and seem to persist in both 2D and 3D.
 \end{abstract}
 \maketitle
 
@@ -126,7 +122,6 @@ We examine a monatomic ideal gas with an adiabatic index of
 $\gamma = 5/3$ whose equation of state is $P = R\rho T$. This is consistent with the approach used in earlier work \cite{graham1975, chan&all1982,
 hurlburt&all1984, cattaneo&all1990, cattaneo&all1991, brummell&all1996} 
 and is the simplest stratified extension of RB.
-In this work we take $R = 1$.
 We study atmospheres which are initially polytropically stratified,
 \begin{equation}
 \begin{split}
@@ -147,7 +142,18 @@ constant with depth.  We study atmospheres with aspect
 ratios of 4 where both the $x$ and $y$ coordinates have the range $[0, 4L_z]$.
 In our 2D cases, we only consider $x$ and $z$.
 
-Convective dynamics are controlled by the superadiabaticity
+We nondimensionalize our domains by setting
+all thermodynamic variables to unity at $z = L_z$, choosing
+$R = T_t = \rho_t = 1$.  By this choice, the non-dimensional
+length scale is the inverse temperature gradient scale and the 
+timescale is the isothermal sound crossing time, 
+$\tau_I$, of this unit length.
+Meaningful convective dynamics occur on 
+timescales of the atmospheric buoyancy time,
+$t_b = \tau_I \sqrt{L_z/g\epsilon}$. 
+
+At fixed $n_\rho$, convective dynamics are 
+controlled by the superadiabaticity
 of the atmospheres as well as the atmospheric diffusivities.
 The superadiabaticity, or the magnitude of the (negative) 
 entropy gradient, is set by 
@@ -165,32 +171,32 @@ Rayleigh number (Ra) and the Prandtl number (Pr),
 where $c_P = \gamma/(\gamma-1)$ is the specific heat at
 constant pressure, and $\nu$ and $\chi$ are the thermal diffusivity and
 kinematic viscosity, respectively.
-The atmospheric thermal diffusivity, $\chi$,
-and kinematic viscosity (viscous diffusivity), $\nu$,
-are determined by the Rayleigh number (Ra) and the Prandtl
-number (Pr).  These polytropes are initially in
+These polytropes are initially in
 thermal equilibrium, so the initial thermal
-conductivity, $\kappa_0 = \chi \rho_0$ must be
+conductivity, $\kappa_0 = \chi \rho_0$, must be
 constant.  Throughout this work we specify
-that Pr $= 1$ and is constant with depth.  By this
-choice, $\chi = \chi_t / \rho_0$ and $\nu = \nu_t / \rho_0$.
-We leave $\kappa = \rho\chi$ and the dynamic viscosity,
-$\mu = \rho\nu$, free to evolve as the density 
-profile evolves.  This formulation 
+that Pr $= 1$ and is constant with depth.  By these
+choices, $\chi = \chi_t / \rho_0$ and $\nu = \nu_t / \rho_0$.
+This formulation 
 means Ra at the bottom of the domain is greater than
 Ra$_t$ by a factor of $e^{2n_\rho}$, and henceforth
 when we specify Ra we are referring to Ra$_t$.  
+We leave $\kappa = \rho\chi$ and 
+$\mu = \rho\nu$ (the dynamic viscosity) free to evolve as the density 
+profile evolves.  
 
-Our diffusivities thus scale as
+Atmospheric diffusivities thus scale as
 \begin{equation}
 \chi_t \propto \sqrt{\frac{\epsilon}{\text{Pr}\cdot\text{Ra}_t}}, \qquad
 \nu_t \propto \sqrt{\frac{\epsilon\cdot\text{Pr}}{\text{Ra}_t}},
+\label{eqn:diffusivities}
 \end{equation}
 and for constant Pr = 1, as in this work, $\chi_t = \nu_t$.
 We carry out two experiments in this letter: one in which
-we fix $\epsilon$ and vary Ra, thus increasing the diffusive
-timescales, and a second in which we fix Ra and vary $\epsilon$,
-thus...
+we fix $\epsilon$ and increase Ra, thus increasing the diffusive
+timescales, and a second in which we fix Ra and raise $\epsilon$,
+thus decreasing the ratio of the buoyant timescale to the 
+diffusive timescales.
 
 We evolve the Fully Compressible Navier-Stokes equations,
 \begin{align}
@@ -283,16 +289,7 @@ random white noise whose magnitude is infinitesimal
 compared to $T_0$ and $\epsilon$.
 We filter this noise spectrum in coefficient space, 
 such that only the lower 25\% of the coefficients
-have power. We nondimensionalize our computational domains by setting
-all thermodynamic variables to unity at $z = L_z$, choosing
-$T_t = \rho_t = 1$.  By this choice, the non-dimensional
-length scale is the inverse temperature gradient scale and the 
-timescale is the isothermal sound crossing time, 
-$\tau_I$, of this unit length.
-Meaningful convective dynamics occur on 
-timescales of the atmospheric buoyancy time,
-$t_b = \tau_I \sqrt{L_z/g\epsilon}$. 
-All reported results are taken from time averages
+have power. All reported results are taken from time averages
 over many $t_b$ beginning \{100, 40\}$t_b$
 after the start of our \{2D, 3D\} simulations in order to
 assure our results are not biased by the convective transient.
@@ -333,11 +330,6 @@ Ma approaches 1 (see Fig. \ref{fig:ma_v_eps}).  This transition
 occurs near Ra/Ra$_\text{crit} \approx \{10^{2}, 10^{3}\}$ for $\epsilon = \{1, 0.5\}$.
 In our limited 3D runs, Ma appears to be a function of $\epsilon$ alone, with
 Ma $\appropto \epsilon^{1/2}$, so at high Ra, Ma$_{\text{3D}} < \text{Ma}_{\text{2D}}$.
-The value of $\epsilon$ also sets the size of the
-evolved thermodynamic fluctuations, such that
-$T_1/T_0 \appropto \epsilon$ and $\rho_1/\rho_0 \appropto \epsilon$.  
-These fluctuations are very small when $\epsilon$ and Ma are small,
-but can be O(1) for values of $\epsilon$ near 1.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
@@ -362,17 +354,23 @@ shock systems form in the upper atmosphere near downflow lanes
 These shock phenomena were reported in
 two \cite{cattaneo&all1990} and 
 three \cite{malagoli&all1990} dimensional polytropic simulations previously.
-As Ra is increased to large values 
-(Fig. \ref{fig:entropy_snapshots}c), thermodynamic structures 
-no longer span the domain depth; rather, they break up into 
-small eddies which traverse the domain multiple
-times before diffusing.  Our choice of fixed temperature, stress free boundary conditions 
-allows the flux at the boundaries to vary, while also allowing
-for mean horizontal velocity profiles along the boundaries (winds).
-We find these windy convective states, reminiscent of similar states
-in RB convection \cite{goluskin&all2014}, at $\epsilon = 10^{-4}$ and
-Ra/Ra$_{\text{crit}} \gtrsim 10^{3}$. Roll states (Fig. \ref{fig:entropy_snapshots}a) with high convective
-transport alternate with windy states of lower transport.
+As Ra is increased to large values (Fig. \ref{fig:entropy_snapshots}c) 
+and diffusivities become small according to (\ref{eqn:diffusivities}),
+thermodynamic structures break up into small eddies which traverse the
+domain repeatedly before diffusing.
+Furthermore, the value of $\epsilon$ sets the size of the
+evolved thermodynamic fluctuations from their adiabatic values,
+as evidenced by the scalings of the colorbars.
+%These fluctuations are very small when $\epsilon$ and Ma are small,
+%but can be O(1) for values of $\epsilon$ near 1.
+
+%Our choice of fixed temperature, stress free boundary conditions 
+%allows the flux at the boundaries to vary, while also allowing
+%for mean horizontal velocity profiles along the boundaries (winds).
+%We find these windy convective states, reminiscent of similar states
+%in RB convection \cite{goluskin&all2014}, at $\epsilon = 10^{-4}$ and
+%Ra/Ra$_{\text{crit}} \gtrsim 10^{3}$. Roll states (Fig. \ref{fig:entropy_snapshots}a) with high convective
+%transport alternate with windy states of lower transport.
 
 
 \begin{figure}[t]
@@ -425,19 +423,21 @@ Nu $\appropto$ Ra$^{1/3}$ regardless of $\epsilon$,
 reminiscent of scaling laws in \RB boundary layer theory 
 \cite{grossman&lohse2000, ahlers&all2009}.
 As the flow becomes supersonic,  Nu $\appropto$ Ra$^{1/5}$.
-2D runs at $\text{Ra }\gtrsim 10^3$Ra$_{\text{crit}}$
-and $\epsilon = 10^{-4}$ exhibit windy convective states.
-In these runs, the system is in flux equilibrium only when
-time averaged over roll states and windy states.
-A long time average
-over both of these states produces a flat flux profile which
-can be sensibly analyzed, but the presence of these time-dependent states
-makes it difficult to equilibrate these higher Ra cases.
+%2D runs at $\text{Ra }\gtrsim 10^3$Ra$_{\text{crit}}$
+%and $\epsilon = 10^{-4}$ exhibit windy convective states.
+%In these runs, the system is in flux equilibrium only when
+%time averaged over roll states and windy states.
+%A long time average
+%over both of these states produces a flat flux profile which
+%can be sensibly analyzed, but the presence of these time-dependent states
+%makes it difficult to equilibrate these higher Ra cases.
 It is also important to note that
 the value of Nu is heavily dependent upon the specific thermodynamic
 structures of the solution, as double roll states will transport
 heat more efficiently than single roll states, and slight changes in
-Ra can result in a simulation latching on to one solution or the other.
+Ra can result in a simulation latching on to one solution or the other. 
+(ADD SOMETHING ABOUT THIS BEING ASPECT RATIO INDEPENDENT AND MAYBE BRIEFLY
+MENTION WINDY STATES HERE?)
 In our limited 3D runs, it appears that Nu $\appropto$ Ra$^{2/7}$, a classic scaling law
 seen in RB studies \cite{johnston&doering2009}.
 
@@ -499,11 +499,11 @@ and supersonic regimes.  We also see that Nu scales similarly in 3D and 2D,
 and that Ma in 3D solutions seems to be a function of $\epsilon$ alone,
 allowing for simple specification of the evolved Ma using input parameters.
 
-We observe interesting phenomena, such as time-dependent, windy
-states of shear in our 2D simulations.  
-Unlike in RB \cite{goluskin&all2014}, our solutions with
-windy states have transport which scales in line with our non-windy solutions.
-Furthermore, the stratification of 
+%We observe interesting phenomena, such as time-dependent, windy
+%states of shear in our 2D simulations.  
+%Unlike in RB \cite{goluskin&all2014}, our solutions with
+%windy states have transport which scales in line with our non-windy solutions.
+The stratification of 
 these polytropic atmospheres evolves in a complex
 manner.  Future work should aim to 
 understand the importance of stratification on
