@@ -34,7 +34,7 @@ MARKERS=['s', 'o', 'd', '*']
 MARKERSIZE=[5,4,5,7]
 
 MARKERS_2=['p', '^', '8']
-COLORS_2=['gold', 'peru', 'teal']
+COLORS_2=['peru', 'gold', 'teal']
 MARKERSIZE_2=[5,5,5]
 
 
@@ -192,6 +192,7 @@ class ParameterSpaceBuddy():
         fig = plt.figure()
         plot_points = dict()
 
+
         for i, group in enumerate(groups):
             x_vals = []
             x_err  = []
@@ -276,6 +277,10 @@ class ParameterSpaceBuddy():
             if empty_markers:
                 kwargs['markerfacecolor'] = 'None'
                 kwargs['markeredgecolor'] = color
+                if annotate != '':
+                    kwargs['markeredgewidth'] = 2
+                else:
+                    kwargs['markeredgewidth'] = 1
             if label:
                 kwargs['label'] = label
             ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, color=color, marker=markers[i], ms=markersize[i], ls='None', capsize=0, **kwargs)
@@ -289,6 +294,7 @@ class ParameterSpaceBuddy():
                         ax.plot(x, y, color=color, marker=markers[i], ms=markersize[i])
                         white = converter.to_rgba('white', alpha=0.8)
                         ax.plot(x, y, color=white, marker='o', ms=2)
+                ax.plot(x_vals, y_vals, color=color, ls=':')
                         
                     
 #                    ax.annotate(annotate, xy=(x,y), fontsize=5, color='white', verticalalignment='center', horizontalalignment='center')
