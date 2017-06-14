@@ -44,13 +44,13 @@ We perform a suite of 2D and 3D simulations in which we vary the initial
 superadiabaticity ($\epsilon$) and the Rayleigh number (Ra) while fixing the
 initial density stratification, aspect
 ratio, and Prandtl number.
-The evolved Mach number (Ma) scales according to
-$\text{Ma} \propto \epsilon^{1/2}\text{Ra}^{\alpha}$, where
-$\alpha = 0$ in 3D and $\alpha \approx 1/4$ in 2D.
 The evolved heat transport, 
 quantified by the Nusselt number (Nu),
 follows scaling relationships similar to those found in the well-studied, 
 incompressible Rayleigh-B\'{e}nard problem in both 2D and 3D.
+The evolved Mach number (Ma) scales according to
+$\text{Ma} \propto \epsilon^{1/2}\text{Ra}^{\alpha}$, where
+$\alpha = 0$ in 3D and $\alpha \approx 1/4$ in 2D.
 At large values of $\epsilon$, significant density inversions appear in the
 evolved atmospheres and seem to persist in both 2D and 3D.
 \end{abstract}
@@ -66,13 +66,16 @@ In these objects, flows are compressible and
 feel the atmospheric stratification.  While in some systems this stratification 
 is negligible, it is significant in regions such as
 the convective envelope of the Sun, which spans 14 density scale heights.
-In the bulk of these systems, flows are at very low Mach number (Ma), 
-but numerical constraints have restricted most studies of 
+In the bulk of these systems, especially in the deep interior far below the surface,
+flows are at very low Mach number (Ma).  Unfortunately,
+numerical constraints have restricted most studies of 
 compressible convection to high Ma.
-These prior studies have provided important insight into the low temperature, 
+These prior studies \cite{hurlburt&all1984, cattaneo&all1990, brummell&all1996,
+brandenburg&all2005} have provided insight into the nature of
+convection in the low temperature,
 high Ma region near the Sun's surface. Few fundamental
-properties of low Ma convection, which characterizes deeper motions,
-are known.
+properties of low Ma compressible convection, such as the nature of
+convective heat transport, are known.
 
 In the widely-studied \RB (RB) problem of incompressible Boussinesq convection, 
 a negative temperature gradient causes convective instability.
@@ -114,6 +117,8 @@ two- and three-dimensional, polytropically stratified atmospheres.
 We vary $\epsilon$ and Ra while holding Pr, aspect ratio, boundary conditions,
 and initial atmospheric stratification
 constant.  We also examine the behavior of flow properties, as quantified by Ma and Re.
+We find that the scaling of Nu is similar to the scaling of Nu in \RB convection,
+and that this scaling is not appreciably changed by the magnitude of the superadiabaticity.
 
 \section{Experiment} 
 \refstepcounter{section}
@@ -328,8 +333,20 @@ Ma(Ra$, \epsilon) \appropto \epsilon^{1/2}$Ra$^{1/4}$.
 This relation breaks down as the mean
 Ma approaches 1 (see Fig. \ref{fig:ma_v_eps}).  This transition
 occurs near Ra/Ra$_\text{crit} \approx \{10^{2}, 10^{3}\}$ for $\epsilon = \{1, 0.5\}$.
+We conjecture that the scaling of Ma with Ra is due to high-velocity ``spinners'' which
+form between upflow and downflow lanes in 2D, and which are constantly fed by 
+the relatively stationary upflows and downflows (BEN NEED CITES).
 In our limited 3D runs, Ma appears to be a function of $\epsilon$ alone, with
 Ma $\appropto \epsilon^{1/2}$, so at high Ra, Ma$_{\text{3D}} < \text{Ma}_{\text{2D}}$.
+Simulations in the range of Ra/Ra$_{\text{crit}} > 10^3$ at $\epsilon = 10^{-4}$
+exhibited ``windy'' states of convection, in which a large-scale horizontal
+shearing flow replaced the more standard upflow/downflow morphology of
+convection.  These states are represented in Figs. 
+\ref{fig:ma_v_eps}, \ref{fig:re_and_nu_v_ra}, \& \ref{fig:nrho_v_ra}
+as hatched points, and while they do not appear to greatly modify the
+scalings of fluid properties measured in this work, these states warrant
+further investigation, and similar states have been seen in
+RB convection \cite{goluskin&all2014}.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
@@ -421,7 +438,7 @@ on Ra, not on $\epsilon$, except where dynamical regimes change.
 In 2D and at low to moderate Ra, 
 Nu $\appropto$ Ra$^{1/3}$ regardless of $\epsilon$,
 reminiscent of scaling laws in \RB boundary layer theory 
-\cite{grossman&lohse2000, ahlers&all2009}.
+\cite{grossman&lohse2000, ahlers&all2009, king&all2012}.
 As the flow becomes supersonic,  Nu $\appropto$ Ra$^{1/5}$.
 %2D runs at $\text{Ra }\gtrsim 10^3$Ra$_{\text{crit}}$
 %and $\epsilon = 10^{-4}$ exhibit windy convective states.
@@ -436,8 +453,9 @@ the value of Nu is heavily dependent upon the specific thermodynamic
 structures of the solution, as double roll states will transport
 heat more efficiently than single roll states, and slight changes in
 Ra can result in a simulation latching on to one solution or the other. 
-(ADD SOMETHING ABOUT THIS BEING ASPECT RATIO INDEPENDENT AND MAYBE BRIEFLY
-MENTION WINDY STATES HERE?)
+Select simulations were run at aspect ratios of 8 and 16, and identical flow
+morphologies were obtained, which suggests that these states are sensitive to
+parameters other than the width of the domain.
 In our limited 3D runs, it appears that Nu $\appropto$ Ra$^{2/7}$, a classic scaling law
 seen in RB studies \cite{johnston&doering2009}.
 
@@ -451,7 +469,9 @@ Re at the midplane ($z=L_z/2$) of the atmosphere in
 Fig. \ref{fig:re_and_nu_v_ra}b.  Largely we find that Re
 depends on Ra, but not $\epsilon$, except when the flow states
 change.
-In 2D and at low Ra, Re $\appropto$ Ra$^{3/4}$.  When the flows
+In 2D and at low Ra, Re $\appropto$ Ra$^{3/4}$.  The heightened scaling
+of Re in 2D is due to the scaling of velocity (Ma) with Ra, as is
+seen in Fig. \ref{ma_v_ra}.  When the flows
 become supersonic, 
 this scaling gives way to Re $\appropto$ Ra$^{1/2}$.
 In our limited 3D runs, the scaling of Re is
@@ -476,9 +496,14 @@ boundary layers. Larger symbols represent 3D runs.}
 
 In the evolved state, the flows change the density stratification,
 as shown in Fig. \ref{fig:nrho_v_ra}.
+Here we take two different measurements of the stratification present in the
+time-averaged, horizontally-averaged density profile: the density difference
+between the max and min value of the density profile (empty symbols) and the
+density difference between the top and bottom of the atmosphere (solid symbols).
 We find that supersonic flows support persistent density inversions (empty symbols)
 in the boundary layers, as
-was reported by \cite{brandenburg&all2005}.  We find this in 2D and 3D.
+was reported by \cite{brandenburg&all2005}.  We find this in 2D and 3D, even
+at very large $\epsilon$.
 Surprisingly, the evolved $n_\rho$ is always less than the initial $n_\rho = 3$,
 and turbulent pressure support plays a larger role than atmospheric slumping.
 The agreement of Nu \& Re across $\epsilon$ (Fig. \ref{fig:re_and_nu_v_ra}), 
