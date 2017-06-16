@@ -47,7 +47,8 @@ ratio, and Prandtl number.
 The evolved heat transport, 
 quantified by the Nusselt number (Nu),
 follows scaling relationships similar to those found in the well-studied, 
-incompressible Rayleigh-B\'{e}nard problem in both 2D and 3D.
+incompressible Rayleigh-B\'{e}nard problem in both 2D and 3D and is not
+appreciably affected by the magnitude of $\epsilon$.
 The evolved Mach number (Ma) scales according to
 $\text{Ma} \propto \epsilon^{1/2}\text{Ra}^{\alpha}$, where
 $\alpha = 0$ in 3D and $\alpha \approx 1/4$ in 2D.
@@ -70,11 +71,12 @@ In the bulk of these systems, especially in the deep interior far below the surf
 flows are at very low Mach number (Ma).  Unfortunately,
 numerical constraints have restricted most studies of 
 compressible convection to high Ma.
-These prior studies \cite{hurlburt&all1984, cattaneo&all1990, brummell&all1996,
+These prior studies \cite{graham1975, chan&all1982,
+hurlburt&all1984, cattaneo&all1990, brummell&all1996,
 brandenburg&all2005} have provided insight into the nature of
 convection in the low temperature,
 high Ma region near the Sun's surface. Few fundamental
-properties of low Ma compressible convection, such as the nature of
+properties of low Ma compressible convection, such as the scaling of
 convective heat transport, are known.
 
 In the widely-studied \RB (RB) problem of incompressible Boussinesq convection, 
@@ -88,7 +90,7 @@ negative entropy gradient causes convective instability.
 Early numerical experiments of moderate-to-high Ma compressible convection
 in two \cite{graham1975, chan&all1982,
 hurlburt&all1984, cattaneo&all1990} and three 
-\cite{cattaneo&all1991, brummell&all1996} dimensions
+\cite{cattaneo&all1991, brandenburg&all2005, brummell&all1996} dimensions
 revealed a different evolved state from the RB case.
 Downflow lanes
 become fast and narrow, and upflow lanes turn into broad, slow upwellings.
@@ -117,14 +119,16 @@ two- and three-dimensional, polytropically stratified atmospheres.
 We vary $\epsilon$ and Ra while holding Pr, aspect ratio, boundary conditions,
 and initial atmospheric stratification
 constant.  We also examine the behavior of flow properties, as quantified by Ma and Re.
-We find that the scaling of Nu is similar to the scaling of Nu in \RB convection,
+We find here that the scaling of Nu in stratified, compressible convection 
+is similar to that in \RB convection,
 and that this scaling is not appreciably changed by the magnitude of the superadiabaticity.
 
 \section{Experiment} 
 \refstepcounter{section}
 \label{sec:experiment}
 We examine a monatomic ideal gas with an adiabatic index of
-$\gamma = 5/3$ whose equation of state is $P = R\rho T$. This is consistent with the approach used in earlier work \cite{graham1975, chan&all1982,
+$\gamma = 5/3$ whose equation of state is $P = R\rho T$. This is consistent with the approach used in earlier work 
+\cite{graham1975, chan&all1982, brandenburg&all2005,
 hurlburt&all1984, cattaneo&all1990, cattaneo&all1991, brummell&all1996} 
 and is the simplest stratified extension of RB.
 We study atmospheres which are initially polytropically stratified,
@@ -141,13 +145,15 @@ Subscript 0 indicates initial conditions and subscript $t$ indicates values
 at $z = L_z$.   We
 specify the depth of the atmosphere, $L_z = e^{n_{\rho}/m} - 1$, by choosing
 the number of density scale heights, $n_{\rho}$, it spans initially.
-Throughout this letter we set $n_{\rho} = 3$.  Satisfying hydrostatic
-equilibrium sets the value of gravity, $g = T_t (m + 1)$, which is
+Throughout this letter we set $n_{\rho} = 3$.  The polytropic
+index is $m = m_{ad} - \epsilon$, where $m_{ad} = (\gamma - 1)^{-1}$
+and $\epsilon$ is the superadiabatic excess.  Satisfying hydrostatic
+equilibrium sets the value of gravity, $g = RT_t (m + 1)$, which is
 constant with depth.  We study atmospheres with aspect
 ratios of 4 where both the $x$ and $y$ coordinates have the range $[0, 4L_z]$.
 In our 2D cases, we only consider $x$ and $z$.
 
-We nondimensionalize our domains by setting
+These domains are nondimensionalized by setting
 all thermodynamic variables to unity at $z = L_z$, choosing
 $R = T_t = \rho_t = 1$.  By this choice, the non-dimensional
 length scale is the inverse temperature gradient scale and the 
@@ -160,10 +166,8 @@ $t_b = \tau_I \sqrt{L_z/g\epsilon}$.
 At fixed $n_\rho$, convective dynamics are 
 controlled by the superadiabaticity
 of the atmospheres as well as the atmospheric diffusivities.
-The superadiabaticity, or the magnitude of the (negative) 
-entropy gradient, is set by 
-the superadiabatic excess, $\epsilon = m_{ad} - m$, where 
-$m_{ad} = (\gamma - 1)^{-1}$ and the initial entropy
+The superadiabaticity is set by $\epsilon$ and 
+the initial entropy
 difference between the top and bottom boundaries is
 $\Delta S_0 = \epsilon\ln (1 + L_z)$.  At a fixed value of
 $\epsilon$, the diffusivities are set by the
@@ -179,18 +183,18 @@ kinematic viscosity, respectively.
 These polytropes are initially in
 thermal equilibrium, so the initial thermal
 conductivity, $\kappa_0 = \chi \rho_0$, must be
-constant.  Throughout this work we specify
-that Pr $= 1$ and is constant with depth.  By these
-choices, $\chi = \chi_t / \rho_0$ and $\nu = \nu_t / \rho_0$.
+constant with depth.  Throughout this work we specify
+that Pr $= 1$ and is depth invariant.  By these
+choices, $\chi(z) = \chi_t / \rho_0$ and $\nu(z) = \nu_t / \rho_0$.
 This formulation 
-means Ra at the bottom of the domain is greater than
-Ra$_t$ by a factor of $e^{2n_\rho}$, and henceforth
+sets Ra at the bottom of the domain greater than
+Ra$_t$ by a factor of $e^{2n_\rho}$. Henceforth
 when we specify Ra we are referring to Ra$_t$.  
 We leave $\kappa = \rho\chi$ and 
 $\mu = \rho\nu$ (the dynamic viscosity) free to evolve as the density 
 profile evolves.  
 
-Atmospheric diffusivities thus scale as
+Under this formulation, diffusivities scale as
 \begin{equation}
 \chi_t \propto \sqrt{\frac{\epsilon}{\text{Pr}\cdot\text{Ra}_t}}, \qquad
 \nu_t \propto \sqrt{\frac{\epsilon\cdot\text{Pr}}{\text{Ra}_t}},
@@ -200,8 +204,8 @@ and for constant Pr = 1, as in this work, $\chi_t = \nu_t$.
 We carry out two experiments in this letter: one in which
 we fix $\epsilon$ and increase Ra, thus increasing the diffusive
 timescales, and a second in which we fix Ra and raise $\epsilon$,
-thus decreasing the ratio of the buoyant timescale to the 
-diffusive timescales.
+thus increasing the ratio of the diffusive timescales to the
+buoyant timescale.
 
 We evolve the Fully Compressible Navier-Stokes equations,
 \begin{align}
@@ -325,8 +329,8 @@ that convective onset
 occurs at $\text{Ra}_{\text{crit}} = \{11.15, 10.06, 10.97, 10.97\}$ 
 for $\epsilon = \{1.0, 0.5, 10^{-4}, 10^{-7}\}$, respectively.  
 
-We measure the adiabatic Mach number (Ma = $|\bm{u}|/\sqrt{\gamma T}$).
-We find that Ma is a strong function of 
+We measure the adiabatic Mach number (Ma = $|\bm{u}|/\sqrt{\gamma T}$),
+and find that it is a strong function of 
 $\epsilon$ and a weak function of Ra.  
 In our 2D runs, when Ma $< 1$, we observe a scaling law of
 Ma(Ra$, \epsilon) \appropto \epsilon^{1/2}$Ra$^{1/4}$.
@@ -341,12 +345,12 @@ Ma $\appropto \epsilon^{1/2}$, so at high Ra, Ma$_{\text{3D}} < \text{Ma}_{\text
 Simulations in the range of Ra/Ra$_{\text{crit}} > 10^3$ at $\epsilon = 10^{-4}$
 exhibited ``windy'' states of convection, in which a large-scale horizontal
 shearing flow replaced the more standard upflow/downflow morphology of
-convection.  These states are represented in Figs. 
+convection, similar to analogous states which have been studied in
+RB convection \cite{goluskin&all2014}.  These states are represented in Figs. 
 \ref{fig:ma_v_eps}, \ref{fig:re_and_nu_v_ra}, \& \ref{fig:nrho_v_ra}
-as hatched points, and while they do not appear to greatly modify the
-scalings of fluid properties measured in this work, these states warrant
-further investigation, and similar states have been seen in
-RB convection \cite{goluskin&all2014}.
+as hatched points, and while this phenomeonon does not appear to greatly modify the
+scaling of fluid properties measured in this work, these states warrant
+further investigation.
 
 \begin{figure}[t]
 \includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
@@ -371,8 +375,8 @@ shock systems form in the upper atmosphere near downflow lanes
 These shock phenomena were reported in
 two \cite{cattaneo&all1990} and 
 three \cite{malagoli&all1990} dimensional polytropic simulations previously.
-As Ra is increased to large values (Fig. \ref{fig:entropy_snapshots}c) 
-and diffusivities become small according to (\ref{eqn:diffusivities}),
+As in (\ref{eqn:diffusivities}), diffusivities become small as Ra 
+is increased to large values (Fig. \ref{fig:entropy_snapshots}c) and
 thermodynamic structures break up into small eddies which traverse the
 domain repeatedly before diffusing.
 Furthermore, the value of $\epsilon$ sets the size of the
@@ -471,9 +475,10 @@ depends on Ra, but not $\epsilon$, except when the flow states
 change.
 In 2D and at low Ra, Re $\appropto$ Ra$^{3/4}$.  The heightened scaling
 of Re in 2D is due to the scaling of velocity (Ma) with Ra, as is
-seen in Fig. \ref{ma_v_ra}.  When the flows
+seen in Fig. \ref{fig:ma_v_eps}.  When the flows
 become supersonic, 
-this scaling gives way to Re $\appropto$ Ra$^{1/2}$.
+this scaling gives way to Re $\appropto$ Ra$^{1/2}$, as expected
+by the scaling of diffusivities in (\ref{eqn:diffusivities}).
 In our limited 3D runs, the scaling of Re is
 Re $\appropto$ Ra$^{1/2}$, consistent with the supersonic results.
 
