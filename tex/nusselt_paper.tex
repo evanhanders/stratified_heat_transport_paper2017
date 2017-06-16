@@ -140,14 +140,15 @@ T_0(z)    &= T_{t}(1 + L_z - z),
 \end{split}
 \end{equation}
 where $m$ is the polytropic index and $L_z$ is the depth of the atmosphere.
+The polytropic
+index is set by the superadiabatic excess, $\epsilon = m_{ad} - m$, where
+$m_{ad} = (\gamma - 1)^{-1}$ is the adiabatic value of $m$.
 The height coordinate, $z$, increases upwards in the range $[0, L_z]$.
 Subscript 0 indicates initial conditions and subscript $t$ indicates values
 at $z = L_z$.   We
 specify the depth of the atmosphere, $L_z = e^{n_{\rho}/m} - 1$, by choosing
 the number of density scale heights, $n_{\rho}$, it spans initially.
-Throughout this letter we set $n_{\rho} = 3$.  The polytropic
-index is $m = m_{ad} - \epsilon$, where $m_{ad} = (\gamma - 1)^{-1}$
-and $\epsilon$ is the superadiabatic excess.  Satisfying hydrostatic
+Throughout this letter we set $n_{\rho} = 3$.    Satisfying hydrostatic
 equilibrium sets the value of gravity, $g = RT_t (m + 1)$, which is
 constant with depth.  We study atmospheres with aspect
 ratios of 4 where both the $x$ and $y$ coordinates have the range $[0, 4L_z]$.
@@ -164,12 +165,8 @@ timescales of the atmospheric buoyancy time,
 $t_b = \tau_I \sqrt{L_z/g\epsilon}$. 
 
 At fixed $n_\rho$, convective dynamics are 
-controlled by the superadiabaticity
-of the atmospheres as well as the atmospheric diffusivities.
-The superadiabaticity is set by $\epsilon$ and 
-the initial entropy
-difference between the top and bottom boundaries is
-$\Delta S_0 = \epsilon\ln (1 + L_z)$.  At a fixed value of
+controlled by $\epsilon$ as well as the atmospheric diffusivities.
+At a fixed value of
 $\epsilon$, the diffusivities are set by the
 Rayleigh number (Ra) and the Prandtl number (Pr),
 \begin{equation}
@@ -177,34 +174,37 @@ Rayleigh number (Ra) and the Prandtl number (Pr),
 \qquad
 \text{Pr} = \frac{\nu}{\chi},
 \end{equation}
-where $c_P = \gamma/(\gamma-1)$ is the specific heat at
+where $\Delta S_0 = \epsilon\ln (1 + L_z)$ is the initial entropy
+difference between the top and bottom boundaries,
+$c_P = \gamma/(\gamma-1)$ is the specific heat a
 constant pressure, and $\nu$ and $\chi$ are the thermal diffusivity and
 kinematic viscosity, respectively.
-These polytropes are initially in
-thermal equilibrium, so the initial thermal
-conductivity, $\kappa_0 = \chi \rho_0$, must be
-constant with depth.  Throughout this work we specify
-that Pr $= 1$ and is depth invariant.  By these
-choices, $\chi(z) = \chi_t / \rho_0$ and $\nu(z) = \nu_t / \rho_0$.
+Throughout this work we specify
+that Pr $= 1$ and is depth invariant.
+Polytropes, as specified in (\ref{eqn:polytrope}),
+are in thermal equilibrium. Thus, the initial thermal
+conductivity, $\kappa_0 = \chi \rho_0$, is
+constant with depth. 
+By these
+choices, $\nu(z) \equiv \chi(z) \equiv \chi_t / \rho_0$.
 This formulation 
 sets Ra at the bottom of the domain greater than
 Ra$_t$ by a factor of $e^{2n_\rho}$. Henceforth
 when we specify Ra we are referring to Ra$_t$.  
-We leave $\kappa = \rho\chi$ and 
-$\mu = \rho\nu$ (the dynamic viscosity) free to evolve as the density 
+The full values of $\kappa = \rho\chi$ and 
+$\mu = \rho\nu$ (the dynamic viscosity) are free to evolve as the density 
 profile evolves.  
 
 Under this formulation, diffusivities scale as
 \begin{equation}
-\chi_t \propto \sqrt{\frac{\epsilon}{\text{Pr}\cdot\text{Ra}_t}}, \qquad
-\nu_t \propto \sqrt{\frac{\epsilon\cdot\text{Pr}}{\text{Ra}_t}},
+\chi_t = \nu_t \propto \sqrt{\frac{\epsilon}{\text{Ra}_t}}
 \label{eqn:diffusivities}
 \end{equation}
-and for constant Pr = 1, as in this work, $\chi_t = \nu_t$.
+for constant Pr = 1, as in this work.
 We carry out two experiments in this letter: one in which
 we fix $\epsilon$ and increase Ra, thus increasing the diffusive
 timescales, and a second in which we fix Ra and raise $\epsilon$,
-thus increasing the ratio of the diffusive timescales to the
+thus modifying the ratio of the diffusive timescales to the
 buoyant timescale.
 
 We evolve the Fully Compressible Navier-Stokes equations,
