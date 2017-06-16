@@ -125,8 +125,8 @@ class ParameterSpaceBuddy():
     def read_files(self, keys):
         import h5py
         for i, dir in enumerate(self.dir_info):
-#            try:
-            if True:
+            try:
+#            if True:
                 f = h5py.File(dir[0]+self.out_dir_name+self.out_file_name, 'r')
 
                 Lz = np.exp(dir[self.parameters.index('nrhocz')+1]/(1.5-dir[self.parameters.index('eps')+1]))-1
@@ -154,10 +154,10 @@ class ParameterSpaceBuddy():
                     if np.isnan(storage[key][0]):
                         raise
                 dir[-1] = storage
-#            except:
-#                print("PROBLEMS READING OUTPUT FILE IN {:s}".format(dir[0]))
-#                import sys
-#                sys.stdout.flush()
+            except:
+                print("PROBLEMS READING OUTPUT FILE IN {:s}".format(dir[0]))
+                import sys
+                sys.stdout.flush()
         return self.dir_info
 
 
@@ -283,7 +283,21 @@ class ParameterSpaceBuddy():
                     kwargs['markeredgewidth'] = 1
             if label:
                 kwargs['label'] = label
-            ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, color=color, marker=markers[i], ms=markersize[i], ls='None', capsize=0, **kwargs)
+
+            if grouping == 'eps' and group == 1e-4 and annotate == '':
+                
+                ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, color=color, marker=markers[i], ms=markersize[i], ls='None', capsize=0,
+                        zorder=1, **kwargs)
+                x_vals = np.array(x_vals)
+                y_vals = np.array(y_vals)
+                y_vals2 = y_vals[x_vals >= 1e3]
+                x_vals2 = x_vals[x_vals >= 1e3]
+                print(x_vals2, y_vals2)
+                ax.scatter(x_vals2, y_vals2, marker=markers[i], c=color, s=35, hatch=10*'\\', edgecolor='black', lw=0.5, zorder=2) 
+                                            #hatch='/', edgecolor='white')
+            else:
+                ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, color=color, marker=markers[i], ms=markersize[i], ls='None', capsize=0,
+                        zorder=5, **kwargs)
             if annotate != '':
                 for x, y in zip(x_vals, y_vals):
                     if empty_markers:
@@ -294,7 +308,7 @@ class ParameterSpaceBuddy():
                         ax.plot(x, y, color=color, marker=markers[i], ms=markersize[i])
                         white = converter.to_rgba('white', alpha=0.8)
                         ax.plot(x, y, color=white, marker='o', ms=2)
-                ax.plot(x_vals, y_vals, color=color, ls=':')
+                ax.plot(x_vals, y_vals, color=color, ls='-')
                         
                     
 #                    ax.annotate(annotate, xy=(x,y), fontsize=5, color='white', verticalalignment='center', horizontalalignment='center')
