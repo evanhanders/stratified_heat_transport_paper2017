@@ -104,8 +104,8 @@ number (Re, the strength of advection to viscous diffusion)
 and the Peclet number (Pe, advection vs. thermal diffusion).  
 In stratified atmospheres, the magnitude of the unstable entropy gradient
 joins Ra and Pr as a third important and independent control parameter.  This 
-\emph{superadiabatic excess} \cite{graham1975}, $\epsilon$,
-sets the scale of the atmospheric entropy gradient.
+\emph{superadiabatic excess}, $\epsilon$,
+sets the scale of the atmospheric entropy gradient \cite{graham1975}.
 We find here that $\epsilon$ primarily controls the Ma of the evolved solution.
 
 In this letter we study the behavior of convective heat transport, 
@@ -126,7 +126,7 @@ $\gamma = 5/3$ whose equation of state is $P = R\rho T$. This is consistent with
 \cite{graham1975, chan&all1982, brandenburg&all2005,
 hurlburt&all1984, cattaneo&all1990, cattaneo&all1991, brummell&all1996} 
 and is the simplest stratified extension of RB.
-We study atmospheres which are initially polytropically stratified,
+The atmospheres studied are initially polytropically stratified,
 \begin{equation}
 \begin{split}
 \rho_0(z) &= \rho_{t}(1 + L_z - z)^m, \\
@@ -151,8 +151,8 @@ ratios of 4 where both the $x$ and $y$ coordinates have the range $[0, 4L_z]$.
 In our 2D cases, we only consider $x$ and $z$.
 
 These domains are nondimensionalized by setting
-all thermodynamic variables to unity at $z = L_z$, choosing
-$R = T_t = \rho_t = 1$.  By this choice, the non-dimensional
+$R = T_t = \rho_t = 1$ at $z = L_z$.
+By this choice, the non-dimensional
 length scale is the inverse temperature gradient scale and the 
 timescale is the isothermal sound crossing time, 
 $\tau_I$, of this unit length.
@@ -170,17 +170,20 @@ Rayleigh number (Ra) and the Prandtl number (Pr),
 \qquad
 \text{Pr} = \frac{\nu}{\chi},
 \end{equation}
-where $\Delta S_0 = \epsilon\ln (1 + L_z)$ is the initial entropy
+where $\Delta S_0 = \epsilon\ln (1 + L_z) = \epsilon n_\rho / m$ 
+is the initial entropy
 difference between the top and bottom boundaries,
-$c_P = \gamma/(\gamma-1)$ is the specific heat a
+$c_P = \gamma/(\gamma-1)$ is the specific heat at
 constant pressure, and $\nu$ and $\chi$ are the thermal diffusivity and
 kinematic viscosity, respectively.
 Throughout this work we specify
 that Pr $= 1$ and is depth invariant.
-Polytropes, as specified in (\ref{eqn:polytrope}),
-are in thermal equilibrium. Thus, the initial thermal
+The initial thermal conductivity,
+Polytropes, as specified in ,
+are in thermal equilibrium. The initial thermal
 conductivity, $\kappa_0 = \chi \rho_0$, is
-constant with depth. 
+constant with depth, such that (\ref{eqn:polytrope}) is in
+thermal equilibrium. 
 By these
 choices, $\nu(z) \equiv \chi(z) \equiv \chi_t / \rho_0$.
 This formulation 
@@ -188,26 +191,26 @@ sets Ra at the bottom of the domain greater than
 Ra$_t$ by a factor of $e^{2n_\rho}$. Henceforth
 when we specify Ra we are referring to Ra$_t$.  
 The full values of $\kappa = \rho\chi$ and 
-$\mu = \rho\nu$ (the dynamic viscosity) are free to evolve as the density 
+$\mu = \rho\nu$ (the dynamic viscosity) change as the density 
 profile evolves.  
-Under this formulation, diffusivities scale as
+The diffusivities scale as
 $\chi_t, \nu_t \propto \sqrt{g L_z^3 \epsilon / \text{Ra}_t}$.
-The thermal diffusion timescale is $t_\chi \equiv L_z^2 / \chi$. The
-ratio of the diffusion time to the buoyancy time is
+Defining the thermal diffusion timescale as $t_\chi \equiv L_z^2 / \chi$, the
+ratio of $t_\chi$ to the buoyancy time is
 \begin{equation}
 \frac{t_\chi}{t_b} = \left(\frac{c_P}{n_\rho}\right)^{1/2}\text{Ra}_t^{1/2}
 \left(m_{ad} - \epsilon\right)^{1/2}.
 \label{eqn:timescales}
 \end{equation}
-We carry out two experiments in this letter: one in which
+We carry out two experiments in this letter. In the first,
 we fix $\epsilon$ and increase Ra, thus increasing the ratio in
-(\ref{eqn:timescales}), and a second in which we fix Ra and change $\epsilon$.
-In this second experiment, the buoyancy time $t_b$ scales as $\epsilon^{-1/2}$
-relative to the speed of sound, and we see this reflected in the Mach
-number scaling. The ratio in (\ref{eqn:timescales}) is
+(\ref{eqn:timescales}). In the second, we fix Ra and vary $\epsilon$,
+scaling the buoyancy time $t_b$ as $\epsilon^{-1/2}$
+relative to the speed of sound; we see this reflected in the evolved Mach
+number scaling (e.g., Fig. \ref{fig:ma_v_eps}). The ratio in (\ref{eqn:timescales}) is
 independent of $\epsilon$ when $\epsilon \ll m_{ad}$.
 
-We evolve the Fully Compressible Navier-Stokes equations,
+The Fully Compressible Navier-Stokes equations,
 \begin{align}
 &\begin{aligned}
 &\frac{\partial \ln\rho}{\partial t} + \grad\cdot\bm{u} 
@@ -230,7 +233,7 @@ We evolve the Fully Compressible Navier-Stokes equations,
 	\label{eqn:energy_eqn}
 \end{aligned}
 \end{align}
-with the viscous stress tensor given by
+are evolved with the viscous stress tensor given by
 \begin{equation}
 \sigma_{ij} \equiv \left(\frac{\partial u_i}{\partial x_j} + 
 \frac{\partial u_j}{\partial x_i} - \frac{2}{3}\delta_{ij}\grad\cdot\bm{u}\right).
@@ -267,9 +270,9 @@ pseudospectral framework to time-evolve
 (\ref{eqn:continuity_eqn})-(\ref{eqn:energy_eqn}) 
 using an implicit-explicit (IMEX), third-order, four-step 
 Runge-Kutta timestepping scheme RK443 \cite{ascher&all1997}.  
-We decompose our thermodynamic variables such that $T = T_0 + T_1$ and
+Thermodynamic variables are decomposed such that $T = T_0 + T_1$ and
 $\ln\rho = (\ln\rho)_0 + (\ln\rho)_1$, 
-and the velocity is $\bm{u} = u\hat{x} + v\hat{y} +  w\hat{z}$.
+and the velocity is $\bm{u} = w\bm{\hat{z}} + u\bm{\hat{x}} + v\bm{\hat{y}}$.
 In our 2D runs, $v = 0$.
 Subscript 0 variables, set by (\ref{eqn:polytrope}), 
 have no time derivative and vary only in $z$.
@@ -291,17 +294,17 @@ tested against a nonlinear benchmark  of the compressible
 Kelvin-Helmholtz instability \cite{Lecoanet_et_al_2016_KH}.
 
 We impose impenetrable, stress free, fixed temperature boundary conditions at
-the top and bottom of the domain such that 
+the top and bottom of the domain, with 
 $w = \partial_z u = T_1 = 0$ at $z = \{0, L_z\}$. 
 $T_1$ is initially filled with
 random white noise whose magnitude is infinitesimal
-compared to $T_0$ and $\epsilon$.
+compared to $\epsilon T_0$.
 We filter this noise spectrum in coefficient space, 
 such that only the lower 25\% of the coefficients
 have power. All reported results are taken from time averages
 over many $t_b$ beginning \{100, 40\}$t_b$
-after the start of our \{2D, 3D\} simulations in order to
-assure our results are not biased by the convective transient.
+after the start of our \{2D, 3D\} simulations to
+ensure our results are not biased by the convective transient.
 
 \section{Results \& Discussion}
 \refstepcounter{section}
