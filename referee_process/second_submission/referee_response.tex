@@ -24,9 +24,8 @@ $\,$\newline
 
 \begin{singlespace}
 We thank the two referees for their detailed and constructive critique.
-The science in our paper has not greatly changed since the last iteration.
-We have completed a select few 3D runs which do not change our results,
-but which make the scaling of parameters at 3D more clear to the reader.
+We have completed further 3D runs which make the scaling of parameters at 3D 
+more clear to the reader.
 We have modified the text of the paper to address the critiques of
 both reports, and have adjusted the styles of select figures in order to
 more efficiently call out interesting results.
@@ -105,8 +104,9 @@ scales like $\epsilon$.
 \end{itemize}
 \end{myquotation}
 We have reworked the discussion of defining Ra and Pr, and have added
-a new Eqn (3) which demonstrates explicitly states how our diffusivities
-scale with input parameters.  We have also explicitly stated the two types
+a new Eqn (3) and related discussion which demonstrates explicitly 
+how our timescales vary with input parameters.  
+We have also explicitly stated the two types
 of experiments we perform (varying $\epsilon$ while holding Ra constant,
 and vice versa), and what these experiments do to the timescales of
 our problem.
@@ -121,9 +121,9 @@ The description of which of the diffusivities or the
 conductivity/dynamic viscosity are constant could certainly be
 tightened up.
 \end{myquotation}
-We have moved the discussion of non-dimensionalization between the
-definition of the polytrope and the discussion of diffusivities in
-order to make the discussion flow more logically.
+We agree. We have moved the discussion of non-dimensionalization after the
+definition of the polytrope and before the discussion of diffusivities.
+
 
 \begin{myquotation}
 With regard to the results:
@@ -133,8 +133,10 @@ surprising. Higher Ra here at fixed epsilon means lower thermal
 diffusivity, and therefore eddies might be expected to retain their
 identity longer. The above explanation would help.
 \end{myquotation}
-We have adjusted our mention of Fig. 2c such that it calls out that
-the long-lasting eddies are what we expect.
+We agree and Eqn. 3 shows now shows this clearly.
+We have revised our discussion of Fig. 2c such that it 
+explicitly states that long-lasting eddies are what we expect based on 
+input parameters.
 
 \begin{myquotation}
 There is quite a bit of mention of “windy” states without any real
@@ -143,9 +145,11 @@ information (at least something visual to distinguish from non-windy
 states) or remove the distraction.
 \end{myquotation}
 We have removed the three scattered discussions of ``windy'' states,
-and replaced them with a short mention in the paragraph describing
+and consolidated them to a short discussion in the paragraph describing
 Fig. 1.  Figs. 1, 2, and 3 have been updated to make it clear which
-runs exhibited ``windy'' states.
+runs exhibited ``windy'' states, and we think including them in the
+discussion at this level may be useful to the field when comparing to
+the work of Goluskin or others.
 
 \begin{myquotation}
 Nusselt number: Usually this is a ratio of heat transport in the
@@ -153,17 +157,20 @@ turbulent state to that in the conduction state. So therefore, aren’t
 the two $F_A$’s different on the top and the bottom? The top has a
 modified kappa but the bottom has the original kappa profile?
 \end{myquotation}
-The change in $\kappa$ as $\rho$ evolves means that the evolved
-atmosphere can have a very different conductive state than the
-initial atmosphere, particularly at large values of $\epsilon$.
-Thus, both the top and bottom of Nu use the evolved state's
-value of $F_A$.  In the previous iteration of the letter, 
-$F_A$ was entirely defined by the initial atmosphere, and
-the $F_{\text{cond}}$ used in the denominator of Nu was
-based on the initial atmosphere, as well.  This led to the
+The evolution of $\kappa$ with $\rho$ (see discussion between
+Eqns 2 \& 3) means that the evolved atmosphere has a different
+conductive state than the initial atmosphere.  $\rho$ evolves
+the most at large $\epsilon$ (Fig. 4).
+Thus, both the numerator and denominator of Eqn. (9) 
+use the same evolved state and
+value of $F_A$.  In the first version of the letter, 
+$F_A$ was instead defined by the initial atmosphere, and
+the $F_{\text{cond}}$ used in the denominator of Eqn. (9) was
+based on the initial atmosphere as well, as traditionally
+in Rayleigh-Benard.  This led to the
 large deviation in Nu scaling at high and low $\epsilon$,
-as a result of the large shifts in the density profile,
-but as Fig. 4 shows, this shift was merely a result of the
+as a result of the large shifts in the density profile.
+However, as Fig. 4 shows, this shift was merely a result of the
 density profile changing rather than a difference in the
 amount of flux being carried.
 
@@ -176,9 +183,13 @@ what is going on? Note also that the sensitive dependence on the exact
 roll or other structure seems to imply that the simulation box is too
 small. This dependence should not be the case.
 \end{myquotation}
-I really have no idea what the 2/7 law means.
-We have added a note that mentions that higher aspect ratios do \emph{not}
-seem to change the solution outcome.
+We also are unsure of what the 2/7 scaling relationship means for these
+fully compressible states.  We are interested in exploring this and potential
+boundary layer theories in future work, but a full examination of this
+is beyond the scope of this letter.
+We have conducted a very small number of high aspect ratio solutions which
+do not appear to converge to vastly different flow morphology.  We mention this
+in the discussion of Fig. 3a.
 
 
 \begin{myquotation}
@@ -187,7 +198,10 @@ Ra$^{1/2}$. Can you explain these alternative scalings or at least why the
 expected scaling emerges at large Ra? Are the 2D ones just
 over-constrained?
 \end{myquotation}
-The increased scaling of Re with Ra is now explained in the text.
+The increased scaling of Re with Ra is now explained in the text at the end
+of the discussion of Fig 3b.  2D solutions build over-constrained spinners
+like flywheeling convection in Rayleigh-Benard, which don't seem to appear
+in our 3D solutions at these parameters.
 
 \begin{myquotation}
 Regarding Fig 4 -- are the authors calculating the integrated evolved
@@ -195,13 +209,14 @@ density profile to get this number? If the effect is only in the
 boundary layer as they mention, I am surprised that the deviation is
 so large. This figure needs much more explanation!
 \end{myquotation}
-We're calculating the horizontally averaged, time-integrated, evolved density
-profile and then taking two measures of it, as we now call out more clearly in the text.  
-One measure is the density max/min, and the other is the density at top/bottom.
-If density were monotonic, these measurements would be equivalent, but since density
-inversions form within the boundary layers, the max/min are found away from the boundaries
-before the density profile turns around.  We have observed boundary layers at the top of
+We have expanded our discussion of these two measurements when we discuss Fig. 4 in the text.
+If density were monotonic, these measurements would be equivalent, but density
+inversions form within the boundary layers and the max/min are found away from the boundaries.
+We have observed inverted boundary layers at the top of
 the domain which span more than one density scale height at $\epsilon = 1$.
+These are interesting and it's surprising that they persist in 3D.
+
+~\newline
 
 \noindent
 This concludes our response to report B.  We thank referee B for this second report.
