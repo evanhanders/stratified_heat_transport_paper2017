@@ -57,12 +57,12 @@ appreciably affected by the magnitude of $\epsilon$. %think about last sentence.
 \section{Introduction}
 \refstepcounter{section}
 \label{sec:intro}
-Convection transports energy in stellar and planetary atmospheres.
-In these objects, flows are compressible and
-feel the atmospheric stratification.  While in some systems this stratification 
-is negligible, it is significant in regions such as
+Convection transports energy in stellar and planetary atmospheres
+where flows are compressible and
+feel the atmospheric stratification.  This stratification 
+is significant in regions such as
 the convective envelope of the Sun, which spans 14 density scale heights.
-In the bulk of these systems, especially in the deep interior far below the surface,
+In the bulk of these systems, particularly in the deep interior,
 flows are at very low Mach number (Ma).  Unfortunately,
 numerical constraints have restricted most studies of 
 compressible convection to high Ma.
@@ -74,7 +74,7 @@ high Ma region near the Sun's surface. Few fundamental
 properties of low Ma compressible convection, such as the scaling of
 convective heat transport, are known.
 
-In the widely-studied \RB (RB) problem of incompressible Boussinesq convection, 
+In the widely-studied \RB problem of incompressible Boussinesq convection (RBC), 
 a negative temperature gradient causes convective instability.
 In the evolved solution, upflows and downflows are symmetrical, the
 temperature in the interior becomes isothermal, and
@@ -86,14 +86,14 @@ Early numerical experiments of moderate-to-high Ma compressible convection
 in two \cite{graham1975, chan&all1982,
 hurlburt&all1984, cattaneo&all1990} and three 
 \cite{cattaneo&all1991, brandenburg&all2005, brummell&all1996} dimensions
-revealed a different evolved state from the RB case.
+revealed a different evolved state from RBC.
 Downflow lanes
 become fast and narrow, and upflow lanes turn into broad, slow upwellings.
 Furthermore, the \emph{entropy} gradient is negated by convection in the interior, so
 a significant temperature gradient and conductive flux can persist despite
 efficient convection.
 
-In RB convection, there exist two primary dynamical control parameters: 
+In RBC, there exist two primary dynamical control parameters: 
 the Rayleigh number (Ra, the ratio of
 buoyant driving to diffusive damping) and the Prandtl number 
 (Pr, the ratio of viscous to thermal
@@ -125,7 +125,7 @@ We examine a monatomic ideal gas with an adiabatic index of
 $\gamma = 5/3$ whose equation of state is $P = R\rho T$. This is consistent with the approach used in earlier work 
 \cite{graham1975, chan&all1982, brandenburg&all2005,
 hurlburt&all1984, cattaneo&all1990, cattaneo&all1991, brummell&all1996} 
-and is the simplest stratified extension of RB.
+and is the simplest stratified extension of RBC.
 The atmospheres studied are initially polytropically stratified,
 \begin{equation}
 \begin{split}
@@ -171,19 +171,16 @@ Rayleigh number (Ra) and the Prandtl number (Pr),
 \text{Pr} = \frac{\nu}{\chi},
 \end{equation}
 where $\Delta S_0 = \epsilon\ln (1 + L_z) = \epsilon n_\rho / m$ 
-is the initial entropy
-difference between the top and bottom boundaries,
+is the initial entropy difference across the domain,
 $c_P = \gamma/(\gamma-1)$ is the specific heat at
-constant pressure, and $\nu$ and $\chi$ are the thermal diffusivity and
-kinematic viscosity, respectively.
+constant pressure, $\nu$ is the thermal diffusivity, 
+and $\chi$ is the kinematic viscosity.
 Throughout this work we specify
 that Pr $= 1$ and is depth invariant.
-The initial thermal conductivity,
-Polytropes, as specified in ,
-are in thermal equilibrium. The initial thermal
+The initial thermal
 conductivity, $\kappa_0 = \chi \rho_0$, is
 constant with depth, such that (\ref{eqn:polytrope}) is in
-thermal equilibrium. 
+thermal equilibrium ($\grad\cdot[\kappa_0\grad T_0] = 0$).
 By these
 choices, $\nu(z) \equiv \chi(z) \equiv \chi_t / \rho_0$.
 This formulation 
@@ -207,7 +204,7 @@ we fix $\epsilon$ and increase Ra, thus increasing the ratio in
 (\ref{eqn:timescales}). In the second, we fix Ra and vary $\epsilon$,
 scaling the buoyancy time $t_b$ as $\epsilon^{-1/2}$
 relative to the speed of sound; we see this reflected in the evolved Mach
-number scaling (e.g., Fig. \ref{fig:ma_v_eps}). The ratio in (\ref{eqn:timescales}) is
+number scaling (Fig. \ref{fig:ma_v_eps}). The ratio in (\ref{eqn:timescales}) is
 independent of $\epsilon$ when $\epsilon \ll m_{ad}$.
 
 The Fully Compressible Navier-Stokes equations,
@@ -265,8 +262,8 @@ Understanding how each of these fluxes interact
 is crucial in characterizing convective heat transport.
 
 We utilize the 
-Dedalus\footnote{http://dedalus-project.org/} \cite{burns&all2016} 
-pseudospectral framework to time-evolve  
+Dedalus\footnote{http://dedalus-project.org/} 
+pseudospectral framework \cite{burns&all2016} to time-evolve  
 (\ref{eqn:continuity_eqn})-(\ref{eqn:energy_eqn}) 
 using an implicit-explicit (IMEX), third-order, four-step 
 Runge-Kutta timestepping scheme RK443 \cite{ascher&all1997}.  
@@ -345,13 +342,13 @@ Ma $\appropto \epsilon^{1/2}$, so at high Ra, Ma$_{\text{3D}} < \text{Ma}_{\text
 We conjecture that the scaling of Ma with Ra in the 2D runs 
 is due to the formation of coherent high-velocity ``spinners,'' which form
 between upflow and downflow lanes in 2D.  These structures, which are reminiscent of flywheel
-modes in RB convection, do not appear in our 3D runs these parameters
+modes in RBC, do not appear in our 3D runs at these parameters
 \cite{jones&all1976, brummell&all2002}.
 Simulations in the range of Ra/Ra$_{\text{crit}} > 10^3$ at $\epsilon = 10^{-4}$
 exhibited ``windy'' states of convection, in which a large-scale horizontal
 shearing flow replaced the more standard upflow/downflow morphology of
 convection.  Similar states have been studied in
-RB convection \cite{goluskin&all2014}.  These runs are represented in Figs. 
+RBC \cite{goluskin&all2014}.  These runs are represented in Figs. 
 \ref{fig:ma_v_eps}, \ref{fig:re_and_nu_v_ra}, \& \ref{fig:nrho_v_ra}
 as hatched points, and while this phenomenon does not appear to greatly modify the
 scaling of fluid properties measured in this work, these states warrant
@@ -400,7 +397,7 @@ Larger symbols with white dots designate 3D runs.
 \end{figure}
 
 The efficiency of convection is quantified by the Nusselt number (Nu).  
-Nu is well-defined in RB convection
+Nu is well-defined in RBC
 as the total flux normalized by the steady-state conductive flux 
 \cite{johnston&doering2009, otero&all2002}.
 In stratified convection Nu is more difficult to define, and we use
@@ -448,10 +445,10 @@ the value of Nu is heavily dependent upon the specific thermodynamic
 structures of the solution, and slight changes in
 Ra can result in a simulation converging to one solution or another. 
 Select simulations were run at higher aspect ratios (8 and 16), and similar flow
-morphologies were obtained, suggesting that these states not highly
+morphologies were obtained, suggesting that these states are not highly
 sensitive to aspect ratio.
 In our limited 3D runs, it appears that Nu $\appropto$ Ra$^{2/7}$, a classic scaling law
-seen in RB studies \cite{johnston&doering2009}.
+seen in RBC \cite{johnston&doering2009}.
 
 The rms Reynolds number (Re = $|\bm{u}|L_z/\nu$) and Peclet number
 (Pe = Pr Re)
@@ -505,7 +502,7 @@ solid symbols lie below empty symbols.  We find this in 2D and 3D, even
 at very large $\epsilon$.
 Surprisingly, the evolved $n_\rho$ is always less than the initial $n_\rho = 3$,
 and turbulent pressure support plays a larger role than atmospheric slumping.
-The appears to arise as a result of the convection making the interior isentropic,
+This appears to arise as a result of the convection making the interior isentropic,
 tied with our fixed-temperature boundary conditions; 
 we expect the behavior of the stratification to be dependent on the choice of
 thermal boundary conditions.
@@ -517,9 +514,9 @@ felt by the flows.
 %Discussion
 
 In summary, we have found that the evolved flow properties of stratified,
-compressible convection scale in a manner reminiscent of RB convection.
+compressible convection scale in a manner reminiscent of RBC.
 We argue that polytropically stratified atmospheres are the natural
-extension of the RB problem with an additional control parameter, $\epsilon$,
+extension of the RBC problem with an additional control parameter, $\epsilon$,
 whose primary role is to set the Ma of the flows.  We show that other properties
 of the evolved solutions (Nu, Re) are nearly identical at vastly different values
 of $\epsilon$, except for where there is a transition between the subsonic
@@ -534,7 +531,7 @@ convective heat transport and other flow properties.
 
 Our studies here will serve as a foundation for 
 comparing heat transport in stratified convection
-to that in RB convection \cite{johnston&doering2009}
+to that in RBC \cite{johnston&doering2009}
 and for better quantifying transport in stratified convection.  
 These results can be used to determine if fluid properties
 scale appropriately in simplified equation sets, 
@@ -546,7 +543,7 @@ and regions with realistic profiles of $\kappa$.
 
 
 
-\subsection{acknowledgements}
+\begin{acknowledgments}
 EHA acknowledges the support of the University of Colorado's George 
 Ellery Hale Graduate Student Fellowship.
 This work was additionally supported by  NASA LWS grant number NNX16AC92G.  
@@ -557,6 +554,7 @@ with allocations GID s1647 and GID g26133.
 We thank Jon Aurnou, Axel Brandenburg, Keith Julien, Mark Rast, and Jeff Oishi 
 for many useful discussions. We also thank the three anonymous referees whose
 careful comments greatly improved the quality of this letter.
+\end{acknowledgments}
 
 \bibliography{../biblio.bib}
 \end{document}
