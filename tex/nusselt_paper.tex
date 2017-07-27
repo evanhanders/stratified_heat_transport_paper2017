@@ -1,5 +1,5 @@
 %\documentclass[iop]{emulateapj}
-\documentclass[aps, prl, twocolumn, nofootinbib, groupedaddress, amsfonts, amssymb, amsmath]{revtex4-1}
+\documentclass[aps, prfluids, onecolumn, notitlepage, nofootinbib, groupedaddress, amsfonts, amssymb, amsmath]{revtex4-1}
 \usepackage{graphicx}
 \usepackage{bm}
 \usepackage{natbib}
@@ -47,27 +47,21 @@ ratio, and Prandtl number.
 The evolved heat transport, 
 quantified by the Nusselt number (Nu),
 follows scaling relationships similar to those found in the well-studied, 
-incompressible Rayleigh-B\'{e}nard problem in both 2D and 3D and is not
-appreciably affected by the magnitude of $\epsilon$.
-The evolved Mach number (Ma) scales according to
-$\text{Ma} \propto \epsilon^{1/2}\text{Ra}^{\alpha}$, where
-$\alpha = 0$ in 3D and $\alpha \approx 1/4$ in 2D.
-At large values of $\epsilon$, significant density inversions appear in the
-evolved atmospheres and seem to persist in both 2D and 3D.
+incompressible Rayleigh-B\'{e}nard problem.  This scaling holds up in both 2D and 3D and is not
+appreciably affected by the magnitude of $\epsilon$. %think about last sentence.
 \end{abstract}
 \maketitle
 
 
 %%%%% Body of the paper
 \section{Introduction}
-\refstepcounter{section}
 \label{sec:intro}
-Convection transports energy in stellar and planetary atmospheres.
-In these objects, flows are compressible and
-feel the atmospheric stratification.  While in some systems this stratification 
-is negligible, it is significant in regions such as
+Convection transports energy in stellar and planetary atmospheres
+where flows are compressible and
+feel the atmospheric stratification.  This stratification 
+is significant in regions such as
 the convective envelope of the Sun, which spans 14 density scale heights.
-In the bulk of these systems, especially in the deep interior far below the surface,
+In the bulk of these systems, particularly in the deep interior,
 flows are at very low Mach number (Ma).  Unfortunately,
 numerical constraints have restricted most studies of 
 compressible convection to high Ma.
@@ -79,8 +73,8 @@ high Ma region near the Sun's surface. Few fundamental
 properties of low Ma compressible convection, such as the scaling of
 convective heat transport, are known.
 
-In the widely-studied \RB (RB) problem of incompressible Boussinesq convection, 
-a negative temperature gradient causes convective instability.
+In the widely-studied \RB problem of incompressible Boussinesq convection (RBC), 
+a sufficiently negative temperature gradient causes convective instability.
 In the evolved solution, upflows and downflows are symmetrical, the
 temperature in the interior becomes isothermal, and
 the conductive flux ($\propto \grad T$) approaches 
@@ -91,14 +85,14 @@ Early numerical experiments of moderate-to-high Ma compressible convection
 in two \cite{graham1975, chan&all1982,
 hurlburt&all1984, cattaneo&all1990} and three 
 \cite{cattaneo&all1991, brandenburg&all2005, brummell&all1996} dimensions
-revealed a different evolved state from the RB case.
+revealed a different evolved state from RBC.
 Downflow lanes
 become fast and narrow, and upflow lanes turn into broad, slow upwellings.
 Furthermore, the \emph{entropy} gradient is negated by convection in the interior, so
 a significant temperature gradient and conductive flux can persist despite
 efficient convection.
 
-In RB convection, there exist two primary dynamical control parameters: 
+In RBC, there exist two primary dynamical control parameters: 
 the Rayleigh number (Ra, the ratio of
 buoyant driving to diffusive damping) and the Prandtl number 
 (Pr, the ratio of viscous to thermal
@@ -108,12 +102,12 @@ the Reynolds
 number (Re, the strength of advection to viscous diffusion)
 and the Peclet number (Pe, advection vs. thermal diffusion).  
 In stratified atmospheres, the magnitude of the unstable entropy gradient
-joins Ra and Pr as an important control parameter.  This 
-\emph{superadiabatic excess} \cite{graham1975}, $\epsilon$,
-sets the scale of the atmospheric entropy gradient.
+joins Ra and Pr as a third important and independent control parameter.  This 
+\emph{superadiabatic excess}, $\epsilon$,
+sets the scale of the atmospheric entropy gradient \cite{graham1975}.
 We find here that $\epsilon$ primarily controls the Ma of the evolved solution.
 
-In this letter we study the behavior of convective heat transport, 
+Here we study the behavior of convective heat transport, 
 quantified by the Nusselt number (Nu), in plane-parallel, 
 two- and three-dimensional, polytropically stratified atmospheres.  
 We vary $\epsilon$ and Ra while holding Pr, aspect ratio, boundary conditions,
@@ -124,14 +118,13 @@ is similar to that in \RB convection,
 and that this scaling is not appreciably changed by the magnitude of the superadiabaticity.
 
 \section{Experiment} 
-\refstepcounter{section}
 \label{sec:experiment}
 We examine a monatomic ideal gas with an adiabatic index of
 $\gamma = 5/3$ whose equation of state is $P = R\rho T$. This is consistent with the approach used in earlier work 
 \cite{graham1975, chan&all1982, brandenburg&all2005,
 hurlburt&all1984, cattaneo&all1990, cattaneo&all1991, brummell&all1996} 
-and is the simplest stratified extension of RB.
-We study atmospheres which are initially polytropically stratified,
+and is the simplest stratified extension of RBC.
+The atmospheres studied are initially polytropically stratified,
 \begin{equation}
 \begin{split}
 \rho_0(z) &= \rho_{t}(1 + L_z - z)^m, \\
@@ -140,36 +133,34 @@ T_0(z)    &= T_{t}(1 + L_z - z),
 \end{split}
 \end{equation}
 where $m$ is the polytropic index and $L_z$ is the depth of the atmosphere.
+The polytropic
+index is set by the superadiabatic excess, $\epsilon = m_{ad} - m$, where
+$m_{ad} = (\gamma - 1)^{-1}$ is the adiabatic value of $m$.
 The height coordinate, $z$, increases upwards in the range $[0, L_z]$.
 Subscript 0 indicates initial conditions and subscript $t$ indicates values
-at $z = L_z$.   We
+at $z = L_z$.   Stratified atmospheres have a fourth non-dimensional parameter,
+the number of density scale heights, $n_{\rho} = \ln\left[\rho_0(z=0)/\rho_t\right]$.  We
 specify the depth of the atmosphere, $L_z = e^{n_{\rho}/m} - 1$, by choosing
-the number of density scale heights, $n_{\rho}$, it spans initially.
-Throughout this letter we set $n_{\rho} = 3$.  The polytropic
-index is $m = m_{ad} - \epsilon$, where $m_{ad} = (\gamma - 1)^{-1}$
-and $\epsilon$ is the superadiabatic excess.  Satisfying hydrostatic
+the initial value of $n_{\rho}$.
+Throughout this work we set $n_{\rho} = 3$.    Satisfying hydrostatic
 equilibrium sets the value of gravity, $g = RT_t (m + 1)$, which is
 constant with depth.  We study atmospheres with aspect
 ratios of 4 where both the $x$ and $y$ coordinates have the range $[0, 4L_z]$.
 In our 2D cases, we only consider $x$ and $z$.
 
 These domains are nondimensionalized by setting
-all thermodynamic variables to unity at $z = L_z$, choosing
-$R = T_t = \rho_t = 1$.  By this choice, the non-dimensional
+$R = T_t = \rho_t = 1$ at $z = L_z$.
+By this choice, the non-dimensional
 length scale is the inverse temperature gradient scale and the 
 timescale is the isothermal sound crossing time, 
 $\tau_I$, of this unit length.
 Meaningful convective dynamics occur on 
 timescales of the atmospheric buoyancy time,
-$t_b = \tau_I \sqrt{L_z/g\epsilon}$. 
+$t_b = \tau_I \sqrt{L_z\,m\,c_P/g\,\epsilon\,n_\rho}$. 
 
 At fixed $n_\rho$, convective dynamics are 
-controlled by the superadiabaticity
-of the atmospheres as well as the atmospheric diffusivities.
-The superadiabaticity is set by $\epsilon$ and 
-the initial entropy
-difference between the top and bottom boundaries is
-$\Delta S_0 = \epsilon\ln (1 + L_z)$.  At a fixed value of
+controlled by $\epsilon$ as well as the atmospheric diffusivities.
+At a fixed value of
 $\epsilon$, the diffusivities are set by the
 Rayleigh number (Ra) and the Prandtl number (Pr),
 \begin{equation}
@@ -177,37 +168,42 @@ Rayleigh number (Ra) and the Prandtl number (Pr),
 \qquad
 \text{Pr} = \frac{\nu}{\chi},
 \end{equation}
-where $c_P = \gamma/(\gamma-1)$ is the specific heat at
-constant pressure, and $\nu$ and $\chi$ are the thermal diffusivity and
-kinematic viscosity, respectively.
-These polytropes are initially in
-thermal equilibrium, so the initial thermal
-conductivity, $\kappa_0 = \chi \rho_0$, must be
-constant with depth.  Throughout this work we specify
-that Pr $= 1$ and is depth invariant.  By these
-choices, $\chi(z) = \chi_t / \rho_0$ and $\nu(z) = \nu_t / \rho_0$.
+where $\Delta S_0 = \epsilon\ln (1 + L_z) = \epsilon n_\rho / m$ 
+is the initial entropy difference across the domain,
+$c_P = \gamma/(\gamma-1)$ is the specific heat at
+constant pressure, $\nu$ is the thermal diffusivity, 
+and $\chi$ is the kinematic viscosity.
+Throughout this work we specify
+that Pr $= 1$ and is depth invariant.
+The initial thermal
+conductivity, $\kappa_0 = \chi \rho_0$, is
+constant with depth, such that (\ref{eqn:polytrope}) is in
+thermal equilibrium ($\grad\cdot[\kappa_0\grad T_0] = 0$).
+By these
+choices, $\nu(z) \equiv \chi(z) \equiv \chi_t / \rho_0$.
 This formulation 
 sets Ra at the bottom of the domain greater than
 Ra$_t$ by a factor of $e^{2n_\rho}$. Henceforth
 when we specify Ra we are referring to Ra$_t$.  
-We leave $\kappa = \rho\chi$ and 
-$\mu = \rho\nu$ (the dynamic viscosity) free to evolve as the density 
+The full values of $\kappa = \rho\chi$ and 
+$\mu = \rho\nu$ (the dynamic viscosity) change as the density 
 profile evolves.  
-
-Under this formulation, diffusivities scale as
+The diffusivities scale as
+$\chi_t, \nu_t \propto \sqrt{g L_z^3 \epsilon / \text{Ra}_t}$.
+Defining the thermal diffusion timescale as $t_\chi \equiv L_z^2 / \chi$, the
+ratio of $t_\chi$ to the buoyancy time is
 \begin{equation}
-\chi_t \propto \sqrt{\frac{\epsilon}{\text{Pr}\cdot\text{Ra}_t}}, \qquad
-\nu_t \propto \sqrt{\frac{\epsilon\cdot\text{Pr}}{\text{Ra}_t}},
-\label{eqn:diffusivities}
+\frac{t_\chi}{t_b} =\text{Ra}_t^{1/2}.
+\label{eqn:timescales}
 \end{equation}
-and for constant Pr = 1, as in this work, $\chi_t = \nu_t$.
-We carry out two experiments in this letter: one in which
-we fix $\epsilon$ and increase Ra, thus increasing the diffusive
-timescales, and a second in which we fix Ra and raise $\epsilon$,
-thus increasing the ratio of the diffusive timescales to the
-buoyant timescale.
+We carry out two experiments in this study. In the first,
+we fix $\epsilon$ and increase Ra, thus increasing the ratio in
+(\ref{eqn:timescales}). In the second, we fix Ra and vary $\epsilon$,
+scaling the buoyancy time $t_b$ as $\epsilon^{-1/2}$
+relative to the speed of sound; we see this reflected in the evolved Mach
+number scaling (Fig. \ref{fig:ma_v_eps}).
 
-We evolve the Fully Compressible Navier-Stokes equations,
+We solve the Fully Compressible Navier-Stokes equations,
 \begin{align}
 &\begin{aligned}
 &\frac{\partial \ln\rho}{\partial t} + \grad\cdot\bm{u} 
@@ -216,16 +212,16 @@ We evolve the Fully Compressible Navier-Stokes equations,
 \end{aligned}\\
 &\begin{aligned}
 \frac{\partial\bm{u}}{\partial t} + \grad T - 
-&\nu\grad\cdot\lilstressT - \lilstressT\cdot\grad\nu = \\
-&-\bm{u}\cdot\grad\bm{u} - T\grad\ln\rho + \bm{g} + 
+&\nu\grad\cdot\lilstressT - \lilstressT\cdot\grad\nu =
+-\bm{u}\cdot\grad\bm{u} - T\grad\ln\rho + \bm{g} + 
 \nu\lilstressT\cdot\grad\ln\rho,
 \label{eqn:momentum_eqn}
 \end{aligned}\\
 &\begin{aligned}
 \frac{\partial T}{\partial t} -\frac{1}{c_V}\left(\right.\chi&\left.
-    \grad^2 T + \grad T\cdot\grad\chi\right) = \\
-	&-\bm{u}\cdot\grad T - (\gamma-1)T\grad\cdot{\bm{u}} \\
-	&+ \frac{1}{c_V}\left(\chi\grad T \cdot\grad\ln\rho +
+    \grad^2 T + \grad T\cdot\grad\chi\right) =
+	-\bm{u}\cdot\grad T - (\gamma-1)T\grad\cdot{\bm{u}}
+	+ \frac{1}{c_V}\left(\chi\grad T \cdot\grad\ln\rho +
 	\nu\left[\lilstressT\cdot\nabla\right]\cdot\bm{u}\right), 
 	\label{eqn:energy_eqn}
 \end{aligned}
@@ -262,14 +258,14 @@ Understanding how each of these fluxes interact
 is crucial in characterizing convective heat transport.
 
 We utilize the 
-Dedalus\footnote{http://dedalus-project.org/} \cite{burns&all2016} 
-pseudospectral framework to time-evolve  
+Dedalus\footnote{http://dedalus-project.org/} 
+pseudospectral framework \cite{burns&all2016} to time-evolve  
 (\ref{eqn:continuity_eqn})-(\ref{eqn:energy_eqn}) 
 using an implicit-explicit (IMEX), third-order, four-step 
 Runge-Kutta timestepping scheme RK443 \cite{ascher&all1997}.  
-We decompose our thermodynamic variables such that $T = T_0 + T_1$ and
+Thermodynamic variables are decomposed such that $T = T_0 + T_1$ and
 $\ln\rho = (\ln\rho)_0 + (\ln\rho)_1$, 
-and the velocity is $\bm{u} = u\hat{x} + v\hat{y} +  w\hat{z}$.
+and the velocity is $\bm{u} = w\bm{\hat{z}} + u\bm{\hat{x}} + v\bm{\hat{y}}$.
 In our 2D runs, $v = 0$.
 Subscript 0 variables, set by (\ref{eqn:polytrope}), 
 have no time derivative and vary only in $z$.
@@ -291,25 +287,24 @@ tested against a nonlinear benchmark  of the compressible
 Kelvin-Helmholtz instability \cite{Lecoanet_et_al_2016_KH}.
 
 We impose impenetrable, stress free, fixed temperature boundary conditions at
-the top and bottom of the domain such that 
+the top and bottom of the domain, with 
 $w = \partial_z u = T_1 = 0$ at $z = \{0, L_z\}$. 
 $T_1$ is initially filled with
 random white noise whose magnitude is infinitesimal
-compared to $T_0$ and $\epsilon$.
+compared to $\epsilon T_0$.
 We filter this noise spectrum in coefficient space, 
 such that only the lower 25\% of the coefficients
 have power. All reported results are taken from time averages
 over many $t_b$ beginning \{100, 40\}$t_b$
-after the start of our \{2D, 3D\} simulations in order to
-assure our results are not biased by the convective transient.
+after the start of our \{2D, 3D\} simulations to
+ensure our results are not biased by the convective transient.
 
 \section{Results \& Discussion}
-\refstepcounter{section}
 \label{sec:results}
 
 
 \begin{figure}[t]
-\includegraphics[width=3.4375in]{./figs/ma_v_Ra.png}
+\includegraphics[width=\textwidth]{./figs/ma_v_Ra.png}
 \caption{The mean adiabatic Mach number of long-time-averaged profiles
 is shown.  Error bars show the full range of Ma over the depth of the
 atmosphere.
@@ -329,41 +324,34 @@ that convective onset
 occurs at $\text{Ra}_{\text{crit}} = \{11.15, 10.06, 10.97, 10.97\}$ 
 for $\epsilon = \{1.0, 0.5, 10^{-4}, 10^{-7}\}$, respectively.  
 
+\subsection{Fluid Numbers \& Flows}
+
 We measure the adiabatic Mach number (Ma = $|\bm{u}|/\sqrt{\gamma T}$),
 and find that it is a strong function of 
 $\epsilon$ and a weak function of Ra.  
 In our 2D runs, when Ma $< 1$, we observe a scaling law of
 Ma(Ra$, \epsilon) \appropto \epsilon^{1/2}$Ra$^{1/4}$.
 This relation breaks down as the mean
-Ma approaches 1 (see Fig. \ref{fig:ma_v_eps}).  This transition
+Ma approaches 1 (Fig. \ref{fig:ma_v_eps}).  This transition
 occurs near Ra/Ra$_\text{crit} \approx \{10^{2}, 10^{3}\}$ for $\epsilon = \{1, 0.5\}$.
-We conjecture that the scaling of Ma with Ra is due to high-velocity ``spinners'' which
-form between upflow and downflow lanes in 2D, and which are constantly fed by 
-the relatively stationary upflows and downflows (BEN NEED CITES).
 In our limited 3D runs, Ma appears to be a function of $\epsilon$ alone, with
 Ma $\appropto \epsilon^{1/2}$, so at high Ra, Ma$_{\text{3D}} < \text{Ma}_{\text{2D}}$.
+We conjecture that the scaling of Ma with Ra in the 2D runs 
+is due to the formation of coherent high-velocity ``spinners,'' which form
+between upflow and downflow lanes in 2D.  These structures, which are reminiscent of flywheel
+modes in RBC, do not appear in our 3D runs at these parameters
+\cite{jones&all1976, brummell&all2002}.
 Simulations in the range of Ra/Ra$_{\text{crit}} > 10^3$ at $\epsilon = 10^{-4}$
 exhibited ``windy'' states of convection, in which a large-scale horizontal
 shearing flow replaced the more standard upflow/downflow morphology of
-convection, similar to analogous states which have been studied in
-RB convection \cite{goluskin&all2014}.  These states are represented in Figs. 
+convection.  Similar states have been studied in
+RBC \cite{goluskin&all2014}.  These runs are represented in Figs. 
 \ref{fig:ma_v_eps}, \ref{fig:re_and_nu_v_ra}, \& \ref{fig:nrho_v_ra}
-as hatched points, and while this phenomeonon does not appear to greatly modify the
+as hatched points, and while this phenomenon does not appear to greatly modify the
 scaling of fluid properties measured in this work, these states warrant
 further investigation.
 
-\begin{figure}[t]
-\includegraphics[width=3.4375in]{./figs/snapshots_fig.png}
-\caption{Characteristic entropy fluctuations in evolved 2D flows roughly
-140$t_b$ after the start of simulations. 
-The time- and horizontally-averaged profile is removed in all cases.  
-(a) A low Ma flow at moderate Ra. (b) A high Ma flow at the same Ra as in (a).
-(c) A high Ma flow at high Ra.
-Shock systems can be seen in the upper atmosphere of the high Ma flows,
-for example at $(x, z) \sim (70, 15-19)$ in (b) and $(x, z) \sim 
-(65, 17-19)$ in (c).
-\label{fig:entropy_snapshots} }
-\end{figure}
+
 
 Low Ma flows (e.g., $\epsilon = 10^{-4}$)
 display the classic narrow downflow and broad upflow lanes of stratified
@@ -371,45 +359,32 @@ convection (Fig. \ref{fig:entropy_snapshots}a).
 At high Ma (e.g., $\epsilon = 0.5$, Ra/Ra$_{\text{crit}} \gtrsim 10^3$), 
 bulk thermodynamic structures are similar but
 shock systems form in the upper atmosphere near downflow lanes 
-(Fig. \ref{fig:entropy_snapshots}b\&c).
-These shock phenomena were reported in
-two \cite{cattaneo&all1990} and 
-three \cite{malagoli&all1990} dimensional polytropic simulations previously.
-As in (\ref{eqn:diffusivities}), diffusivities become small as Ra 
-is increased to large values (Fig. \ref{fig:entropy_snapshots}c) and
-thermodynamic structures break up into small eddies which traverse the
-domain repeatedly before diffusing.
-Furthermore, the value of $\epsilon$ sets the size of the
-evolved thermodynamic fluctuations from their adiabatic values,
-as evidenced by the scalings of the colorbars.
-%These fluctuations are very small when $\epsilon$ and Ma are small,
-%but can be O(1) for values of $\epsilon$ near 1.
-
-%Our choice of fixed temperature, stress free boundary conditions 
-%allows the flux at the boundaries to vary, while also allowing
-%for mean horizontal velocity profiles along the boundaries (winds).
-%We find these windy convective states, reminiscent of similar states
-%in RB convection \cite{goluskin&all2014}, at $\epsilon = 10^{-4}$ and
-%Ra/Ra$_{\text{crit}} \gtrsim 10^{3}$. Roll states (Fig. \ref{fig:entropy_snapshots}a) with high convective
-%transport alternate with windy states of lower transport.
-
-
-\begin{figure}[t]
-\includegraphics[width=3.4375in]{./figs/re_and_nu_v_Ra.png}
-\caption{
-Flow properties at high and low $\epsilon$. 
-(a) Nu vs. Ra/Ra$_{\text{crit}}$.
-Errors bars indicate the variance of Nu with depth;
-large error bars indicate a poorly converged solution.
-(b) Re vs. Ra/Ra$_{\text{crit}}$.
-Re is measured at the midplane of the atmosphere.
-Larger symbols with white dots designate 3D runs.
- \label{fig:re_and_nu_v_ra}
-}
+(Fig. \ref{fig:entropy_snapshots}b\&c), as reported previously
+\cite{cattaneo&all1990, malagoli&all1990}.
+At large Ra, the diffusion timescale becomes long (\ref{eqn:timescales}), 
+and
+thermodynamic structures form small eddies which traverse the
+domain repeatedly before diffusing (Fig. \ref{fig:entropy_snapshots}c).
+As evidenced by the colorbar scalings, the
+amplitudes of thermodynamic fluctuations scale with $\epsilon$.
+\begin{figure}[t!]
+\includegraphics[width=\textwidth]{./figs/snapshots_fig.png}
+\caption{Characteristic entropy fluctuations in evolved 2D flows roughly
+140$t_b$ after the start of simulations. 
+The time- and horizontally-averaged profile is removed in all cases.  
+(a) A low Ma flow at moderate Ra. (b) A high Ma flow at the same Ra as in (a).
+(c) A high Ma flow at high Ra.  In all cases, the broad upflow and narrow downflows
+traditionally seen in stratified convection are apparent.
+Shock systems can be seen in the upper atmosphere of the high Ma flows,
+for example at $(x, z) \sim (70, 15-19)$ in (b) and $(x, z) \sim 
+(65, 17-19)$ in (c).
+\label{fig:entropy_snapshots} }
 \end{figure}
 
+
+
 The efficiency of convection is quantified by the Nusselt number (Nu).  
-Nu is well-defined in RB convection
+Nu is well-defined in RBC
 as the total flux normalized by the steady-state conductive flux 
 \cite{johnston&doering2009, otero&all2002}.
 In stratified convection Nu is more difficult to define, and we use
@@ -435,6 +410,20 @@ values of $\epsilon$.
 In incompressible Boussinesq convection, where $\grad S = 0$ only when 
 $\grad T = 0$, this definition reduces to the traditionally defined
 Nusselt number \cite{otero&all2002, johnston&doering2009}.
+\begin{figure}[t!]
+\includegraphics[width=\textwidth]{./figs/re_and_nu_v_Ra.png}
+\caption{
+Flow properties at high and low $\epsilon$. 
+(a) Nu vs. Ra/Ra$_{\text{crit}}$.
+Errors bars indicate the variance of Nu with depth;
+large error bars indicate a poorly converged solution.
+(b) Re vs. Ra/Ra$_{\text{crit}}$.
+Re is measured at the midplane of the atmosphere.
+Larger symbols with white dots designate 3D runs.
+ \label{fig:re_and_nu_v_ra}
+}
+\end{figure}
+
 
 The variation of Nu with Ra is shown in 
 Fig. \ref{fig:re_and_nu_v_ra}a.  We find that the Nu depends primarily
@@ -444,46 +433,41 @@ Nu $\appropto$ Ra$^{1/3}$ regardless of $\epsilon$,
 reminiscent of scaling laws in \RB boundary layer theory 
 \cite{grossman&lohse2000, ahlers&all2009, king&all2012}.
 As the flow becomes supersonic,  Nu $\appropto$ Ra$^{1/5}$.
-%2D runs at $\text{Ra }\gtrsim 10^3$Ra$_{\text{crit}}$
-%and $\epsilon = 10^{-4}$ exhibit windy convective states.
-%In these runs, the system is in flux equilibrium only when
-%time averaged over roll states and windy states.
-%A long time average
-%over both of these states produces a flat flux profile which
-%can be sensibly analyzed, but the presence of these time-dependent states
-%makes it difficult to equilibrate these higher Ra cases.
-It is also important to note that
+It is also important to note that, in 2D,
 the value of Nu is heavily dependent upon the specific thermodynamic
-structures of the solution, as double roll states will transport
-heat more efficiently than single roll states, and slight changes in
-Ra can result in a simulation latching on to one solution or the other. 
-Select simulations were run at aspect ratios of 8 and 16, and identical flow
-morphologies were obtained, which suggests that these states are sensitive to
-parameters other than the width of the domain.
+structures of the solution, and slight changes in
+Ra can result in a simulation converging to one solution or another. 
+Select simulations were run at higher aspect ratios (8 and 16), and similar flow
+morphologies were obtained, suggesting that these states are not highly
+sensitive to aspect ratio.
 In our limited 3D runs, it appears that Nu $\appropto$ Ra$^{2/7}$, a classic scaling law
-seen in RB studies \cite{johnston&doering2009}.
+seen in RBC \cite{johnston&doering2009}.
 
 The rms Reynolds number (Re = $|\bm{u}|L_z/\nu$) and Peclet number
 (Pe = Pr Re)
 compare the importance of advection to diffusion in the evolved
-convective state.  For Pr = 1, such as in this work, Pe = Re.  
+convective state.  For Pr = 1, Pe = Re.  
 Our choice of $\{\nu,\chi\}\propto \rho_0^{-1}$ drastically changes
 the value of Re between the top and bottom of the atmosphere.  We report values of
 Re at the midplane ($z=L_z/2$) of the atmosphere in
-Fig. \ref{fig:re_and_nu_v_ra}b.  Largely we find that Re
-depends on Ra, but not $\epsilon$, except when the flow states
-change.
-In 2D and at low Ra, Re $\appropto$ Ra$^{3/4}$.  The heightened scaling
-of Re in 2D is due to the scaling of velocity (Ma) with Ra, as is
-seen in Fig. \ref{fig:ma_v_eps}.  When the flows
+Fig. \ref{fig:re_and_nu_v_ra}b.  We find that Re
+depends on largely Ra, but not $\epsilon$, except when the flow regime
+changes.
+In 2D Re $\appropto$ Ra$^{3/4}$ at low Ra.    When the 2D flows
 become supersonic, 
-this scaling gives way to Re $\appropto$ Ra$^{1/2}$, as expected
-by the scaling of diffusivities in (\ref{eqn:diffusivities}).
-In our limited 3D runs, the scaling of Re is
+Re $\appropto$ Ra$^{1/2}$, as expected
+from (\ref{eqn:timescales}).
+In our limited 3D runs,
 Re $\appropto$ Ra$^{1/2}$, consistent with the supersonic results.
+The heightened scaling
+of Re in 2D follows the scaling of velocity (Ma) with Ra, as
+seen in Fig. \ref{fig:ma_v_eps}, and reflects the presence of coherent
+spinners, which do not exist in 3D.
+
+\subsection{Change of Stratification}
 
 \begin{figure}[t]
-\includegraphics[width=3.4375in]{./figs/density_v_ra.png}
+\includegraphics[width=0.5\textwidth]{./figs/density_v_ra.png}
 \caption{\label{fig:nrho_v_ra} 
 Solid symbols show the density contrast measured
 in density scale heights between the upper and lower boundary, 
@@ -499,40 +483,40 @@ as in Fig. \ref{fig:ma_v_eps}b), density inversions form within the thermal
 boundary layers. Larger symbols represent 3D runs.}
 \end{figure}
 
-In the evolved state, the flows change the density stratification,
+In the evolved state, the flows can change the density stratification,
 as shown in Fig. \ref{fig:nrho_v_ra}.
-Here we take two different measurements of the stratification present in the
-time-averaged, horizontally-averaged density profile: the density difference
-between the max and min value of the density profile (empty symbols) and the
-density difference between the top and bottom of the atmosphere (solid symbols).
-We find that supersonic flows support persistent density inversions (empty symbols)
+We measure the 
+time- and horizontally-averaged density profile in two ways. Empty symbols
+show the density difference
+between the max and min value of the profile, while solid symbols
+show the difference between the top and bottom of the atmosphere. 
+We find that supersonic flows support persistent density inversions 
 in the boundary layers, as
-was reported by \cite{brandenburg&all2005}.  We find this in 2D and 3D, even
+was reported by \cite{brandenburg&all2005}.  This is visible when
+solid symbols lie below empty symbols.  We find this in 2D and 3D, even
 at very large $\epsilon$.
 Surprisingly, the evolved $n_\rho$ is always less than the initial $n_\rho = 3$,
 and turbulent pressure support plays a larger role than atmospheric slumping.
+This appears to arise as a result of the convection making the interior isentropic,
+tied with our fixed-temperature boundary conditions; 
+we expect the behavior of the stratification to be dependent on the choice of
+thermal boundary conditions.
 The agreement of Nu \& Re across $\epsilon$ (Fig. \ref{fig:re_and_nu_v_ra}), 
 particularly at low Ra in which all four of our cases collapse onto a single
 power law, is striking in light of the vastly different evolved stratifications
 felt by the flows. 
 
-%Discussion
-
+\section{Discussion \& Future Work}
 In summary, we have found that the evolved flow properties of stratified,
-compressible convection scale in a manner reminiscent of RB convection.
+compressible convection scale in a manner reminiscent of RBC.
 We argue that polytropically stratified atmospheres are the natural
-extension of the RB problem with an additional control parameter, $\epsilon$,
+extension of the RBC problem with an additional control parameter, $\epsilon$,
 whose primary role is to set the Ma of the flows.  We show that other properties
 of the evolved solutions (Nu, Re) are nearly identical at vastly different values
 of $\epsilon$, except for where there is a transition between the subsonic
-and supersonic regimes.  We also see that Nu scales similarly in 3D and 2D,
-and that Ma in 3D solutions seems to be a function of $\epsilon$ alone,
+and supersonic regimes.  We also see that Nu scales similarly in 2D and 3D,
+and that Ma in 3D solutions appears to be a function of $\epsilon$ alone,
 allowing for simple specification of the evolved Ma using input parameters.
-
-%We observe interesting phenomena, such as time-dependent, windy
-%states of shear in our 2D simulations.  
-%Unlike in RB \cite{goluskin&all2014}, our solutions with
-%windy states have transport which scales in line with our non-windy solutions.
 The stratification of 
 these polytropic atmospheres evolves in a complex
 manner.  Future work should aim to 
@@ -541,7 +525,7 @@ convective heat transport and other flow properties.
 
 Our studies here will serve as a foundation for 
 comparing heat transport in stratified convection
-to that in RB convection \cite{johnston&doering2009}
+to that in RBC \cite{johnston&doering2009}
 and for better quantifying transport in stratified convection.  
 These results can be used to determine if fluid properties
 scale appropriately in simplified equation sets, 
@@ -553,7 +537,7 @@ and regions with realistic profiles of $\kappa$.
 
 
 
-\subsection{acknowledgements}
+\begin{acknowledgments}
 EHA acknowledges the support of the University of Colorado's George 
 Ellery Hale Graduate Student Fellowship.
 This work was additionally supported by  NASA LWS grant number NNX16AC92G.  
@@ -562,8 +546,9 @@ with support by the NASA High End Computing (HEC) Program through the NASA
 Advanced Supercomputing (NAS) Division at Ames Research Center on Pleiades
 with allocations GID s1647 and GID g26133.
 We thank Jon Aurnou, Axel Brandenburg, Keith Julien, Mark Rast, and Jeff Oishi 
-for many useful discussions. We also thank the two anonymous referees whose
-careful comments greatly improved the quality of this letter.
+for many useful discussions. We also thank the three anonymous referees whose
+careful comments greatly improved the quality of this paper.
+\end{acknowledgments}
 
 \bibliography{../biblio.bib}
 \end{document}
