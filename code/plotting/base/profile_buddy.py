@@ -329,7 +329,7 @@ class ProfileBuddy(PlotBuddy):
                     else:
                         Nu_6 = (F_conv + F_cond - kappa_ad_mean*grad_t_ad)/(nu_bottom)
 
-                   
+                  
                     ma_post = self.full_average_profiles['vel_rms'][i,:]/\
                                 np.sqrt(self.atmosphere['gamma']*T_full)
                    

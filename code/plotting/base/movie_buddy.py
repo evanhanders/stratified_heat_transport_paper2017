@@ -75,6 +75,7 @@ class MovieBuddy(PlotBuddy):
             bare -- If bare, then don't plot up any axis information (public talks, etc.)
 
         '''
+        print(xs.shape, zs.shape, field.shape)
         if self.idle: return
         if max == None:
             max = np.max(field)
@@ -271,8 +272,16 @@ class MovieBuddy(PlotBuddy):
 
                 if zlabel == None:
                     zlabel = field
+
+                if hlabel == 'x' and vlabel == 'y':
+                    xs, ys = np.meshgrid(self.x, self.x)
+                    field_base = field_base[:,:,0]
+                else:
+                    xs, ys = self.xs/length_div, self.zs/length_div
+                    if len(field_base.shape) == 3:
+                        field_base = field_base[:,0,:]
                 
-                self.plot_field(self.xs/length_div, self.zs/length_div, field_base, axis, \
+                self.plot_field(xs, ys, field_base, axis, \
                             zlabel, cmap=cmap, min=min, max=max, plot_title=plot_title,\
                             bare=bare)#, extra_label=field_base)
                 if length_div != 1:

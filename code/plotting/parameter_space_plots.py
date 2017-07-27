@@ -54,7 +54,7 @@ def line_leastsq(x, y, y_uncert):
     p = np.array((slope, intercept))
     covar = np.array(((s, -sx),(-sx, sx2)))/Delta
     return p, covar
-START_FILE=100
+START_FILE=20
 N_FILES=1000
 golden_ratio=1.618
 FIGWIDTH=3+7.0/16
@@ -75,10 +75,10 @@ mach_threeD_dir = '/nobackup/eanders/sp2017/mach_eps_3D/'
 threeD_out_dir='/parameter_calcs/'
 param_keys = ['Ra', 'eps', 'nrhocz', 'Pr']
 
-keys = ['Nusselt', 'Nusselt_5', 'Nusselt_6', 'norm_5_kappa_flux_z',  
+keys = ['Nusselt_AB17', #'Nusselt_5', 'Nusselt_6', 'norm_5_kappa_flux_z',  
     'Re_rms', 'Ma_ad', 'Ma_iso', 'ln_rho1', 'T1', 'vel_rms',\
     'rho_full', 'T_full', 'kappa_flux_z', 'enthalpy_flux_z', 'PE_flux_z', 'KE_flux_z', 'viscous_flux_z', 'kappa_flux_z', 'kappa_flux_fluc_z']
-plot_keys = [('Nusselt_6', 'minmax'), ('Re_rms', 'midplane'), ('Ma_ad_post', 'minmax'), ('density_contrasts', 'val'), ('rho_full', 'logmaxovermin')]
+plot_keys = [('Nusselt_6', 'minmax'), ('Re_rms', 'midplane'), ('Ma_ad_post', 'minmax'), ('density_contrasts', 'val'), ('rho_full', 'logmaxovermin'), ('rho_full', 'val'), ('z', 'val')]
 
 root_buddy = ParameterSpaceBuddy(root_dir, parameters=param_keys)
 mach_buddy = ParameterSpaceBuddy(mach_dir, parameters=param_keys)
@@ -121,9 +121,9 @@ dirs_root = root_buddy.dir_info
 dirs_mach = mach_buddy.dir_info
 
 #RE and NU plot 
-fig = plt.figure(figsize=(FIGWIDTH, FIGHEIGHT))
-ax1 = fig.add_subplot(2,1,1)
-ax2 = fig.add_subplot(2,1,2)
+fig = plt.figure(figsize=(2.5*FIGWIDTH, FIGHEIGHT/2.2))
+ax1 = fig.add_subplot(1,2,1)
+ax2 = fig.add_subplot(1,2,2)
 
 ax1.grid(which='major')
 ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'Nusselt_6', grouping='eps',
@@ -170,8 +170,10 @@ legend1 = ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsiz
 #legend1 = ax1.legend(handles, labels, loc='lower right', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
 
 #ax1.set_xlabel('Ra')
+ax1.set_xlabel(r'$\mathrm{Ra}/\mathrm{Ra}_{\mathrm{crit}}$')
 ax1.set_ylabel(r'$\mathrm{Nu}$')
 ax1.set_ylim(1, 2e2)
+ax1.set_xlim(1e0, 1e7)
 ax1.set_xscale('log')
 ax1.set_yscale('log')
 handles, labels = ax1.get_legend_handles_labels()
@@ -221,7 +223,7 @@ ax2.annotate(r'$\mathrm{3D}$', xy=(3e3, 60), va='center', ha='center', fontsize=
 ax2.set_ylim(1, 5e4)
 ax2.set_xlim(1e0, 1e7)
 ax2.set_xlabel(r'$\mathrm{Ra}/\mathrm{Ra}_{\mathrm{crit}}$')
-ax2.set_ylabel(r'$\mathrm{Re}$')
+ax2.set_ylabel(r'$\mathrm{Re}$', labelpad=1)
 ax2.set_xscale('log')
 ax2.set_yscale('log')
 handles, labels = ax2.get_legend_handles_labels()
@@ -248,11 +250,11 @@ for label in ax2.get_yticklabels():
 
 labels = [r'$\mathrm{(a)}$', r'$\mathrm{(b)}$']
 axes   = [ax1, ax2]
-y_coords = [1e2, 1e4]
+y_coords = [4.5e-1, 1.9e-1]
 for i, ax in enumerate(axes):
     label = labels[i]
     trans = ax.get_yaxis_transform() # y in data untis, x in axes fraction
-    ann = ax.annotate(label, xy=(-0.21, y_coords[i]), size=11, color='black', xycoords=trans)
+    ann = ax.annotate(label, xy=(-0.13, y_coords[i]), size=11, color='black', xycoords=trans)
 
 
 
@@ -262,9 +264,9 @@ fig.savefig('./figs/re_and_nu_v_Ra.png', dpi=1200, bbox_inches='tight')
 
 
 #MA plot
-fig = plt.figure(figsize=(FIGWIDTH, FIGHEIGHT))
-ax2 = fig.add_subplot(2,1,1)
-ax1 = fig.add_subplot(2,1,2)
+fig = plt.figure(figsize=(FIGWIDTH*2.5, FIGHEIGHT/2.2))
+ax2 = fig.add_subplot(1,2,1)
+ax1 = fig.add_subplot(1,2,2)
 
 
 
@@ -310,10 +312,11 @@ ax1.plot(x1s/11, y1s/3.16e3, dashes=(5,1.5), color='black')#, label=r'$\mathrm{R
 #ax1.plot(x2s, y3s, dashes=(2,1,5,1), color='black')#, label=r'$\mathrm{Ra}^{1/5}$')
 
 ax1.set_xlabel(r'$\mathrm{Ra}/\mathrm{Ra}_{\mathrm{crit}}$')
-ax1.set_ylabel(r'$\mathrm{Ma}$')
+#ax1.set_ylabel(r'$\mathrm{Ma}$')
 ax1.set_xscale('log')
 ax1.set_yscale('log')
 ax1.set_xlim(1e0, 1e7)
+ax1.set_ylim(1e-5, 1e1)
 handles, labels = ax1.get_legend_handles_labels()
 legend1 = ax1.legend(handles[:1], labels[:1], loc='center right', fontsize=legend_fontsize, numpoints=1, 
                                               borderpad=0.3, labelspacing=0.3, handletextpad=0.3, borderaxespad=0.3, fancybox=True)
@@ -357,7 +360,7 @@ legend1 = ax2.legend(handles[:1], labels[:1], loc='upper left', fontsize=legend_
                                               borderpad=0.3, labelspacing=0.3, handletextpad=0.3, borderaxespad=0.3, fancybox=True)
 #legend1 = ax2.legend(handles[:1], labels[:1], loc='upper left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0.3)
 
-ax2.set_xlabel(r'$\epsilon$', labelpad=-3)
+ax2.set_xlabel(r'$\epsilon$')#, labelpad=-3)
 ax2.set_ylabel(r'$\mathrm{Ma}$')
 ax2.set_xscale('log')
 ax2.set_yscale('log')
@@ -383,19 +386,20 @@ for label in ax2.get_yticklabels():
 
 labels = [r'$\mathrm{(b)}$', r'$\mathrm{(a)}$']
 axes   = [ax1, ax2]
-y_coords = [3.16e0, 3.16e0]
+y_coords = [1e-6, 1e-6]
 for i, ax in enumerate(axes):
     label = labels[i]
     trans = ax.get_yaxis_transform() # y in data untis, x in axes fraction
-    ann = ax.annotate(label, xy=(-0.21, y_coords[i]), size=11, color='black', xycoords=trans)
+    ann = ax.annotate(label, xy=(-0.13, y_coords[i]), size=11, color='black', xycoords=trans)
 
 fig.savefig('./figs/ma_v_Ra.png', dpi=1200, bbox_inches='tight')
 
 
 #Density plot
 
-fig = plt.figure(figsize=(FIGWIDTH, FIGWIDTH/golden_ratio))
-ax1 = fig.add_subplot(1,1,1)
+fig = plt.figure(figsize=(2*FIGWIDTH, FIGWIDTH/golden_ratio))
+ax1 = fig.add_subplot(1,2,1)
+ax1.axhline(3, lw=2, color='k', zorder=0)
 
 ax1.grid(which='major')
 ax1, data, groups3 = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ra', 'rho_full', grouping='eps',
@@ -425,36 +429,113 @@ for label in ax1.get_xticklabels():
 for label in ax1.get_yticklabels():
     label.set_fontproperties('serif')
 
+
+ax2 = fig.add_subplot(1,2,2)
+dirs = ['/nobackup/eanders/sp2017/fc_poly_hydro/FC_poly_fixed_constMu_constKappa_2D_nrhocz3_Ra1.00e6_Pr1_eps5e-1_a4_nusselt_fixedT/',
+        '/nobackup/bpbrown/polytrope-evan-3D/FC_poly_3D_nrhocz3_Ra1e6_Pr1_eps0.5_a4/',
+        '/nobackup/bpbrown/polytrope-evan-3D/FC_poly_3D_nrhocz3_Ra1e5_Pr1_eps1_a4/',
+        '/nobackup/bpbrown/polytrope-evan-3D/FC_poly_3D_nrhocz3_Ra1e6_Pr1_eps1e-4_a4/']
+labels = [r'$\mathrm{2D},\,\epsilon=0.5,\,\mathrm{Ra}=10^{6}$',
+         r'$\mathrm{3D},\,\epsilon=0.5,\,\mathrm{Ra}=10^{6}$',
+         r'$\mathrm{3D},\,\epsilon=1,\,\mathrm{Ra}=10^{6}$',
+         r'$\mathrm{3D},\,\epsilon=10^{-4},\,\mathrm{Ra}=10^{6}$']
+colors = ['indigo', 'indigo', 'red', 'green']
+dashes = [None, (5,2), (5,2,2,2,2,2), (1,1)]
+
+
+for dir in threeD_buddy.dir_info:
+    dir_name = dirs[2]
+    label = labels[2]
+    if dir[0] == dir_name:
+        z = dir[-1]['z_profile']
+        rho = dir[-1]['rho_full_profile']
+        ax2.plot(z/np.max(z), rho, label=labels[2], dashes=dashes[2], color=colors[2])
+
+for dir in root_buddy.dir_info:
+    if dir[0] == dirs[0]:
+        z = dir[-1]['z_profile']
+        rho = dir[-1]['rho_full_profile']
+        ax2.plot(z/np.max(z), rho, label=labels[0], color=colors[0])
+
+for dir in threeD_buddy.dir_info:
+    for i in range(len(dirs)):
+        if i == 0 or i == 2:
+            continue
+        dir_name = dirs[i]
+        label = labels[i]
+        if dir[0] == dir_name:
+            z = dir[-1]['z_profile']
+            rho = dir[-1]['rho_full_profile']
+            ax2.plot(z/np.max(z), rho, label=labels[i], dashes=dashes[i], color=colors[i])
+
+ax2.set_xlabel(r'$z/L_z$')
+ax2.set_ylabel(r'$\rho$')
+ax2.set_xlim(0, 1)
+ax2.legend(loc='best', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.1, \
+            handletextpad=0.1, fancybox=True, borderaxespad=0.5, columnspacing=0)
+
+
+
+xticks = np.array([0, 0.5, 1])
+xticklabels = [r'${:1.1f}$'.format(tick) for tick in xticks]
+xticklabels[0] = r'${:1d}$'.format(0)
+xticklabels[-1] = r'${:1d}$'.format(1)
+ax2.set_xticks(xticks)
+ax2.set_xticklabels(xticklabels)
+yticks = np.array([1, 10, 20, 30])#np.array([1, np.exp(1), np.exp(2), np.exp(3)])
+yticklabels = [r'${:d}$'.format(tick) for tick in yticks]
+ax2.set_yticks(yticks)
+ax2.set_yticklabels(yticklabels)
+
+
+for label in ax2.get_xticklabels():
+    label.set_fontproperties('serif')
+for label in ax2.get_yticklabels():
+    label.set_fontproperties('serif')
+
+
+labels = [r'$\mathrm{(a)}$', r'$\mathrm{(b)}$']
+axes   = [ax1, ax2]
+y_coords = [-1.5, -3]
+for i, ax in enumerate(axes):
+    label = labels[i]
+    trans = ax.get_yaxis_transform() # y in data untis, x in axes fraction
+    ann = ax.annotate(label, xy=(-0.13, y_coords[i]), size=11, color='black', xycoords=trans)
+
+
+
+
+
 fig.savefig('./figs/density_v_ra.png', dpi=1200, bbox_inches='tight')
  
-fig = plt.figure(figsize=(FIGWIDTH, FIGWIDTH/golden_ratio))
-ax1 = fig.add_subplot(1,1,1)
-
-ax1.grid(which='major')
-ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'rho_full', grouping='eps', empty_markers=True,
-                onsets_norm=True, onsets=RA_ONSETS, saturation=twoD_saturation)
-ax1, data, groups = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'rho_full', grouping='eps',
-            markersize=THREED_MARKERSIZE, label=False, annotate='3', empty_markers=True, onsets_norm=True, onsets=RA_ONSETS, saturation=threeD_saturation)
-ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'density_contrasts', grouping='eps',
-                onsets_norm=True, onsets=RA_ONSETS, saturation=twoD_saturation)
-ax1, data, groups3 = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'density_contrasts', grouping='eps',
-            markersize=THREED_MARKERSIZE, label=False, annotate='3', onsets_norm=True, onsets=RA_ONSETS, saturation=threeD_saturation)
-ax1.set_xlabel(r'$\mathrm{Ma}$')
-ax1.set_ylabel(r'$n_{\rho}$')
-ax1.set_xlim(1e0, 1e7)
-ax1.set_ylim(-1, 3.3)
-ax1.set_xscale('log')
-handles, labels = ax1.get_legend_handles_labels()
-handles = [h[0] for h in handles] #remove error bars from labels
-vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles[-7:-3], labels[-7:-3])))
-ax1.legend(handles, labels, loc='lower left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
-
-for label in ax1.get_xticklabels():
-    label.set_fontproperties('serif')
-for label in ax1.get_yticklabels():
-    label.set_fontproperties('serif')
-
-fig.savefig('./figs/density_v_ma.png', dpi=1200, bbox_inches='tight')
+#fig = plt.figure(figsize=(FIGWIDTH, FIGWIDTH/golden_ratio))
+#ax1 = fig.add_subplot(1,1,1)
+#
+#ax1.grid(which='major')
+#ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'rho_full', grouping='eps', empty_markers=True,
+#                onsets_norm=True, onsets=RA_ONSETS, saturation=twoD_saturation)
+#ax1, data, groups = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'rho_full', grouping='eps',
+#            markersize=THREED_MARKERSIZE, label=False, annotate='3', empty_markers=True, onsets_norm=True, onsets=RA_ONSETS, saturation=threeD_saturation)
+#ax1, data, groups = root_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'density_contrasts', grouping='eps',
+#                onsets_norm=True, onsets=RA_ONSETS, saturation=twoD_saturation)
+#ax1, data, groups3 = threeD_buddy.plot_parameter_space_comparison(ax1, 'Ma_ad_post', 'density_contrasts', grouping='eps',
+#            markersize=THREED_MARKERSIZE, label=False, annotate='3', onsets_norm=True, onsets=RA_ONSETS, saturation=threeD_saturation)
+#ax1.set_xlabel(r'$\mathrm{Ma}$')
+#ax1.set_ylabel(r'$n_{\rho}$')
+#ax1.set_xlim(1e0, 1e7)
+#ax1.set_ylim(-1, 3.3)
+#ax1.set_xscale('log')
+#handles, labels = ax1.get_legend_handles_labels()
+#handles = [h[0] for h in handles] #remove error bars from labels
+#vals, handles, labels = zip(*sorted(zip(1/np.array(groups), handles[-7:-3], labels[-7:-3])))
+#ax1.legend(handles, labels, loc='lower left', fontsize=legend_fontsize, numpoints=1, borderpad=0.3, labelspacing=0.3, handletextpad=0)
+#
+#for label in ax1.get_xticklabels():
+#    label.set_fontproperties('serif')
+#for label in ax1.get_yticklabels():
+#    label.set_fontproperties('serif')
+#
+#fig.savefig('./figs/density_v_ma.png', dpi=1200, bbox_inches='tight')
  
 
 

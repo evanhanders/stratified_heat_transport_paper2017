@@ -204,6 +204,13 @@ class PlotBuddy:
         if 'slices' in self.file_dirs:
             f = h5py.File("{:s}".format(self.global_files['slices'][0][0]))
             self.x = np.array(f['scales']['x']['1.0'][:], dtype=np.float32)
+            try:
+                self.y = np.array(f['scales']['y']['1.0'][:], dtype=np.float32)
+                self.y_xx, self.y_yy = np.meshgrid(self.x, self.y)
+            except:
+                print("No y, must be 2D")
+                self.y = None
+                self.y_xx, self.y_yy = None, None
             self.z = np.array(f['scales']['z']['1.0'][:], dtype=np.float32)
             self.zs, self.xs = np.meshgrid(self.z,self.x)
             f.close()

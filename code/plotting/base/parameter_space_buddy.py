@@ -138,7 +138,13 @@ class ParameterSpaceBuddy():
                 for key_info in keys:
                     key, type = key_info
                     if type == 'val':
-                        storage[key] = (np.log(f[key][0]), 0, 0)
+                        if len(f[key].shape) == 1:
+                            if f[key].shape[0] == 1:
+                                storage[key] = (np.log(f[key][0]), 0, 0)
+                            else:
+                                storage[key+'_profile'] = f[key]
+                        else:
+                            storage[key+'_profile'] = f[key][0,0,:]
                     elif type == 'midplane':
                         current_field['g'] = f[key]
                         storage[key] = (current_field.interpolate(z=Lz/2)['g'][0], 0, 0)
