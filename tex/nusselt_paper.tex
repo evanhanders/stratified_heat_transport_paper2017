@@ -74,7 +74,7 @@ properties of low Ma compressible convection, such as the scaling of
 convective heat transport, are known.
 
 In the widely-studied \RB problem of incompressible Boussinesq convection (RBC), 
-a negative temperature gradient causes convective instability.
+a sufficiently negative temperature gradient causes convective instability.
 In the evolved solution, upflows and downflows are symmetrical, the
 temperature in the interior becomes isothermal, and
 the conductive flux ($\propto \grad T$) approaches 
@@ -156,7 +156,7 @@ timescale is the isothermal sound crossing time,
 $\tau_I$, of this unit length.
 Meaningful convective dynamics occur on 
 timescales of the atmospheric buoyancy time,
-$t_b = \tau_I \sqrt{L_z m c_P/g\epsilon n_\rho}$. 
+$t_b = \tau_I \sqrt{L_z\,m\,c_P/g\,\epsilon\,n_\rho}$. 
 
 At fixed $n_\rho$, convective dynamics are 
 controlled by $\epsilon$ as well as the atmospheric diffusivities.
@@ -193,8 +193,7 @@ $\chi_t, \nu_t \propto \sqrt{g L_z^3 \epsilon / \text{Ra}_t}$.
 Defining the thermal diffusion timescale as $t_\chi \equiv L_z^2 / \chi$, the
 ratio of $t_\chi$ to the buoyancy time is
 \begin{equation}
-\frac{t_\chi}{t_b} = \left(\frac{c_P}{n_\rho}\right)^{1/2}\text{Ra}_t^{1/2}
-\left(m_{ad} - \epsilon\right)^{1/2}.
+\frac{t_\chi}{t_b} =\text{Ra}_t^{1/2}.
 \label{eqn:timescales}
 \end{equation}
 We carry out two experiments in this study. In the first,
@@ -202,10 +201,9 @@ we fix $\epsilon$ and increase Ra, thus increasing the ratio in
 (\ref{eqn:timescales}). In the second, we fix Ra and vary $\epsilon$,
 scaling the buoyancy time $t_b$ as $\epsilon^{-1/2}$
 relative to the speed of sound; we see this reflected in the evolved Mach
-number scaling (Fig. \ref{fig:ma_v_eps}). The ratio in (\ref{eqn:timescales}) is
-independent of $\epsilon$ when $\epsilon \ll m_{ad}$.
+number scaling (Fig. \ref{fig:ma_v_eps}).
 
-The Fully Compressible Navier-Stokes equations,
+We solve the Fully Compressible Navier-Stokes equations,
 \begin{align}
 &\begin{aligned}
 &\frac{\partial \ln\rho}{\partial t} + \grad\cdot\bm{u} 
@@ -228,7 +226,7 @@ The Fully Compressible Navier-Stokes equations,
 	\label{eqn:energy_eqn}
 \end{aligned}
 \end{align}
-are evolved with the viscous stress tensor given by
+with the viscous stress tensor given by
 \begin{equation}
 \sigma_{ij} \equiv \left(\frac{\partial u_i}{\partial x_j} + 
 \frac{\partial u_j}{\partial x_i} - \frac{2}{3}\delta_{ij}\grad\cdot\bm{u}\right).
@@ -353,20 +351,6 @@ as hatched points, and while this phenomenon does not appear to greatly modify t
 scaling of fluid properties measured in this work, these states warrant
 further investigation.
 
-\begin{figure}[t!]
-\includegraphics[width=\textwidth]{./figs/snapshots_fig.png}
-\caption{Characteristic entropy fluctuations in evolved 2D flows roughly
-140$t_b$ after the start of simulations. 
-The time- and horizontally-averaged profile is removed in all cases.  
-(a) A low Ma flow at moderate Ra. (b) A high Ma flow at the same Ra as in (a).
-(c) A high Ma flow at high Ra.  In all cases, the broad upflow and narrow downflows
-traditionally seen in stratified convection are apparent.
-Shock systems can be seen in the upper atmosphere of the high Ma flows,
-for example at $(x, z) \sim (70, 15-19)$ in (b) and $(x, z) \sim 
-(65, 17-19)$ in (c).
-\label{fig:entropy_snapshots} }
-\end{figure}
-
 
 
 Low Ma flows (e.g., $\epsilon = 10^{-4}$)
@@ -383,21 +367,21 @@ thermodynamic structures form small eddies which traverse the
 domain repeatedly before diffusing (Fig. \ref{fig:entropy_snapshots}c).
 As evidenced by the colorbar scalings, the
 amplitudes of thermodynamic fluctuations scale with $\epsilon$.
-
-
-\begin{figure}[t]
-\includegraphics[width=\textwidth]{./figs/re_and_nu_v_Ra.png}
-\caption{
-Flow properties at high and low $\epsilon$. 
-(a) Nu vs. Ra/Ra$_{\text{crit}}$.
-Errors bars indicate the variance of Nu with depth;
-large error bars indicate a poorly converged solution.
-(b) Re vs. Ra/Ra$_{\text{crit}}$.
-Re is measured at the midplane of the atmosphere.
-Larger symbols with white dots designate 3D runs.
- \label{fig:re_and_nu_v_ra}
-}
+\begin{figure}[t!]
+\includegraphics[width=\textwidth]{./figs/snapshots_fig.png}
+\caption{Characteristic entropy fluctuations in evolved 2D flows roughly
+140$t_b$ after the start of simulations. 
+The time- and horizontally-averaged profile is removed in all cases.  
+(a) A low Ma flow at moderate Ra. (b) A high Ma flow at the same Ra as in (a).
+(c) A high Ma flow at high Ra.  In all cases, the broad upflow and narrow downflows
+traditionally seen in stratified convection are apparent.
+Shock systems can be seen in the upper atmosphere of the high Ma flows,
+for example at $(x, z) \sim (70, 15-19)$ in (b) and $(x, z) \sim 
+(65, 17-19)$ in (c).
+\label{fig:entropy_snapshots} }
 \end{figure}
+
+
 
 The efficiency of convection is quantified by the Nusselt number (Nu).  
 Nu is well-defined in RBC
@@ -426,6 +410,20 @@ values of $\epsilon$.
 In incompressible Boussinesq convection, where $\grad S = 0$ only when 
 $\grad T = 0$, this definition reduces to the traditionally defined
 Nusselt number \cite{otero&all2002, johnston&doering2009}.
+\begin{figure}[t!]
+\includegraphics[width=\textwidth]{./figs/re_and_nu_v_Ra.png}
+\caption{
+Flow properties at high and low $\epsilon$. 
+(a) Nu vs. Ra/Ra$_{\text{crit}}$.
+Errors bars indicate the variance of Nu with depth;
+large error bars indicate a poorly converged solution.
+(b) Re vs. Ra/Ra$_{\text{crit}}$.
+Re is measured at the midplane of the atmosphere.
+Larger symbols with white dots designate 3D runs.
+ \label{fig:re_and_nu_v_ra}
+}
+\end{figure}
+
 
 The variation of Nu with Ra is shown in 
 Fig. \ref{fig:re_and_nu_v_ra}a.  We find that the Nu depends primarily
