@@ -36,10 +36,7 @@
 \title{Convective heat transport in stratified atmospheres at low and high Mach number}
 
 \begin{abstract}
-%Convection in astrophysical systems is stratified and
-%often occurs at high Rayleigh number (Ra) and low
-%Mach number (Ma).
-We study stratified convection in the context of 
+We study fully compressible convection in the context of 
 plane-parallel, polytropically stratified atmospheres. 
 We perform a suite of 2D and 3D simulations in which we vary the initial
 superadiabaticity ($\epsilon$) and the Rayleigh number (Ra) while fixing the
@@ -157,7 +154,8 @@ timescale is the isothermal sound crossing time,
 $\tau_I$, of this unit length.
 Meaningful convective dynamics occur on 
 timescales of the atmospheric buoyancy time,
-$t_b = \tau_I \sqrt{L_z\,m\,c_P/g\,\epsilon\,n_\rho}$. 
+$t_b = \tau_I \sqrt{L_z\,m\,c_P/g\,\epsilon\,n_\rho}$, where
+$c_P = R \gamma/(\gamma-1) = 2.5$ is the specific heat at constant pressure.
 
 At fixed $n_\rho$, convective dynamics are 
 controlled by $\epsilon$ as well as the atmospheric diffusivities.
@@ -170,10 +168,9 @@ Rayleigh number (Ra) and the Prandtl number (Pr),
 \text{Pr} = \frac{\nu}{\chi},
 \end{equation}
 where $\Delta S_0 = \epsilon\ln (1 + L_z) = \epsilon n_\rho / m$ 
-is the initial entropy difference across the domain,
-$c_P = \gamma/(\gamma-1)$ is the specific heat at
-constant pressure, $\nu$ is the thermal diffusivity, 
-and $\chi$ is the kinematic viscosity.
+is the initial specific entropy difference across the domain,
+$\chi$ is the thermal diffusivity, 
+and $\nu$ is the kinematic viscosity.
 Throughout this work we specify
 that Pr $= 1$ and is depth invariant.
 The initial thermal
@@ -190,7 +187,7 @@ The full values of $\kappa = \rho\chi$ and
 $\mu = \rho\nu$ (the dynamic viscosity) change as the density 
 profile evolves.  
 The diffusivities scale as
-$\chi_t, \nu_t \propto \sqrt{g L_z^3 \epsilon / \text{Ra}_t}$.
+$\chi_t, \nu_t \propto \sqrt{g L_z^3 (\Delta S_0 / c_P) / \text{Ra}_t}$.
 Defining the thermal diffusion timescale as $t_\chi \equiv L_z^2 / \chi$, the
 ratio of $t_\chi$ to the buoyancy time is
 \begin{equation}
@@ -200,11 +197,12 @@ ratio of $t_\chi$ to the buoyancy time is
 We carry out two experiments in this study. In the first,
 we fix $\epsilon$ and increase Ra, thus increasing the ratio in
 (\ref{eqn:timescales}). In the second, we fix Ra and vary $\epsilon$,
-scaling the buoyancy time $t_b$ as $\epsilon^{-1/2}$
+scaling the dynamical timescales $(t_b, t_\chi)$ as $\epsilon^{-1/2}$
 relative to the speed of sound; we see this reflected in the evolved Mach
 number scaling (Fig. \ref{fig:ma_v_eps}).
 
-We solve the Fully Compressible Navier-Stokes equations,
+We use $\ln \rho$ and $T$ as our thermodynamic variables and solve the Fully 
+Compressible Navier-Stokes equations,
 \begin{align}
 &\begin{aligned}
 &\frac{\partial \ln\rho}{\partial t} + \grad\cdot\bm{u} 
@@ -325,7 +323,7 @@ that convective onset
 occurs at $\text{Ra}_{\text{crit}} = \{11.15, 10.06, 10.97, 10.97\}$ 
 for $\epsilon = \{1.0, 0.5, 10^{-4}, 10^{-7}\}$, respectively.  
 
-\subsection{Fluid Numbers \& Flows}
+\subsection{Evolved fluid numbers \& flow morphology}
 
 We measure the adiabatic Mach number (Ma = $|\bm{u}|/\sqrt{\gamma T}$),
 and find that it is a strong function of 
@@ -354,7 +352,7 @@ further investigation.
 
 
 
-Low Ma flows (e.g., $\epsilon = 10^{-4}$)
+In 2D, low Ma flows (e.g., $\epsilon = 10^{-4}$)
 display the classic narrow downflow and broad upflow lanes of stratified
 convection (Fig. \ref{fig:entropy_snapshots}a).
 At high Ma (e.g., $\epsilon = 0.5$, Ra/Ra$_{\text{crit}} \gtrsim 10^3$), 
@@ -366,19 +364,23 @@ At large Ra, the diffusion timescale becomes long (\ref{eqn:timescales}),
 and
 thermodynamic structures form small eddies which traverse the
 domain repeatedly before diffusing (Fig. \ref{fig:entropy_snapshots}c).
+In 3D, the same upflow/downflow asymmetry is seen, but downflow lanes no
+longer span the depth of the domain (Fig. \ref{fig:entropy_snapshots}d-f).
 As evidenced by the colorbar scalings, the
 amplitudes of thermodynamic fluctuations scale with $\epsilon$.
 \begin{figure}[t!]
 \includegraphics[width=\textwidth]{./figs/snapshots_fig.png}
-\caption{Characteristic entropy fluctuations in evolved 2D flows roughly
-140$t_b$ after the start of simulations. 
-The time- and horizontally-averaged profile is removed in all cases.  
+\caption{Characteristic entropy fluctuations in evolved flows roughly
+$\{$140, 60$\}$ $t_b$ after the start of simulations for $\{$2D, 3D$\}$ runs. 
+The time- and horizontally-averaged profile is removed in vertical slices (a)-(d). 
+The time- averaged mean value is removed in horizontal slices (e) and (f).
 (a) A low Ma flow at moderate Ra. (b) A high Ma flow at the same Ra as in (a).
-(c) A high Ma flow at high Ra.  In all cases, the broad upflow and narrow downflows
-traditionally seen in stratified convection are apparent.
+(c) A high Ma flow at high Ra. (d)-(f) A low Ma 3D run at the same parameters as in (a),
+where (d) is a vertical ($x$, $z$) slice at $y = L_y/2$, (e) is a horizontal slice
+at $z = L_z$, and (f) is a horizontal slice at $z = L_z/2$.
 Shock systems can be seen in the upper atmosphere of the high Ma flows,
-for example at $(x, z) \sim (70, 15-19)$ in (b) and $(x, z) \sim 
-(65, 17-19)$ in (c).
+for example at $(x, z) \sim (5, 15-19)$ in (b) and $(x, z) \sim 
+(50, 15-19)$ in (c).
 \label{fig:entropy_snapshots} }
 \end{figure}
 
@@ -409,7 +411,8 @@ $\langle \kappa \rangle = \langle \rho\chi \rangle$, which is nearly
 $\kappa_0$ for small $\epsilon$ but changes appreciably for large
 values of $\epsilon$.
 In incompressible Boussinesq convection, where $\grad S = 0$ only when 
-$\grad T = 0$, this definition reduces to the traditionally defined
+$\grad T = 0$, and where $\kappa$ is constant with depth and time,
+this definition reduces to the traditionally defined
 Nusselt number \cite{otero&all2002, johnston&doering2009}.
 \begin{figure}[t!]
 \includegraphics[width=\textwidth]{./figs/re_and_nu_v_Ra.png}
@@ -465,20 +468,21 @@ of Re in 2D follows the scaling of velocity (Ma) with Ra, as
 seen in Fig. \ref{fig:ma_v_eps}, and reflects the presence of coherent
 spinners, which do not exist in 3D.
 
-\subsection{Change of Stratification}
+\subsection{Evolved stratification}
 
-In the evolved state, the flows can change the density stratification,
-as shown in Fig. \ref{fig:nrho_v_ra}.
-We measure the 
+In the evolved state, the flows can change the density stratification.
+In Fig. \ref{fig:nrho_v_ra}a, we measure the 
 time- and horizontally-averaged density profile in two ways. Empty symbols
-show the density difference
-between the max and min value of the profile, while solid symbols
-show the difference between the top and bottom of the atmosphere. 
-We find that supersonic flows support persistent density inversions 
-in the boundary layers, as
-was reported by \cite{brandenburg&all2005}.  This is visible when
+show the number of density scale heights between the maximum and minimum of the
+atmospheric density profile.  Solid symbols
+show the number of density scale heights between the top and bottom of the atmosphere. 
+We find that near-sonic and supersonic flows support significant, 
+persistent density inversions in the boundary layers, as
+was reported previously \cite{brandenburg&all2005}.  This is visible when
 solid symbols lie below empty symbols.  We find this in 2D and 3D, even
-at very large $\epsilon$.
+at very large $\epsilon$.  Sample evolved density profiles are displayed in
+Fig. \ref{fig:nrho_v_ra}b.
+
 Surprisingly, the evolved $n_\rho$ is always less than the initial $n_\rho = 3$,
 and turbulent pressure support plays a larger role than atmospheric slumping.
 This appears to arise as a result of the convection making the interior isentropic,
@@ -494,7 +498,7 @@ felt by the flows.
 \begin{figure}[t!]
 \includegraphics[width=\textwidth]{./figs/density_v_ra.png}
 \caption{\label{fig:nrho_v_ra} 
-Solid symbols show the density contrast measured
+(a) Solid symbols show the density contrast measured
 in density scale heights between the upper and lower boundary, 
 $n_\rho = \ln[\rho(z=0)/\rho(z=L_z)]$.
 Empty symbols show 
@@ -505,13 +509,16 @@ At high $\epsilon$,
 the density stratification decreases.  Once the mean 
 Ma approaches 1 (at Ra/Ra$_{\text{crit}} \approx \{10^2, 10^3\}$ for $\epsilon = \{1, 0.5\}$
 as in Fig. \ref{fig:ma_v_eps}b), density inversions form within the thermal
-boundary layers. Larger symbols represent 3D runs.}
+boundary layers. Larger symbols represent 3D runs. (b) The natural log of time-
+and horizontally-averaged density profiles are shown for select simulations,
+to illustrate the inversions which appear in the boundary layers.}
 \end{figure}
 
-
+\vspace{-0.5cm}
 \section{Discussion \& Future Work}
-In summary, we have found that the evolved flow properties of stratified,
-compressible convection scale in a manner reminiscent of RBC.
+We have found that the evolved flow properties of stratified,
+compressible convection scale in a manner reminiscent of incompressible,
+Boussinesq \RB convection.
 We argue that polytropically stratified atmospheres are the natural
 extension of the RBC problem with an additional control parameter, $\epsilon$,
 whose primary role is to set the Ma of the flows.  We show that other properties
@@ -522,7 +529,7 @@ and that Ma in 3D solutions appears to be a function of $\epsilon$ alone,
 allowing for simple specification of the evolved Ma using input parameters.
 The stratification of 
 these polytropic atmospheres evolves in a complex
-manner.  Future work should aim to 
+manner, and future work should aim to 
 understand the importance of stratification on
 convective heat transport and other flow properties.
 
@@ -554,5 +561,62 @@ careful comments greatly improved the quality of this paper.
 \end{acknowledgments}
 
 \bibliography{../biblio.bib}
+
+\appendix
+\section{Table of simulation parameters}
+In table \ref{table:run_info}, we report both the input parameters ($\epsilon$, Ra$_t$, resolution)
+and output values (evolved Nu, Re, Ma, $n_\rho$) of select simulations.  All 3D simulations
+are listed, and the corresponding 2D simulations at the same parameters are included.  A full
+table of all information is included as a CSV file in the supplemental materials.
+
+Simulation input values are listed in the first six columns.  The mean evolved Nu
+is presented, as well as how far away the atmospheric maximum and minimum are from
+the mean.  Re at the midplane is reported.  Ma is reported
+in the same format as Nu.  The evolved number of density scale heights is reported, using the two
+metrics described in Fig. \ref{fig:nrho_v_ra}.
+
+%\begin{table}
+\begin{center}
+\begin{longtable}{ p{1cm} p{1cm} p{1cm} p{1cm} p{1cm} p{1cm} p{1.75cm} p{1.5cm} p{2.75cm} p{1cm} p{1.2cm}  }
+\caption{Input and output values of select simulations.\label{table:run_info}}\\
+\hline
+$\epsilon$	&	Ra$_t$	&	3D	&	$n_z$	&	$n_x$	&	$n_y$	&	Nu					&	Re	&	Ma					&	$n_{\rho, \text{max}}$	&	$n_{\rho, \text{bounds}}$	\\
+\hline\hline \endfirsthead																													\\
+\multicolumn{11}{c}%
+{ \tablename\ \thetable{} -- continued from previous page} \\
+\hline
+$\epsilon$	&	Ra$_t$	&	3D	&	$n_z$	&	$n_x$	&	$n_y$	&	Nu					&	Re	&	Ma					&	$n_{\rho, \text{max}}$	&	$n_{\rho, \text{bounds}}$	\\
+\hline \hline \endhead
+\hline \endfoot
+\hline \endlastfoot
+
+\vspace{0.08cm}1	&	$10^4$	&	No	&	256	&	1024	&	---	&$	20.43	_{-	0.21	}^{+	0.24	}$&	397.69	&$	0.79	_{-	0.35	}^{+	5.49	}$&	1.26	&	-0.21	\\
+\vspace{0.08cm}1	&	$10^5$	&	No	&	512	&	2048	&	---	&$	33.60	_{-	0.41	}^{+	1.03	}$&	1356.44	&$	0.82	_{-	0.33	}^{+	4.51	}$&	1.72	&	-0.55	\\
+\vspace{0.08cm}0.5	&	100	&	No	&	64	&	256	&	---	&$	3.72	_{-	0.01	}^{+	0.01	}$&	15.22	&$	0.22	_{-	0.11	}^{+	0.33	}$&	2.52	&	2.52	\\
+\vspace{0.08cm}0.5	&	1000	&	No	&	128	&	512	&	---	&$	7.87	_{-	0.04	}^{+	0.09	}$&	83.02	&$	0.39	_{-	0.26	}^{+	0.71	}$&	1.98	&	1.96	\\
+\vspace{0.08cm}0.5	&	$10^4$	&	No	&	128	&	512	&	---	&$	18.69	_{-	0.38	}^{+	0.63	}$&	487.35	&$	0.74	_{-	0.54	}^{+	1.50	}$&	1.51	&	1.24	\\
+\vspace{0.08cm}0.5	&	$10^5$	&	No	&	256	&	1024	&	---	&$	30.14	_{-	0.15	}^{+	0.39	}$&	1677.07	&$	0.71	_{-	0.34	}^{+	0.87	}$&	1.70	&	1.03	\\
+\vspace{0.08cm}0.5	&	$10^6$	&	No	&	512	&	2048	&	---	&$	45.86	_{-	1.90	}^{+	3.76	}$&	4943.73	&$	0.64	_{-	0.24	}^{+	0.62	}$&	1.95	&	1.11	\\
+\vspace{0.08cm}$10^{-4}$	&	100	&	No	&	64	&	256	&	---	&$	3.75	_{-	0.01	}^{+	0.01	}$&	13.93	&$	2.82	_{-	1.39	}^{+	1.91}\cdot 10^{-3}	$&	3.00	&	3.00	\\
+\vspace{0.08cm}$10^{-4}$	&	1000	&	No	&	128	&	512	&	---	&$	7.97	_{-	0.07	}^{+	0.28	}$&	65.85	&$	4.51	_{-	2.66	}^{+	3.95}\cdot 10^{-3}	$&	3.00	&	3.00	\\
+\vspace{0.08cm}$10^{-4}$	&	$10^4$	&	No	&	128	&	512	&	---	&$	15.21	_{-	0.14	}^{+	0.32	}$&	391.38	&$	9.30	_{-	7.11	}^{+	11.7}\cdot 10^{-3}	$&	3.00	&	3.00	\\
+\vspace{0.08cm}$10^{-4}$	&	$10^5$	&	No	&	256	&	1024	&	---	&$	27.83	_{-	0.47	}^{+	0.42	}$&	1766.70	&$	1.50	_{-	1.17	}^{+	2.19}\cdot 10^{-2}	$&	3.00	&	3.00	\\
+\vspace{0.08cm}$10^{-4}$	&	$10^6$	&	No	&	512	&	2048	&	---	&$	69.68	_{-	15.80	}^{+	28.24	}$&	7684.29	&$	2.10	_{-	1.74	}^{+	3.15}\cdot 10^{-2}	$&	3.00	&	3.00	\\
+\vspace{0.08cm}1	&	$10^4$	&	Yes	&	128	&	256	&	256	&$	16.10	_{-	0.99	}^{+	0.15	}$&	176.84	&$	0.39	_{-	0.13	}^{+	3.78	}$&	1.24	&	0.41	\\
+\vspace{0.08cm}1	&	$10^5$	&	Yes	&	256	&	512	&	512	&$	29.67	_{-	1.90	}^{+	0.44	}$&	562.40	&$	0.38	_{-	0.14	}^{+	3.71	}$&	1.67	&	-0.22	\\
+\vspace{0.08cm}0.5	&	100	&	Yes	&	64	&	128	&	128	&$	3.42	_{-	0.11	}^{+	0.06	}$&	13.42	&$	0.21	_{-	0.08	}^{+	0.33	}$&	2.56	&	2.57	\\
+\vspace{0.08cm}0.5	&	1000	&	Yes	&	128	&	256	&	256	&$	6.83	_{-	0.25	}^{+	0.18	}$&	46.03	&$	0.23	_{-	0.08	}^{+	0.38	}$&	2.19	&	2.19	\\
+\vspace{0.08cm}0.5	&	$10^4$	&	Yes	&	128	&	256	&	256	&$	12.89	_{-	0.62	}^{+	0.30	}$&	146.92	&$	0.23	_{-	0.08	}^{+	0.45	}$&	1.83	&	1.81	\\
+\vspace{0.08cm}0.5	&	$10^5$	&	Yes	&	256	&	512	&	512	&$	23.05	_{-	1.04	}^{+	1.41	}$&	429.63	&$	0.21	_{-	0.08	}^{+	0.43	}$&	1.95	&	1.59	\\
+\vspace{0.08cm}0.5	&	$10^6$	&	Yes	&	256	&	512	&	512	&$	40.53	_{-	0.72	}^{+	0.66	}$&	1291.61	&$	0.20	_{-	0.08	}^{+	0.46	}$&	2.15	&	1.47	\\
+\vspace{0.08cm}$10^{-4}$	&	100	&	Yes	&	64	&	128	&	128	&$	3.19	_{-	0.10	}^{+	0.06	}$&	11.48	&$	2.53	_{-	9.97	}^{+	1.93}\cdot 10^{-3}	$&	3.00	&	3.00	\\
+\vspace{0.08cm}$10^{-4}$	&	1000	&	Yes	&	128	&	256	&	256	&$	6.72	_{-	0.19	}^{+	0.57	}$&	38.32	&$	2.88	_{-	1.09	}^{+	2.55}\cdot 10^{-3}	$&	3.00	&	3.00	\\
+\vspace{0.08cm}$10^{-4}$	&	$10^4$	&	Yes	&	128	&	256	&	256	&$	11.92	_{-	0.40	}^{+	1.34	}$&	115.06	&$	2.85	_{-	1.13	}^{+	3.11}\cdot 10^{-3}	$&	3.00	&	3.00	\\
+\vspace{0.08cm}$10^{-4}$	&	$10^5$	&	Yes	&	256	&	512	&	512	&$	21.11	_{-	1.69	}^{+	4.74	}$&	319.84	&$	2.46	_{-	1.07	}^{+	2.90}\cdot 10^{-3}	$&	3.00	&	3.00	\\
+\vspace{0.08cm}$10^{-4}$	&	$10^6$	&	Yes	&	256	&	512	&	512	&$	38.50	_{-	4.71	}^{+	12.54	}$&	920.21	&$	2.26	_{-	1.02	}^{+	2.84}\cdot 10^{-3}	$&	3.00	&	3.00	\\
+\hline
+\end{longtable}
+\end{center}
+%\end{table}
 
 \end{document}
