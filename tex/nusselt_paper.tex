@@ -323,6 +323,8 @@ that convective onset
 occurs at $\text{Ra}_{\text{crit}} = \{11.15, 10.06, 10.97, 10.97\}$ 
 for $\epsilon = \{1.0, 0.5, 10^{-4}, 10^{-7}\}$, respectively.  
 
+
+\vspace{-0.5cm}
 \subsection{Evolved fluid numbers \& flow morphology}
 
 We measure the adiabatic Mach number (Ma = $|\bm{u}|/\sqrt{\gamma T}$),
@@ -364,10 +366,30 @@ At large Ra, the diffusion timescale becomes long (\ref{eqn:timescales}),
 and
 thermodynamic structures form small eddies which traverse the
 domain repeatedly before diffusing (Fig. \ref{fig:entropy_snapshots}c).
-In 3D, the same upflow/downflow asymmetry is seen, but downflow lanes no
-longer span the depth of the domain (Fig. \ref{fig:entropy_snapshots}d-f).
 As evidenced by the colorbar scalings, the
 amplitudes of thermodynamic fluctuations scale with $\epsilon$.
+
+In 3D, the same upflow/downflow asymmetry is seen, but other aspects 
+of the flow are distinctly different.  Fig. \ref{fig:entropy_snapshots}d-f show select
+snapshots of a 3D simulation with the same input parameters as the 2D case in Fig. \ref{fig:entropy_snapshots}a.
+In 2D, large-scale, coherent 
+spinners dominate the  flow, leading to a single upflow and downflow.  
+New downflowing plumes at the upper boundary are efficiently swept into the large 
+coherent structure (near $x \sim 1$ and spanning the vertical domain).  The 
+behavior of downflows in 3D is strikingly different (Fig. \ref{fig:entropy_snapshots}d).
+In 3D, many individual plumes detach from 
+the upper boundary, but do not organize into a single dominant downflow 
+in the same fashion.  Horizontal cuts near the top of the domain 
+(Fig. \ref{fig:entropy_snapshots}e) reveal 
+a network of narrow downflow lanes surrounding broad upflows. 
+Stronger clusters of downflows near the surface are linked to 
+sheets of low entropy at the midplane of the domain (Fig. \ref{fig:entropy_snapshots}f).
+As the flows evolve in time, new downflows appear at the top of the domain in 
+the middle of upflows and join the surrounding downflow network, 
+causing the convective structures to fragment.  There is no preferred orientation 
+in the newly forming downflows, and the convective flow field constantly evolves, 
+which appears to prevent the occurrence of either spinners or windy states.
+
 \begin{figure}[t!]
 \includegraphics[width=\textwidth]{./figs/snapshots_fig.png}
 \caption{Characteristic entropy fluctuations in evolved flows roughly
@@ -375,12 +397,13 @@ $\{$140, 60$\}$ $t_b$ after the start of simulations for $\{$2D, 3D$\}$ runs.
 The time- and horizontally-averaged profile is removed in vertical slices (a)-(d). 
 The time- averaged mean value is removed in horizontal slices (e) and (f).
 (a) A low Ma flow at moderate Ra. (b) A high Ma flow at the same Ra as in (a).
-(c) A high Ma flow at high Ra. (d)-(f) A low Ma 3D run at the same parameters as in (a),
-where (d) is a vertical ($x$, $z$) slice at $y = L_y/2$, (e) is a horizontal slice
-at $z = L_z$, and (f) is a horizontal slice at $z = L_z/2$.
+(c) A high Ma flow at high Ra. 
 Shock systems can be seen in the upper atmosphere of the high Ma flows,
 for example at $(x, z) \sim (5, 15-19)$ in (b) and $(x, z) \sim 
 (50, 15-19)$ in (c).
+(d)-(f) A low Ma 3D run at the same parameters as in (a),
+where (d) is a vertical ($x$, $z$) slice at $y = L_y/2$, (e) is a horizontal slice
+at $z = L_z$, and (f) is a horizontal slice at $z = L_z/2$.
 \label{fig:entropy_snapshots} }
 \end{figure}
 
@@ -468,6 +491,7 @@ of Re in 2D follows the scaling of velocity (Ma) with Ra, as
 seen in Fig. \ref{fig:ma_v_eps}, and reflects the presence of coherent
 spinners, which do not exist in 3D.
 
+\vspace{-0.5cm}
 \subsection{Evolved stratification}
 
 In the evolved state, the flows can change the density stratification.
@@ -480,8 +504,22 @@ We find that near-sonic and supersonic flows support significant,
 persistent density inversions in the boundary layers, as
 was reported previously \cite{brandenburg&all2005}.  This is visible when
 solid symbols lie below empty symbols.  We find this in 2D and 3D, even
-at very large $\epsilon$.  Sample evolved density profiles are displayed in
-Fig. \ref{fig:nrho_v_ra}b.
+at very large $\epsilon$.  
+
+Sample evolved density profiles are displayed in Fig. \ref{fig:nrho_v_ra}b.
+The natural log of the temporally and horizontally averaged density profile, 
+$\ln \rho = \ln \rho_0 + \ln\rho_1$, is displayed for four cases.  At low $\epsilon$
+(dotted green line), the density stratification is, to first order, unchanged from
+the initial density stratification.  At high $\epsilon$, in both 2D (solid purple line)
+and 3D (dashed purple line and dash-dot-dot red line), the evolved stratification differs
+significantly from the initial state and does not increase monotonically with depth.
+To measure the number of density scale heights between two points in the atmosphere,
+$z_1$ \& $z_2$, we calculate $n_\rho(z_1, z_2) = \ln\rho(z_2) - \ln\rho(z_1)$.  Thus,
+the values plotted in Fig. \ref{fig:nrho_v_ra}a for the cases in Fig. \ref{fig:nrho_v_ra}b
+can be directly read off.  For example, at $\epsilon = 1$ and Ra/Ra$_{\text{crit}} \sim 10^5$
+(dash-dot-dot red line), measuring the stratification between the boundaries retrieves
+$n_\rho(L_z, 0) \approx -0.3$, but measuring between the maximum and minimum value of
+the profile retrieves $n_\rho(\text{min, max}) \approx 1.3$.
 
 Surprisingly, the evolved $n_\rho$ is always less than the initial $n_\rho = 3$,
 and turbulent pressure support plays a larger role than atmospheric slumping.
